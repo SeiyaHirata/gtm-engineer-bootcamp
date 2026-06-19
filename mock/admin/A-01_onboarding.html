@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1024">
+<title>ReServe 管理画面 ｜ A-01 初期設定（オンボーディング）</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
+    background: #eceae6;
+    color: #2c2a28;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* ===== 合宿モック注記バー ===== */
+  .mock-note {
+    background: #2c2a28;
+    color: #d8d3c8;
+    font-size: 12px;
+    padding: 6px 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    letter-spacing: .02em;
+  }
+  .mock-note .badge {
+    background: #c98b5e;
+    color: #fff;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 3px;
+    letter-spacing: .04em;
+  }
+  .mock-note .sep { opacity: .45; }
+
+  /* ===== ブランドヘッダー ===== */
+  header.brand {
+    background: #fbfaf8;
+    border-bottom: 1px solid #ddd8cf;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: .01em;
+    color: #3a3733;
+  }
+  .logo .mark { color: #b5764a; }
+  .logo .tag {
+    display: block;
+    font-size: 10px;
+    font-weight: 400;
+    color: #9a948a;
+    letter-spacing: .18em;
+    margin-top: 1px;
+  }
+  .brand .account {
+    font-size: 12px;
+    color: #8a857c;
+    text-align: right;
+  }
+  .brand .account strong { color: #4a463f; font-weight: 600; }
+
+  /* ===== レイアウト本体 ===== */
+  .layout { display: flex; min-height: calc(100vh - 95px); }
+
+  /* サイドナビ（現在地が分かりにくい＝広大な設定の海） */
+  nav.side {
+    width: 230px;
+    background: #f4f1ec;
+    border-right: 1px solid #ddd8cf;
+    padding: 20px 0;
+    flex-shrink: 0;
+  }
+  nav.side .nav-section {
+    font-size: 11px;
+    color: #a39d92;
+    letter-spacing: .08em;
+    padding: 14px 22px 6px;
+  }
+  nav.side a {
+    display: block;
+    padding: 9px 22px;
+    color: #5c5850;
+    text-decoration: none;
+    font-size: 13px;
+    border-left: 3px solid transparent;
+  }
+  nav.side a.active {
+    background: #e8e2d7;
+    color: #2c2a28;
+    border-left-color: #b5764a;
+    font-weight: 600;
+  }
+  nav.side a small { color: #b3ada1; font-size: 11px; }
+
+  main {
+    flex: 1;
+    padding: 28px 40px 80px;
+    max-width: 860px;
+  }
+
+  .page-head h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #312e2a;
+    margin-bottom: 4px;
+  }
+  .page-head .crumb {
+    font-size: 12px;
+    color: #a39d92;
+    margin-bottom: 2px;
+  }
+  .page-head .lede {
+    color: #6f6a61;
+    font-size: 13px;
+    margin-bottom: 24px;
+  }
+
+  /* ===== セクション（カードが延々と続く＝項目過多の体感） ===== */
+  .section {
+    background: #fbfaf8;
+    border: 1px solid #e2ddd3;
+    border-radius: 6px;
+    padding: 22px 24px;
+    margin-bottom: 18px;
+  }
+  .section > h2 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #3a3733;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee8dd;
+  }
+  .req {
+    color: #c0392b;
+    font-size: 11px;
+    font-weight: 700;
+    margin-left: 6px;
+    vertical-align: 2px;
+  }
+
+  .field { margin-bottom: 16px; }
+  .field:last-child { margin-bottom: 0; }
+  .field label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4a463f;
+    margin-bottom: 6px;
+  }
+  .field .hint {
+    font-size: 11px;
+    color: #a39d92;
+    font-weight: 400;
+    margin-left: 8px;
+  }
+  input[type=text], input[type=tel], input[type=number], select, textarea {
+    width: 100%;
+    border: 1px solid #d3cdc1;
+    background: #fff;
+    border-radius: 4px;
+    padding: 9px 11px;
+    font-size: 13px;
+    font-family: inherit;
+    color: #2c2a28;
+  }
+  textarea { resize: vertical; min-height: 64px; }
+  .row2 { display: flex; gap: 14px; }
+  .row2 > .field { flex: 1; }
+
+  /* 写真アップロード */
+  .upload {
+    border: 1px dashed #cfc8ba;
+    background: #f6f3ed;
+    border-radius: 5px;
+    padding: 26px;
+    text-align: center;
+    color: #9a948a;
+    font-size: 13px;
+  }
+  .upload .ic { font-size: 26px; display: block; margin-bottom: 6px; color: #c3bbab; }
+
+  /* 営業時間 7行テーブル（スクロールが要る量） */
+  table.hours { width: 100%; border-collapse: collapse; }
+  table.hours th, table.hours td {
+    border: 1px solid #e4ded3;
+    padding: 7px 9px;
+    text-align: center;
+    font-size: 13px;
+  }
+  table.hours th {
+    background: #f1ece2;
+    color: #6f6a61;
+    font-weight: 600;
+    font-size: 12px;
+  }
+  table.hours td.day { background: #f7f4ee; font-weight: 600; color: #4a463f; width: 70px; }
+  table.hours input[type=text] { padding: 6px 8px; text-align: center; }
+  table.hours .closed { color: #b3ada1; font-size: 12px; }
+
+  /* 繰り返し行（メニュー・スタイリスト） */
+  .repeat-row {
+    display: flex;
+    gap: 12px;
+    align-items: flex-end;
+    margin-bottom: 12px;
+  }
+  .repeat-row .field { margin-bottom: 0; }
+  .repeat-row .grow { flex: 2; }
+  .repeat-row .price { flex: 1; }
+  .repeat-row .del {
+    border: 1px solid #d8d2c6;
+    background: #f1ece2;
+    color: #9a948a;
+    border-radius: 4px;
+    padding: 9px 12px;
+    font-size: 13px;
+    cursor: default;
+    white-space: nowrap;
+  }
+  .add-line {
+    display: inline-block;
+    margin-top: 4px;
+    font-size: 13px;
+    color: #8a857c;
+    border: 1px dashed #cfc8ba;
+    background: #f6f3ed;
+    border-radius: 4px;
+    padding: 7px 14px;
+  }
+
+  /* 定休日チェック */
+  .checks { display: flex; flex-wrap: wrap; gap: 16px; }
+  .checks label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #4a463f;
+    margin: 0;
+  }
+
+  /* ===== フッターCTA（何ステップ目か不明・道筋が見えない） ===== */
+  .actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 26px;
+    padding-top: 20px;
+    border-top: 1px solid #e2ddd3;
+  }
+  .actions .left-note { font-size: 12px; color: #a39d92; }
+  .actions .btns { display: flex; gap: 10px; }
+  .btn-ghost {
+    border: 1px solid #d3cdc1;
+    background: #fbfaf8;
+    color: #6f6a61;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 13px;
+  }
+  /* 「次へ」だけ。完了までの距離が読めない弱いCTA */
+  .btn-next {
+    border: 1px solid #c2a98f;
+    background: #d9c6b1;
+    color: #5a4a39;
+    border-radius: 5px;
+    padding: 10px 26px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+</style>
+</head>
+<body>
+
+  <!-- 合宿用モック注記 -->
+  <div class="mock-note">
+    <span class="badge">A-01</span>
+    <span>店舗オンボーディング画面（①）</span>
+    <span class="sep">|</span>
+    <span>これは合宿用モック（数字は仮・分析はSQL）</span>
+  </div>
+
+  <!-- ブランドヘッダー -->
+  <header class="brand">
+    <div class="logo">
+      Re<span class="mark">Serve</span>
+      <span class="tag">SALON RESERVATION CLOUD</span>
+    </div>
+    <div class="account">
+      <strong>田中美容室</strong> ／ 管理者：田中 様<br>
+      プラン：月額 12,000円（課金中）
+    </div>
+  </header>
+
+  <div class="layout">
+
+    <!-- サイドナビ：設定の全体像が掴めず現在地も曖昧 -->
+    <nav class="side">
+      <div class="nav-section">店舗管理</div>
+      <a href="#" class="active">初期設定</a>
+      <a href="#">ダッシュボード <small>（未公開）</small></a>
+      <a href="#">予約一覧 <small>（未公開）</small></a>
+      <a href="#">店舗ページ <small>（未公開）</small></a>
+      <div class="nav-section">アカウント</div>
+      <a href="#">請求・プラン</a>
+      <a href="#">通知設定</a>
+      <a href="#">スタッフ権限</a>
+    </nav>
+
+    <main>
+      <div class="page-head">
+        <div class="crumb">店舗管理 ＞ 初期設定</div>
+        <h1>初期設定</h1>
+        <p class="lede">店舗情報を入力してください。すべての項目が必須です。</p>
+      </div>
+
+      <!-- 店舗基本情報（店舗名は登録時と重複＝混乱の元） -->
+      <div class="section">
+        <h2>店舗基本情報</h2>
+        <div class="field">
+          <label>店舗名 <span class="req">必須</span><span class="hint">※ご登録時に入力した店舗名をもう一度ご入力ください</span></label>
+          <input type="text" placeholder="例）田中美容室">
+        </div>
+        <div class="field">
+          <label>店舗写真 <span class="req">必須</span></label>
+          <div class="upload">
+            <span class="ic">⬆</span>
+            画像ファイルをドラッグ＆ドロップ、またはクリックして選択
+          </div>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label>住所 <span class="req">必須</span></label>
+            <input type="text" placeholder="例）東京都渋谷区〇〇1-2-3">
+          </div>
+          <div class="field">
+            <label>電話番号 <span class="req">必須</span></label>
+            <input type="tel" placeholder="例）03-1234-5678">
+          </div>
+        </div>
+      </div>
+
+      <!-- 営業時間：曜日×時間 7行（スクロールが必要な量） -->
+      <div class="section">
+        <h2>営業時間 <span class="req">必須</span></h2>
+        <table class="hours">
+          <thead>
+            <tr><th>曜日</th><th>開店</th><th>閉店</th><th>定休</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="day">月</td><td><input type="text" placeholder="10:00"></td><td><input type="text" placeholder="20:00"></td><td><input type="checkbox"></td></tr>
+            <tr><td class="day">火</td><td><input type="text" placeholder="10:00"></td><td><input type="text" placeholder="20:00"></td><td><input type="checkbox"></td></tr>
+            <tr><td class="day">水</td><td><input type="text" placeholder="10:00"></td><td><input type="text" placeholder="20:00"></td><td><input type="checkbox"></td></tr>
+            <tr><td class="day">木</td><td><input type="text" placeholder="10:00"></td><td><input type="text" placeholder="20:00"></td><td><input type="checkbox"></td></tr>
+            <tr><td class="day">金</td><td><input type="text" placeholder="10:00"></td><td><input type="text" placeholder="20:00"></td><td><input type="checkbox"></td></tr>
+            <tr><td class="day">土</td><td><input type="text" placeholder="09:00"></td><td><input type="text" placeholder="19:00"></td><td><input type="checkbox"></td></tr>
+            <tr><td class="day">日</td><td><input type="text" placeholder="09:00"></td><td><input type="text" placeholder="19:00"></td><td><input type="checkbox"></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- メニュー（名前＋料金・複数行追加可） -->
+      <div class="section">
+        <h2>メニュー <span class="req">必須</span></h2>
+        <div class="repeat-row">
+          <div class="field grow">
+            <label>メニュー名</label>
+            <input type="text" placeholder="例）カット">
+          </div>
+          <div class="field price">
+            <label>料金（円）</label>
+            <input type="number" placeholder="4000">
+          </div>
+          <div class="del">削除</div>
+        </div>
+        <div class="repeat-row">
+          <div class="field grow">
+            <label>メニュー名</label>
+            <input type="text" placeholder="例）カラー">
+          </div>
+          <div class="field price">
+            <label>料金（円）</label>
+            <input type="number" placeholder="7000">
+          </div>
+          <div class="del">削除</div>
+        </div>
+        <div class="repeat-row">
+          <div class="field grow">
+            <label>メニュー名</label>
+            <input type="text" placeholder="例）パーマ">
+          </div>
+          <div class="field price">
+            <label>料金（円）</label>
+            <input type="number" placeholder="9000">
+          </div>
+          <div class="del">削除</div>
+        </div>
+        <span class="add-line">＋ メニューを追加</span>
+      </div>
+
+      <!-- スタイリスト（複数人追加可） -->
+      <div class="section">
+        <h2>スタイリスト <span class="req">必須</span></h2>
+        <div class="repeat-row">
+          <div class="field grow">
+            <label>スタイリスト名</label>
+            <input type="text" placeholder="例）田中 太郎">
+          </div>
+          <div class="del">削除</div>
+        </div>
+        <div class="repeat-row">
+          <div class="field grow">
+            <label>スタイリスト名</label>
+            <input type="text" placeholder="例）佐藤 花子">
+          </div>
+          <div class="del">削除</div>
+        </div>
+        <span class="add-line">＋ スタイリストを追加</span>
+      </div>
+
+      <!-- 定休日（チェックボックス） -->
+      <div class="section">
+        <h2>定休日 <span class="req">必須</span></h2>
+        <div class="checks">
+          <label><input type="checkbox"> 月</label>
+          <label><input type="checkbox"> 火</label>
+          <label><input type="checkbox"> 水</label>
+          <label><input type="checkbox"> 木</label>
+          <label><input type="checkbox"> 金</label>
+          <label><input type="checkbox"> 土</label>
+          <label><input type="checkbox"> 日</label>
+          <label><input type="checkbox"> 祝日</label>
+        </div>
+      </div>
+
+      <!-- フッターCTA：進捗表示なし／何ステップ目か・完了までの距離が不明 -->
+      <div class="actions">
+        <div class="left-note">入力内容は自動保存されません</div>
+        <div class="btns">
+          <button class="btn-ghost">下書き保存</button>
+          <button class="btn-next">次へ</button>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+</body>
+</html>

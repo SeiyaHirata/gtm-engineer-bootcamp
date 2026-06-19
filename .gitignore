@@ -1,0 +1,13 @@
+# Supabase local runtime artifacts
+supabase/.branches/
+supabase/.temp/
+supabase/.env
+
+# OS / editor
+.DS_Store
+*.swp
+.idea/
+.vscode/
+
+# Node (if tooling is added later)
+node_modules/
