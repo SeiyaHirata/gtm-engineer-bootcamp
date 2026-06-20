@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>請求・プラン｜ReServe（リザーブ）</title>
+<link rel="stylesheet" href="../assets/reserve.css">
+<style>
+  /* このページ固有の最小限の調整のみ（プラン枠の左ゴールド帯と解約カードの淡赤地） */
+  .plan-card { border-left: 4px solid var(--gold); }
+  .plan-price { font-size: 2rem; font-weight: 800; color: var(--ink); letter-spacing: .01em; line-height: 1.1; }
+  .plan-price .per { font-size: .9rem; font-weight: 600; color: var(--muted); margin-left: 4px; }
+  .plan-meta { display: grid; grid-template-columns: 120px 1fr; gap: 6px 16px; font-size: .86rem; margin-top: var(--sp-4); }
+  .plan-meta dt { color: var(--muted); }
+  .plan-meta dd { margin: 0; color: var(--ink); }
+  .danger-zone { background: var(--danger-soft); border-color: #f2cfca; }
+</style>
+</head>
+<body>
+
+<!-- ===== 合宿モック注記（最上部・常時） ===== -->
+<div class="mocknote">
+  <span class="mocknote-badge">MOCK</span>
+  <span>A-05 請求・プラン</span>
+  <span class="sep">|</span>
+  <span>これは合宿用モック。画面上の<strong>金額・件数はレイアウト用の仮数字</strong>です。チャーン率・LTV・詰まりの分析は<strong>SQL</strong>で出します。</span>
+</div>
+
+<!-- ===== ヘッダー ===== -->
+<header class="appbar">
+  <!-- ロゴはトップ（店舗側＝A-03）へ -->
+  <a href="A-03_dashboard.html" class="brand">Re<span class="mark">Serve</span>
+    <span class="brand-tag">SALON RESERVATION</span>
+  </a>
+  <div class="appbar-right">
+    <div><strong>田中美容室</strong>（東京都渋谷区）</div>
+    <div>プラン：スタンダード／契約 3ヶ月目</div>
+  </div>
+</header>
+
+<!-- ===== 本体：サイドナビ + メイン ===== -->
+<div class="app-layout">
+
+  <!-- サイドナビ（A-03 とで相互遷移） -->
+  <nav class="sidenav">
+    <div class="nav-group">店舗管理</div>
+    <a href="A-03_dashboard.html">ダッシュボード</a>
+    <a href="A-04_reservations.html">予約一覧</a>
+    <a href="A-05_billing.html" class="active">請求・プラン</a>
+    <div class="nav-group">店舗ページ</div>
+    <a href="../user/U-01_store.html">公開ページを見る</a>
+  </nav>
+
+  <!-- メイン -->
+  <main class="app-main">
+
+    <div class="page-head">
+      <div class="crumb"><a href="A-03_dashboard.html" style="text-decoration:none;color:inherit;">← ダッシュボードに戻る</a></div>
+      <h1>請求・プラン</h1>
+      <p class="lede">ご利用中のプラン、課金履歴、解約手続きを確認できます。</p>
+    </div>
+
+    <!-- ===== 現在のプラン ===== -->
+    <div class="section-label">現在のプラン</div>
+    <div class="card plan-card">
+      <div class="row-between" style="align-items:flex-start;">
+        <div>
+          <div class="row" style="gap:var(--sp-2);">
+            <span class="card-h mb-0" style="border:none;padding:0;margin:0;">スタンダードプラン</span>
+            <span class="badge badge-ok"><span class="dot"></span>利用中</span>
+          </div>
+          <div class="plan-price mt-2">¥12,000<span class="per">／ 月（税込）</span></div>
+          <p class="hint hint-block" style="margin-left:0;">予約受付・店舗ページ公開・予約管理がすべて含まれます。</p>
+        </div>
+        <a href="#" class="btn btn-ghost btn-sm">支払い方法を変更</a>
+      </div>
+
+      <hr class="divider">
+
+      <dl class="plan-meta">
+        <dt>契約状態</dt>
+        <dd>有効（自動更新）</dd>
+        <dt>初回課金日</dt>
+        <dd>2026年4月1日（登録と同時に初月課金・トライアルなし）</dd>
+        <dt>次回請求日</dt>
+        <dd>2026年7月1日　<span class="muted">¥12,000 の予定</span></dd>
+        <dt>支払い方法</dt>
+        <dd>クレジットカード（VISA ****4242）</dd>
+      </dl>
+    </div>
+
+    <!-- ===== 課金履歴 ===== -->
+    <div class="section-label">課金履歴</div>
+    <div class="card" style="padding:0;overflow:hidden;">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>請求日</th>
+            <th>内容</th>
+            <th class="num">金額</th>
+            <th>状態</th>
+            <th class="right">領収書</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>2026/06/01</td>
+            <td>スタンダードプラン 月額（6月分）</td>
+            <td class="num">¥12,000</td>
+            <td><span class="badge badge-ok">支払い済み</span></td>
+            <td class="right"><a href="#" class="link-cta">PDF</a></td>
+          </tr>
+          <tr>
+            <td>2026/05/01</td>
+            <td>スタンダードプラン 月額（5月分）</td>
+            <td class="num">¥12,000</td>
+            <td><span class="badge badge-ok">支払い済み</span></td>
+            <td class="right"><a href="#" class="link-cta">PDF</a></td>
+          </tr>
+          <tr>
+            <td>2026/04/01</td>
+            <td>スタンダードプラン 月額（初月分・登録同時課金）</td>
+            <td class="num">¥12,000</td>
+            <td><span class="badge badge-ok">支払い済み</span></td>
+            <td class="right"><a href="#" class="link-cta">PDF</a></td>
+          </tr>
+          <tr>
+            <td>2026/07/01</td>
+            <td>スタンダードプラン 月額（7月分・予定）</td>
+            <td class="num">¥12,000</td>
+            <td><span class="badge badge-muted">請求予定</span></td>
+            <td class="right faint">—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="hint hint-block" style="margin-left:0;">
+      これまでのお支払い合計：<strong style="color:var(--ink);">¥36,000</strong>（3ヶ月分）。
+      <span class="faint">※ この合計・件数はレイアウト用の仮数字です。実際の請求金額・チャーン分析はSQLで算出します。</span>
+    </p>
+
+    <!-- ===== 解約（②チャーンの文脈） ===== -->
+    <div class="section-label">プランの解約</div>
+    <div class="card danger-zone">
+      <div class="card-h" style="border-color:#f2cfca;">プランを解約する</div>
+      <p class="muted" style="font-size:.88rem;">
+        解約すると、次回請求日（<strong style="color:var(--ink);">2026年7月1日</strong>）以降は課金されず、店舗ページの公開とオンライン予約の受付が停止します。
+        受付済みの予約データは閲覧のみ可能になります。違約金・解約手数料はかかりません。
+      </p>
+      <div class="row mt-4" style="gap:var(--sp-3);">
+        <a href="#" class="btn btn-danger btn-outline">プランを解約する</a>
+        <span class="hint" style="margin-left:0;">いつでも解約できます。引き止めもありません。</span>
+      </div>
+    </div>
+
+    <!-- 店舗オーナーの本音（②早期チャーンの演出・補足） -->
+    <div class="card" style="background:#fbf9f5;border-style:dashed;">
+      <p class="muted" style="font-size:.86rem;line-height:1.8;margin:0;">
+        <strong style="color:var(--ink);">店舗オーナーの本音：</strong>
+        「予約は入るけど当日キャンセルばかり。毎月1万2千円払ってるのに、これなら自分の手帳管理でいいかも…解約、ここから1クリックでできるんだ。」
+        <span class="faint">（この導線の手軽さが3ヶ月目の解約 ＝ ②早期チャーンにつながる。原因の特定と通過率はSQLで。）</span>
+      </p>
+    </div>
+
+  </main>
+</div>
+
+<!-- ===== フッター ===== -->
+<footer class="footer">
+  <div class="footer-links">
+    <a href="A-03_dashboard.html">ダッシュボード</a>
+    <a href="A-04_reservations.html">予約一覧</a>
+    <a href="A-05_billing.html">請求・プラン</a>
+    <a href="../user/U-01_store.html">公開店舗ページ</a>
+    <a href="../instructor/sitemap.html">講師用サイトマップ</a>
+  </div>
+  <div>ReServe（リザーブ）｜美容室予約SaaS ・ 合宿用モック ・ 金額／件数は仮・分析はSQL</div>
+</footer>
+
+</body>
+</html>

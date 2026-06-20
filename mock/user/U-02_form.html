@@ -3,128 +3,161 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>U-02 予約フォーム ｜ ReServe（合宿用モック）</title>
+<title>U-02 初回予約フォーム ｜ ReServe（合宿用モック）</title>
+<link rel="stylesheet" href="../assets/reserve.css">
 </head>
-<body style="margin:0;padding:0;background:#e9e6e1;font-family:'Hiragino Kaku Gothic ProN','Hiragino Sans','Noto Sans JP',-apple-system,sans-serif;color:#2b2622;-webkit-font-smoothing:antialiased;">
+<body>
 
-  <!-- 合宿用モック注記バー（画面外の説明。ファネルの数字はSQLで出す） -->
-  <div style="max-width:390px;margin:0 auto;background:#3a332c;color:#d9cfc2;font-size:11px;line-height:1.5;padding:7px 14px;letter-spacing:.02em;">
-    <span style="display:inline-block;background:#b08968;color:#fff;font-weight:700;border-radius:3px;padding:1px 7px;margin-right:7px;font-size:10px;letter-spacing:.06em;">U-02</span>
-    これは合宿用モック（数字は仮・分析はSQL）。詰まり <strong style="color:#f0b884;">③a</strong>：初回予約フォーム。
-  </div>
+  <!-- スマホ端末風キャンバス（利用者サイト） -->
+  <div class="mobile">
 
-  <!-- スマホ幅のキャンバス -->
-  <div style="max-width:390px;margin:0 auto;background:#faf8f5;min-height:100vh;box-shadow:0 0 24px rgba(0,0,0,.12);">
+    <!-- 合宿モック注記（数字は仮・分析はSQL） -->
+    <div class="mocknote">
+      <span class="mocknote-badge">U-02</span>
+      合宿用モック・数字は仮・分析は<strong>SQL</strong>｜詰まり<strong>③a</strong> 初回予約フォーム
+    </div>
 
-    <!-- ブランドヘッダー（落ち着いた配色＋ロゴ風テキスト） -->
-    <header style="background:#2f2a24;padding:13px 18px;display:flex;align-items:center;justify-content:space-between;">
-      <div style="display:flex;align-items:baseline;gap:8px;">
-        <span style="font-size:19px;font-weight:700;letter-spacing:.14em;color:#f3ede4;">Re<span style="color:#c79a6e;">Serve</span></span>
-        <span style="font-size:10px;color:#9a8f80;letter-spacing:.12em;">SALON BOOKING</span>
-      </div>
-      <span style="font-size:10px;color:#9a8f80;border:1px solid #524a40;border-radius:11px;padding:2px 9px;">後払い</span>
+    <!-- ブランドヘッダー（濃色・反転）。ロゴはトップ U-01 へ -->
+    <header class="appbar appbar-dark">
+      <a href="U-01_store.html" class="brand">Re<span class="mark">Serve</span><span class="brand-tag">SALON BOOKING</span></a>
+      <span class="badge badge-muted">後払い</span>
     </header>
 
-    <!-- 店舗名・予約見出し -->
-    <div style="padding:16px 18px 10px;border-bottom:1px solid #ece6dd;">
-      <div style="font-size:11px;color:#9a8f80;letter-spacing:.06em;">ご予約</div>
-      <h1 style="margin:3px 0 0;font-size:17px;font-weight:700;color:#2b2622;letter-spacing:.02em;">田中美容室 ─ 初回ご予約フォーム</h1>
-      <div style="margin-top:5px;font-size:11px;color:#b3a89a;">必須項目をすべてご入力ください</div>
-    </div>
+    <div class="mobile-body">
 
-    <!-- フォーム本体（項目が多く、スクロールが長い ＝ ③aの核その1） -->
-    <div style="padding:6px 18px 30px;">
-
-      <!-- 1. メニュー選択（ラジオ） -->
-      <section style="margin-top:18px;">
-        <label style="display:block;font-size:13px;font-weight:700;margin-bottom:8px;">メニュー選択<span style="color:#c0392b;font-size:11px;margin-left:5px;">必須</span></label>
-        <div style="border:1px solid #ddd4c8;border-radius:8px;background:#fff;overflow:hidden;">
-          <div style="display:flex;align-items:center;gap:9px;padding:11px 13px;border-bottom:1px solid #f0ebe3;font-size:13px;"><span style="width:15px;height:15px;border:2px solid #b8ac9c;border-radius:50%;flex:none;"></span>カット <span style="margin-left:auto;color:#8a7f70;">¥4,400 / 60分</span></div>
-          <div style="display:flex;align-items:center;gap:9px;padding:11px 13px;border-bottom:1px solid #f0ebe3;font-size:13px;"><span style="width:15px;height:15px;border:2px solid #b8ac9c;border-radius:50%;flex:none;"></span>カット＋カラー <span style="margin-left:auto;color:#8a7f70;">¥8,800 / 120分</span></div>
-          <div style="display:flex;align-items:center;gap:9px;padding:11px 13px;font-size:13px;"><span style="width:15px;height:15px;border:2px solid #b8ac9c;border-radius:50%;flex:none;"></span>カット＋パーマ <span style="margin-left:auto;color:#8a7f70;">¥9,900 / 130分</span></div>
-        </div>
-      </section>
-
-      <!-- 2. 日付選択（カレンダー） -->
-      <section style="margin-top:20px;">
-        <label style="display:block;font-size:13px;font-weight:700;margin-bottom:8px;">日付選択<span style="color:#c0392b;font-size:11px;margin-left:5px;">必須</span></label>
-        <div style="border:1px solid #ddd4c8;border-radius:8px;background:#fff;padding:11px 13px;">
-          <div style="display:flex;align-items:center;justify-content:space-between;font-size:12px;font-weight:700;color:#5a5147;margin-bottom:8px;"><span>‹</span><span>2026年 6月</span><span>›</span></div>
-          <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;font-size:11px;text-align:center;color:#a99e8e;margin-bottom:4px;"><span>日</span><span>月</span><span>火</span><span>水</span><span>木</span><span>金</span><span>土</span></div>
-          <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;font-size:12px;text-align:center;color:#4a4239;">
-            <span style="padding:5px 0;"></span><span style="padding:5px 0;">1</span><span style="padding:5px 0;">2</span><span style="padding:5px 0;">3</span><span style="padding:5px 0;">4</span><span style="padding:5px 0;">5</span><span style="padding:5px 0;">6</span>
-            <span style="padding:5px 0;">7</span><span style="padding:5px 0;">8</span><span style="padding:5px 0;">9</span><span style="padding:5px 0;">10</span><span style="padding:5px 0;">11</span><span style="padding:5px 0;">12</span><span style="padding:5px 0;">13</span>
-            <span style="padding:5px 0;">14</span><span style="padding:5px 0;">15</span><span style="padding:5px 0;">16</span><span style="padding:5px 0;">17</span><span style="padding:5px 0;">18</span><span style="padding:5px 0;">19</span><span style="padding:5px 0;">20</span>
-            <span style="padding:5px 0;">21</span><span style="padding:5px 0;background:#c79a6e;color:#fff;border-radius:5px;">22</span><span style="padding:5px 0;">23</span><span style="padding:5px 0;">24</span><span style="padding:5px 0;">25</span><span style="padding:5px 0;">26</span><span style="padding:5px 0;">27</span>
-            <span style="padding:5px 0;">28</span><span style="padding:5px 0;">29</span><span style="padding:5px 0;">30</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- 3. 時間帯選択（プルダウン） -->
-      <section style="margin-top:20px;">
-        <label style="display:block;font-size:13px;font-weight:700;margin-bottom:8px;">時間帯選択<span style="color:#c0392b;font-size:11px;margin-left:5px;">必須</span></label>
-        <div style="border:1px solid #ddd4c8;border-radius:8px;background:#fff;padding:12px 13px;font-size:13px;color:#9a8f80;display:flex;align-items:center;justify-content:space-between;">時間帯を選択してください<span style="color:#b8ac9c;">▾</span></div>
-      </section>
-
-      <!-- 4. スタイリスト指名（プルダウン・「指名なし」なし＝強制） -->
-      <section style="margin-top:20px;">
-        <label style="display:block;font-size:13px;font-weight:700;margin-bottom:8px;">スタイリスト指名<span style="color:#c0392b;font-size:11px;margin-left:5px;">必須</span></label>
-        <div style="border:1px solid #ddd4c8;border-radius:8px;background:#fff;padding:12px 13px;font-size:13px;color:#9a8f80;display:flex;align-items:center;justify-content:space-between;">スタイリストを選択してください<span style="color:#b8ac9c;">▾</span></div>
-        <div style="font-size:11px;color:#b3a89a;margin-top:5px;">※「指名なし」は選べません。必ずどなたかをご指名ください</div>
-      </section>
-
-      <!-- 5. お名前 -->
-      <section style="margin-top:20px;">
-        <label style="display:block;font-size:13px;font-weight:700;margin-bottom:8px;">お名前<span style="color:#c0392b;font-size:11px;margin-left:5px;">必須</span></label>
-        <div style="border:1px solid #ddd4c8;border-radius:8px;background:#fff;padding:12px 13px;font-size:13px;color:#c4baac;">例）山田 花子</div>
-      </section>
-
-      <!-- 6. 電話番号 -->
-      <section style="margin-top:20px;">
-        <label style="display:block;font-size:13px;font-weight:700;margin-bottom:8px;">電話番号<span style="color:#c0392b;font-size:11px;margin-left:5px;">必須</span></label>
-        <div style="border:1px solid #ddd4c8;border-radius:8px;background:#fff;padding:12px 13px;font-size:13px;color:#c4baac;">例）090-1234-5678</div>
-      </section>
-
-      <!-- 7. 要望・備考（空欄不可＝必須） -->
-      <section style="margin-top:20px;">
-        <label style="display:block;font-size:13px;font-weight:700;margin-bottom:8px;">要望・備考<span style="color:#c0392b;font-size:11px;margin-left:5px;">必須</span></label>
-        <div style="border:1px solid #ddd4c8;border-radius:8px;background:#fff;padding:12px 13px;font-size:13px;color:#c4baac;min-height:62px;">ご希望のイメージやお悩みをご記入ください（空欄での送信はできません）</div>
-      </section>
-
-      <!-- 8. アンケート（チェック複数・必須） -->
-      <section style="margin-top:20px;">
-        <label style="display:block;font-size:13px;font-weight:700;margin-bottom:4px;">アンケート<span style="color:#c0392b;font-size:11px;margin-left:5px;">必須</span></label>
-        <div style="font-size:11px;color:#b3a89a;margin-bottom:9px;">当てはまるものをすべてお選びください</div>
-        <div style="font-size:12px;font-weight:700;color:#7a7062;margin-bottom:6px;">来店動機</div>
-        <div style="display:flex;flex-direction:column;gap:7px;margin-bottom:13px;">
-          <span style="display:flex;align-items:center;gap:8px;font-size:13px;"><span style="width:15px;height:15px;border:2px solid #b8ac9c;border-radius:3px;flex:none;"></span>SNSで見かけて</span>
-          <span style="display:flex;align-items:center;gap:8px;font-size:13px;"><span style="width:15px;height:15px;border:2px solid #b8ac9c;border-radius:3px;flex:none;"></span>口コミ・紹介</span>
-          <span style="display:flex;align-items:center;gap:8px;font-size:13px;"><span style="width:15px;height:15px;border:2px solid #b8ac9c;border-radius:3px;flex:none;"></span>自宅・職場から近い</span>
-          <span style="display:flex;align-items:center;gap:8px;font-size:13px;"><span style="width:15px;height:15px;border:2px solid #b8ac9c;border-radius:3px;flex:none;"></span>検索で見つけた</span>
-        </div>
-        <div style="font-size:12px;font-weight:700;color:#7a7062;margin-bottom:6px;">髪のお悩み</div>
-        <div style="display:flex;flex-direction:column;gap:7px;">
-          <span style="display:flex;align-items:center;gap:8px;font-size:13px;"><span style="width:15px;height:15px;border:2px solid #b8ac9c;border-radius:3px;flex:none;"></span>くせ毛・うねり</span>
-          <span style="display:flex;align-items:center;gap:8px;font-size:13px;"><span style="width:15px;height:15px;border:2px solid #b8ac9c;border-radius:3px;flex:none;"></span>白髪・カラーの持ち</span>
-          <span style="display:flex;align-items:center;gap:8px;font-size:13px;"><span style="width:15px;height:15px;border:2px solid #b8ac9c;border-radius:3px;flex:none;"></span>ダメージ・パサつき</span>
-          <span style="display:flex;align-items:center;gap:8px;font-size:13px;"><span style="width:15px;height:15px;border:2px solid #b8ac9c;border-radius:3px;flex:none;"></span>ボリューム・薄毛</span>
-        </div>
-      </section>
-
-      <!-- 送信CTA ＝ ③aの核その2：ボタンに見えない下線付き青文字テキストリンク。固定フッターなし -->
-      <div style="margin-top:30px;text-align:left;">
-        <a href="#" style="color:#3a6ea5;text-decoration:underline;font-size:14px;">予約内容を確認する</a>
+      <!-- 戻る＋見出し -->
+      <div class="row-between" style="margin-bottom:var(--sp-2);">
+        <a href="U-01_store.html" class="link-cta" style="text-decoration:none;color:var(--muted);">← 店舗ページに戻る</a>
+      </div>
+      <div class="page-head" style="margin-bottom:var(--sp-4);">
+        <div class="crumb">田中美容室 ／ 東京都渋谷区</div>
+        <h1 style="font-size:1.25rem;">初回ご予約フォーム</h1>
+        <p class="lede" style="font-size:.86rem;">必須項目をすべてご入力ください。お支払いは来店時です。</p>
       </div>
 
-      <!-- 画面下に余白。固定フッターがないため、長いフォームを最後までスクロールしないとCTAに辿り着けない -->
-      <div style="height:40px;"></div>
+      <!-- 1. メニュー選択（ラジオ） -->
+      <div class="field">
+        <span class="label">メニュー選択<span class="req">必須</span></span>
+        <div class="card mb-0" style="padding:0;overflow:hidden;">
+          <label class="check" style="display:flex;padding:.7em .85em;border-bottom:1px solid var(--line-soft);font-weight:500;">
+            <input type="radio" name="menu"> カット
+            <span class="spacer"></span><span class="muted" style="font-size:.82rem;">¥4,400 ／ 60分</span>
+          </label>
+          <label class="check" style="display:flex;padding:.7em .85em;border-bottom:1px solid var(--line-soft);font-weight:500;">
+            <input type="radio" name="menu"> カラー
+            <span class="spacer"></span><span class="muted" style="font-size:.82rem;">¥8,800 ／ 90分</span>
+          </label>
+          <label class="check" style="display:flex;padding:.7em .85em;border-bottom:1px solid var(--line-soft);font-weight:500;">
+            <input type="radio" name="menu"> 縮毛矯正
+            <span class="spacer"></span><span class="muted" style="font-size:.82rem;">¥13,200 ／ 150分</span>
+          </label>
+          <label class="check" style="display:flex;padding:.7em .85em;font-weight:500;">
+            <input type="radio" name="menu"> トリートメント
+            <span class="spacer"></span><span class="muted" style="font-size:.82rem;">¥3,300 ／ 40分</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- 2. 日付選択（カレンダー） -->
+      <div class="field">
+        <span class="label">日付選択<span class="req">必須</span></span>
+        <div class="card mb-0">
+          <div class="row-between" style="font-size:.82rem;font-weight:700;color:var(--muted);margin-bottom:var(--sp-3);">
+            <span>‹</span><span>2026年 6月</span><span>›</span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;font-size:.72rem;text-align:center;color:var(--faint);margin-bottom:4px;">
+            <span>日</span><span>月</span><span>火</span><span>水</span><span>木</span><span>金</span><span>土</span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;font-size:.82rem;text-align:center;color:var(--ink);">
+            <span></span><span class="faint">1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span>
+            <span class="faint">7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span>
+            <span class="faint">14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span>
+            <span class="faint">21</span><span>22</span><span>23</span><span>24</span><span style="background:var(--gold);color:#fff;border-radius:5px;font-weight:700;">25</span><span>26</span><span>27</span>
+            <span class="faint">28</span><span>29</span><span>30</span>
+          </div>
+          <p class="hint hint-block">月曜は定休日のためご予約いただけません。</p>
+        </div>
+      </div>
+
+      <!-- 3. 時間帯選択（プルダウン） -->
+      <div class="field">
+        <span class="label">時間帯選択<span class="req">必須</span></span>
+        <select class="select">
+          <option value="" selected disabled>時間帯を選択してください</option>
+          <option>10:00</option><option>11:00</option><option>12:00</option>
+          <option>13:00</option><option>14:00</option><option>15:00</option>
+          <option>16:00</option><option>17:00</option><option>18:00</option>
+        </select>
+      </div>
+
+      <!-- 4. スタイリスト指名（「指名なし」なし＝必須） -->
+      <div class="field">
+        <span class="label">スタイリスト指名<span class="req">必須</span></span>
+        <select class="select">
+          <option value="" selected disabled>スタイリストを選択してください</option>
+          <option>佐藤 葵</option>
+          <option>鈴木 大地</option>
+        </select>
+        <p class="hint hint-block">「指名なし」は選べません。必ずどなたかをご指名ください。</p>
+      </div>
+
+      <!-- 5. お名前 -->
+      <div class="field">
+        <span class="label">お名前<span class="req">必須</span></span>
+        <input class="input" type="text" placeholder="例）山田 花子">
+      </div>
+
+      <!-- 6. 電話番号 -->
+      <div class="field">
+        <span class="label">電話番号<span class="req">必須</span></span>
+        <input class="input" type="tel" placeholder="例）090-1234-5678">
+      </div>
+
+      <!-- 7. 要望・備考（空欄不可＝必須） -->
+      <div class="field">
+        <span class="label">要望・備考<span class="req">必須</span></span>
+        <textarea class="textarea" placeholder="ご希望のイメージやお悩みをご記入ください（空欄での送信はできません）"></textarea>
+      </div>
+
+      <!-- 8. アンケート（チェック複数・必須） -->
+      <div class="field">
+        <span class="label">アンケート<span class="req">必須</span></span>
+        <p class="hint hint-block" style="margin-top:0;margin-bottom:var(--sp-3);">当てはまるものをすべてお選びください。</p>
+
+        <div class="muted" style="font-size:.8rem;font-weight:700;margin-bottom:var(--sp-2);">来店動機</div>
+        <div class="check-group" style="flex-direction:column;gap:var(--sp-2);margin-bottom:var(--sp-4);">
+          <label class="check"><input type="checkbox"> SNSで見かけて</label>
+          <label class="check"><input type="checkbox"> 口コミ・紹介</label>
+          <label class="check"><input type="checkbox"> 自宅・職場から近い</label>
+          <label class="check"><input type="checkbox"> 検索で見つけた</label>
+        </div>
+
+        <div class="muted" style="font-size:.8rem;font-weight:700;margin-bottom:var(--sp-2);">髪のお悩み</div>
+        <div class="check-group" style="flex-direction:column;gap:var(--sp-2);">
+          <label class="check"><input type="checkbox"> くせ毛・うねり</label>
+          <label class="check"><input type="checkbox"> 白髪・カラーの持ち</label>
+          <label class="check"><input type="checkbox"> ダメージ・パサつき</label>
+          <label class="check"><input type="checkbox"> ボリューム・薄毛</label>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- 送信CTA ＝ ③aの核：ボタンに見えない下線つき青テキストリンク。固定フッターなし -->
+      <div style="margin-top:var(--sp-5);">
+        <a href="U-03_confirm.html" class="link-cta">予約内容を確認する</a>
+      </div>
+
+      <!-- 長いフォームを最後までスクロールしないとCTAに辿り着けない（固定フッターなし） -->
+      <div style="height:32px;"></div>
+
     </div>
 
-    <!-- フッター（ブランドのみ。送信ボタンは置かない＝③aの根本原因を保つ） -->
-    <footer style="border-top:1px solid #ece6dd;padding:14px 18px 22px;text-align:center;">
-      <div style="font-size:11px;color:#b3a89a;letter-spacing:.06em;">Powered by <span style="color:#9a8f80;font-weight:700;">ReServe</span></div>
-    </footer>
+    <!-- ブランドフッター（送信ボタンは置かない＝③aの根本原因を保つ） -->
+    <div class="footer">
+      Powered by <strong style="color:var(--muted);">ReServe</strong>
+      <div class="mt-2 faint" style="font-size:.7rem;">画面上の件数はレイアウト用の仮数字です（詰まりの数字はSQLで出します）。</div>
+    </div>
 
   </div>
 

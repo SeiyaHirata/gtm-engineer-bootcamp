@@ -1,134 +1,240 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>U-01 公開店舗ページ | ReServe（合宿用モック）</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>田中美容室 ｜ ReServe（合宿用モック・U-01 公開店舗ページ）</title>
+<link rel="stylesheet" href="../assets/reserve.css">
+<style>
+  /* ページ固有の最小限のみ（共有CSSに無い要素だけ）。見た目の統一は reserve.css に従う */
+
+  /* スマホ端末風キャンバス：固定フッター分の余白を確保 */
+  .mobile { padding-bottom: 92px; }
+
+  /* 店舗写真ヒーロー（A-01で登録した写真の代替プレースホルダ） */
+  .hero {
+    position: relative;
+    height: 220px;
+    background:
+      linear-gradient(to top, rgba(40,36,32,.74), rgba(40,36,32,0) 58%),
+      linear-gradient(135deg, #d6c4a4 0%, #b89a72 52%, #927a5b 100%);
+    display: flex;
+    align-items: flex-end;
+  }
+  .hero .hero-tag {
+    position: absolute; top: 12px; left: 12px;
+    background: rgba(43,38,34,.5); color: #f3ede4;
+    font-size: .68rem; letter-spacing: .03em;
+    padding: 3px 9px; border-radius: 5px;
+  }
+  .hero .hero-cap { width: 100%; padding: 16px var(--sp-4); }
+  .hero .hero-name {
+    color: #fff; font-size: 1.5rem; font-weight: 800; letter-spacing: .01em;
+    text-shadow: 0 1px 6px rgba(0,0,0,.45);
+  }
+  .hero .hero-sub {
+    color: #f1ece4; font-size: .82rem; margin-top: 4px; opacity: .95;
+    text-shadow: 0 1px 4px rgba(0,0,0,.4);
+  }
+
+  /* 情報行（住所・営業時間）：アイコンドット＋ラベル */
+  .info-row { display: flex; gap: var(--sp-3); align-items: flex-start; }
+  .info-row + .info-row { margin-top: var(--sp-3); }
+  .info-row .ic {
+    flex: none; width: 24px; height: 24px; border-radius: 50%;
+    background: var(--gold-soft); color: var(--gold-deep);
+    display: flex; align-items: center; justify-content: center;
+    font-size: .8rem; margin-top: 1px;
+  }
+  .info-row .info-label { font-size: .72rem; color: var(--faint); letter-spacing: .03em; }
+  .info-row .info-body { font-size: .9rem; line-height: 1.65; }
+
+  /* メニュー行：名称＋所要時間 と 料金 を両端寄せ */
+  .menu-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: var(--sp-4); padding: 12px 0; border-bottom: 1px solid var(--line-soft);
+  }
+  .menu-row:last-child { border-bottom: none; }
+  .menu-row .menu-name { font-size: .95rem; font-weight: 600; }
+  .menu-row .menu-meta { font-size: .72rem; color: var(--faint); margin-top: 2px; }
+  .menu-row .menu-price {
+    font-size: .98rem; font-weight: 800; white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* スタイリスト：丸アバター横並び */
+  .stylists { display: flex; gap: var(--sp-5); }
+  .stylist { text-align: center; }
+  .stylist .ava {
+    width: 66px; height: 66px; border-radius: 50%; margin: 0 auto 7px;
+    border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 1.3rem; font-weight: 700; letter-spacing: .02em;
+  }
+  .stylist .ava-1 { background: linear-gradient(135deg, #d8c7a8, #b69a72); }
+  .stylist .ava-2 { background: linear-gradient(135deg, #c9b89c, #a08763); }
+  .stylist .st-name { font-size: .82rem; font-weight: 600; }
+  .stylist .st-role { font-size: .68rem; color: var(--faint); margin-top: 1px; }
+
+  /* 固定フッターCTA（明確な「予約する」ボタン）。共有CSSの .btn-primary を使う */
+  .bookbar {
+    position: fixed; left: 0; right: 0; bottom: 0;
+    background: var(--card); border-top: 1px solid var(--line);
+    box-shadow: 0 -2px 14px rgba(43,38,34,.08);
+    padding: 10px var(--sp-4) calc(10px + env(safe-area-inset-bottom));
+  }
+  .bookbar-inner { max-width: 430px; margin: 0 auto; }
+</style>
 </head>
-<body style="margin:0; background:#e9e4dc; font-family:-apple-system,'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif; color:#2e2a26; -webkit-font-smoothing:antialiased;">
+<body>
 
-  <!-- ===== モック注記バー（合宿用・全画面共通） ===== -->
-  <div style="background:#3c3530; color:#e9e4dc; font-size:11px; line-height:1.5; padding:7px 14px; text-align:center; letter-spacing:.02em;">
-    <strong style="color:#c9a96a;">U-01</strong>｜公開店舗ページ（③aの入口）
-    <span style="opacity:.85;">これは合宿用モック（数字は仮・分析はSQL）</span>
-  </div>
+  <!-- スマホ端末風キャンバス（利用者向けは .mobile・中央寄せ） -->
+  <div class="mobile">
 
-  <!-- ===== スマホ幅の枠 ===== -->
-  <div style="max-width:390px; margin:0 auto; background:#fbf9f5; min-height:100vh; box-shadow:0 0 24px rgba(0,0,0,.12); padding-bottom:96px; position:relative;">
+    <!-- 合宿モック注記（数字は仮・分析はSQL） -->
+    <div class="mocknote">
+      <span class="mocknote-badge">U-01</span>
+      公開店舗ページ（③aの入口）｜<span class="sep">|</span>これは合宿用モック（数字は仮・分析は<strong>SQL</strong>）
+    </div>
 
-    <!-- ロゴ風ヘッダー -->
-    <header style="display:flex; align-items:center; justify-content:space-between; padding:14px 18px; background:#fbf9f5; border-bottom:1px solid #ece6dc;">
-      <div style="font-size:20px; font-weight:700; letter-spacing:.04em; color:#3c3530;">
-        Re<span style="color:#c9a96a;">Serve</span>
-      </div>
-      <div style="font-size:11px; color:#a59a8a; letter-spacing:.08em;">予約管理</div>
+    <!-- ブランドヘッダー（濃色・反転）。ロゴ→トップ(U-01)／左に「←戻る」(index) -->
+    <header class="appbar appbar-dark">
+      <a href="../index.html" class="muted" style="text-decoration:none; font-size:.8rem; color:#9a8f80;">← 戻る</a>
+      <a href="U-01_store.html" class="brand">
+        Re<span class="mark">Serve</span>
+        <span class="brand-tag">SALON BOOKING</span>
+      </a>
+      <span class="badge badge-muted" style="background:#3a342c; color:#cdbfa9;">後払い</span>
     </header>
 
-    <!-- 店舗写真（プレースホルダ） -->
-    <div style="height:210px; background:linear-gradient(135deg,#cbb89a 0%,#a98f6b 55%,#8a7355 100%); position:relative; display:flex; align-items:flex-end;">
-      <div style="position:absolute; top:12px; left:12px; background:rgba(60,53,48,.55); color:#fbf9f5; font-size:11px; padding:3px 9px; border-radius:4px; letter-spacing:.03em;">店舗写真（A-01で登録）</div>
-      <div style="width:100%; padding:16px 18px; background:linear-gradient(transparent, rgba(40,36,32,.72));">
-        <div style="color:#fbf9f5; font-size:23px; font-weight:700; letter-spacing:.02em; text-shadow:0 1px 4px rgba(0,0,0,.4);">田中美容室</div>
-        <div style="color:#f2ede4; font-size:12px; margin-top:4px; opacity:.92;">表参道 ／ カット・カラー・トリートメント</div>
+    <!-- 店舗写真ヒーロー -->
+    <div class="hero">
+      <span class="hero-tag">店舗写真（A-01で登録）</span>
+      <div class="hero-cap">
+        <div class="hero-name">田中美容室</div>
+        <div class="hero-sub">東京都渋谷区 ／ カット・カラー・縮毛矯正・トリートメント</div>
       </div>
     </div>
 
-    <!-- 基本情報 -->
-    <section style="padding:18px 18px 6px;">
-      <div style="display:flex; gap:10px; align-items:flex-start; margin-bottom:12px;">
-        <div style="width:22px; text-align:center; color:#c9a96a; font-size:15px; flex-shrink:0;">●</div>
-        <div style="font-size:13px; line-height:1.6;">
-          <div style="color:#8a7d6c; font-size:11px;">住所・アクセス</div>
-          東京都渋谷区神宮前5-1-1　表参道駅A2出口 徒歩3分
-          <a href="#" style="color:#9a7b3f; text-decoration:underline; margin-left:6px; font-size:12px;">地図を見る</a>
+    <div class="mobile-body">
+
+      <!-- 店舗ステータス＆基本情報 -->
+      <div class="card">
+        <div class="row" style="margin-bottom:var(--sp-4); gap:var(--sp-2);">
+          <span class="badge badge-ok"><span class="dot"></span>予約受付中</span>
+          <span class="badge badge-muted">月曜定休</span>
+        </div>
+
+        <div class="info-row">
+          <span class="ic">📍</span>
+          <div>
+            <div class="info-label">住所・アクセス</div>
+            <div class="info-body">
+              東京都渋谷区道玄坂2-10-12<br>
+              渋谷駅 ハチ公口より徒歩5分
+              <a href="#" class="link-cta" style="font-size:.8rem; margin-left:4px;">地図を見る</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-row">
+          <span class="ic">🕘</span>
+          <div>
+            <div class="info-label">営業時間・定休日</div>
+            <div class="info-body">
+              火〜日 10:00 – 20:00（最終受付 19:00）<br>
+              <span class="muted">定休日：毎週月曜</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-row">
+          <span class="ic">☎</span>
+          <div>
+            <div class="info-label">電話</div>
+            <div class="info-body">03-1234-5678</div>
+          </div>
         </div>
       </div>
-      <div style="display:flex; gap:10px; align-items:flex-start;">
-        <div style="width:22px; text-align:center; color:#c9a96a; font-size:15px; flex-shrink:0;">●</div>
-        <div style="font-size:13px; line-height:1.6;">
-          <div style="color:#8a7d6c; font-size:11px;">営業時間・定休日</div>
-          10:00 - 20:00（最終受付 19:00）　<span style="color:#6e6256;">定休日：毎週月曜・第3火曜</span>
+
+      <!-- メニュー一覧（料金） -->
+      <div class="card">
+        <h2 class="card-h">メニュー・料金</h2>
+
+        <div class="menu-row">
+          <div>
+            <div class="menu-name">カット</div>
+            <div class="menu-meta">所要 約60分</div>
+          </div>
+          <div class="menu-price">¥4,400</div>
+        </div>
+
+        <div class="menu-row">
+          <div>
+            <div class="menu-name">カラー</div>
+            <div class="menu-meta">所要 約90分</div>
+          </div>
+          <div class="menu-price">¥8,800</div>
+        </div>
+
+        <div class="menu-row">
+          <div>
+            <div class="menu-name">縮毛矯正</div>
+            <div class="menu-meta">所要 約150分</div>
+          </div>
+          <div class="menu-price">¥13,200</div>
+        </div>
+
+        <div class="menu-row">
+          <div>
+            <div class="menu-name">トリートメント</div>
+            <div class="menu-meta">所要 約40分</div>
+          </div>
+          <div class="menu-price">¥3,300</div>
+        </div>
+
+        <p class="hint hint-block" style="margin-top:var(--sp-3);">
+          価格はすべて税込です。ご予約時のお支払いはありません（来店時に施術料金をお支払いください）。
+        </p>
+      </div>
+
+      <!-- スタイリスト -->
+      <div class="card">
+        <h2 class="card-h">スタイリスト</h2>
+        <div class="stylists">
+          <div class="stylist">
+            <div class="ava ava-1">葵</div>
+            <div class="st-name">佐藤 葵</div>
+            <div class="st-role">スタイリスト</div>
+          </div>
+          <div class="stylist">
+            <div class="ava ava-2">大</div>
+            <div class="st-name">鈴木 大地</div>
+            <div class="st-role">スタイリスト</div>
+          </div>
         </div>
       </div>
-    </section>
 
-    <div style="height:1px; background:#ece6dc; margin:16px 18px;"></div>
-
-    <!-- メニュー一覧 -->
-    <section style="padding:0 18px;">
-      <h2 style="font-size:15px; font-weight:700; letter-spacing:.04em; color:#3c3530; margin:0 0 10px;">メニュー</h2>
-
-      <div style="display:flex; justify-content:space-between; align-items:baseline; padding:11px 0; border-bottom:1px solid #f0ebe1;">
-        <div>
-          <div style="font-size:14px; font-weight:600;">カット</div>
-          <div style="font-size:11px; color:#9a8e7d; margin-top:2px;">所要 約60分</div>
-        </div>
-        <div style="font-size:14px; font-weight:700; color:#3c3530; white-space:nowrap;">¥4,000</div>
-      </div>
-
-      <div style="display:flex; justify-content:space-between; align-items:baseline; padding:11px 0; border-bottom:1px solid #f0ebe1;">
-        <div>
-          <div style="font-size:14px; font-weight:600;">カット＋カラー</div>
-          <div style="font-size:11px; color:#9a8e7d; margin-top:2px;">所要 約120分</div>
-        </div>
-        <div style="font-size:14px; font-weight:700; color:#3c3530; white-space:nowrap;">¥9,000</div>
-      </div>
-
-      <div style="display:flex; justify-content:space-between; align-items:baseline; padding:11px 0; border-bottom:1px solid #f0ebe1;">
-        <div>
-          <div style="font-size:14px; font-weight:600;">トリートメント</div>
-          <div style="font-size:11px; color:#9a8e7d; margin-top:2px;">所要 約40分</div>
-        </div>
-        <div style="font-size:14px; font-weight:700; color:#3c3530; white-space:nowrap;">¥3,500</div>
-      </div>
-
-      <div style="display:flex; justify-content:space-between; align-items:baseline; padding:11px 0;">
-        <div>
-          <div style="font-size:14px; font-weight:600;">縮毛矯正</div>
-          <div style="font-size:11px; color:#9a8e7d; margin-top:2px;">所要 約150分</div>
-        </div>
-        <div style="font-size:14px; font-weight:700; color:#3c3530; white-space:nowrap;">¥13,000</div>
-      </div>
-    </section>
-
-    <div style="height:1px; background:#ece6dc; margin:16px 18px;"></div>
-
-    <!-- スタイリスト一覧 -->
-    <section style="padding:0 18px 8px;">
-      <h2 style="font-size:15px; font-weight:700; letter-spacing:.04em; color:#3c3530; margin:0 0 12px;">スタイリスト</h2>
-      <div style="display:flex; gap:18px;">
-        <div style="text-align:center;">
-          <div style="width:64px; height:64px; border-radius:50%; background:linear-gradient(135deg,#d8c7a8,#b69a72); margin:0 auto 6px;"></div>
-          <div style="font-size:12px; font-weight:600;">田中 美咲</div>
-          <div style="font-size:10px; color:#9a8e7d;">店長</div>
-        </div>
-        <div style="text-align:center;">
-          <div style="width:64px; height:64px; border-radius:50%; background:linear-gradient(135deg,#cdbfa9,#a9926f); margin:0 auto 6px;"></div>
-          <div style="font-size:12px; font-weight:600;">佐藤 健</div>
-          <div style="font-size:10px; color:#9a8e7d;">スタイリスト</div>
-        </div>
-        <div style="text-align:center;">
-          <div style="width:64px; height:64px; border-radius:50%; background:linear-gradient(135deg,#d4c3a4,#b09469); margin:0 auto 6px;"></div>
-          <div style="font-size:12px; font-weight:600;">鈴木 彩</div>
-          <div style="font-size:10px; color:#9a8e7d;">スタイリスト</div>
+      <!-- 口コミ風の体裁（実在SaaSらしさの補強・件数は仮） -->
+      <div class="card mb-0">
+        <div class="row-between">
+          <div class="row" style="gap:var(--sp-2);">
+            <span class="badge"><span class="dot"></span>★ 4.8</span>
+            <span class="muted" style="font-size:.82rem;">128件のクチコミ</span>
+          </div>
+          <a href="#" class="link-cta" style="font-size:.82rem;">すべて見る</a>
         </div>
       </div>
-    </section>
 
-    <!-- 注記：入口メモ（合宿の文脈） -->
-    <div style="margin:18px; padding:11px 13px; background:#f4efe4; border:1px solid #e4d9c4; border-radius:8px; font-size:11px; line-height:1.6; color:#7a6e5c;">
-      <strong style="color:#9a7b3f;">入口メモ（③a）</strong>：このページの訪問は月40,000（仮）。ここから下の「予約する」を押すと U-02 予約フォームへ進む。詰まりはフォーム側（項目が多い＋送信CTAが弱い）。通過率はSQLで出す。
     </div>
 
-  </div>
-
-  <!-- ===== 固定フッター：予約する → U-02 ===== -->
-  <div style="position:fixed; bottom:0; left:0; right:0; background:#fbf9f5; border-top:1px solid #ece6dc; padding:10px 18px calc(10px + env(safe-area-inset-bottom)); box-shadow:0 -2px 12px rgba(0,0,0,.06);">
-    <div style="max-width:354px; margin:0 auto;">
-      <a href="U-02_form.html" style="display:block; text-align:center; background:#c9a96a; color:#fff; font-size:16px; font-weight:700; letter-spacing:.06em; padding:14px; border-radius:10px; text-decoration:none; box-shadow:0 2px 8px rgba(201,169,106,.4);">
-        予約する
-      </a>
+    <!-- 固定フッター：明確な「予約する」ボタン → U-02 -->
+    <div class="bookbar">
+      <div class="bookbar-inner">
+        <a href="U-02_form.html" class="btn btn-primary btn-block btn-lg">予約する</a>
+      </div>
     </div>
+
   </div>
 
 </body>

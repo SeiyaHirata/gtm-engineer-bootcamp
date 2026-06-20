@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>講師用 全画面マップ｜ReServe（合宿モック・ファシリ用）</title>
+<link rel="stylesheet" href="../assets/reserve.css">
+<style>
+  /* このページ固有の最小限の追加だけ（共有CSSのトークンを流用） */
+  .map-section { margin-bottom: var(--sp-7); }
+  .map-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--sp-4);
+  }
+  .map-card {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    border-left: 4px solid var(--line);
+  }
+  .map-card:hover { border-color: var(--line); border-left-color: var(--gold); box-shadow: var(--shadow-2); transform: translateY(-1px); }
+  .map-card.is-jam { border-left-color: var(--danger); }
+  .map-card.is-jam:hover { border-left-color: var(--danger); }
+  .map-card.is-ok { border-left-color: var(--ok); }
+  .map-card.is-ok:hover { border-left-color: var(--ok); }
+  .map-card .id-row { display: flex; align-items: center; gap: var(--sp-2); margin-bottom: 6px; }
+  .map-card .id { font-size: .72rem; font-weight: 800; letter-spacing: .08em; color: var(--gold-deep); }
+  .map-card .map-title { font-size: 1.02rem; font-weight: 700; margin: 0 0 4px; }
+  .map-card .map-desc { font-size: .84rem; color: var(--muted); line-height: 1.6; }
+  .map-card .map-href { margin-top: auto; padding-top: var(--sp-3); font-size: .72rem; color: var(--faint); font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; }
+  .map-card .jam-line { margin-top: var(--sp-3); font-size: .78rem; line-height: 1.55; }
+  .map-card .jam-line .jam-key { font-weight: 700; color: var(--danger); }
+  .map-card .jam-line.ok .jam-key { color: var(--ok); }
+  .map-card .jam-line .jam-key.neutral { color: var(--muted); }
+  .facil-banner {
+    display: flex; gap: var(--sp-3); align-items: flex-start;
+    background: var(--gold-soft);
+    border: 1px solid #e7d4ac;
+    border-radius: var(--r-lg);
+    padding: var(--sp-4) var(--sp-5);
+    margin-bottom: var(--sp-6);
+  }
+  .facil-banner .facil-ic { font-size: 1.2rem; line-height: 1.3; flex: none; }
+  .facil-banner .facil-t { font-size: .9rem; color: var(--ink); }
+  .facil-banner .facil-t strong { color: var(--gold-deep); }
+  .journey-head { display: flex; align-items: baseline; gap: var(--sp-3); flex-wrap: wrap; }
+  .journey-head .flow {
+    font-size: .76rem; color: var(--faint);
+    font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  }
+  .quick-links { display: flex; gap: var(--sp-3); flex-wrap: wrap; }
+</style>
+</head>
+<body>
+
+<!-- ===== ヘッダー（共有appbar・ロゴはトップ index.html へ） ===== -->
+<header class="appbar">
+  <a class="brand" href="../index.html">Re<span class="mark">Serve</span><span class="brand-tag">SALON RESERVATION SAAS</span></a>
+  <div class="appbar-right">
+    <span class="badge badge-muted"><span class="dot"></span>講師用ビュー</span>
+    <div style="margin-top:4px;"><strong>全画面マップ</strong>（ファシリ用）</div>
+  </div>
+</header>
+
+<!-- ===== モック注記（隅・共通） ===== -->
+<div class="mocknote">
+  <span class="mocknote-badge">合宿モック</span>
+  画面ID <strong>sitemap</strong>（講師用ナビ）
+  <span class="sep">｜</span>
+  画面上の件数は<strong>レイアウト用の仮数字</strong>。詰まりの特定・通過率・ROIは<strong>すべてSQL</strong>で出します。
+</div>
+
+<main class="container">
+
+  <!-- ===== ページ見出し ===== -->
+  <div class="page-head">
+    <div class="crumb"><a href="../index.html" style="text-decoration:none;color:inherit;">← トップ（index）に戻る</a></div>
+    <h1>講師用 全画面マップ</h1>
+    <p class="lede">ファシリテーターが合宿中に各画面へ飛ぶための一覧です。店舗ジャーニー／利用者ジャーニー／講師用に分け、各画面が<strong>どの詰まりを体現するか</strong>を併記しています。</p>
+  </div>
+
+  <!-- ===== ファシリ向けの位置づけ明記 ===== -->
+  <div class="facil-banner">
+    <span class="facil-ic">📍</span>
+    <div class="facil-t">
+      <strong>これは講師用ナビです（受講生体験の入口ではありません）。</strong>
+      受講生は <code>index.html</code> から「お店として始める／お客さんとして予約する」に入って導線を体感します。講師はこのページから任意の画面へ直接ジャンプし、画面投影・解説に使ってください。模範解（収益の答え合わせ）は <a href="revenue-summary.html">収益サマリー</a> にあります（受講生には伏せる）。
+    </div>
+  </div>
+
+  <!-- クイックリンク -->
+  <div class="quick-links">
+    <a class="btn btn-ghost btn-sm" href="../index.html">🏠 トップ index.html</a>
+    <a class="btn btn-ghost btn-sm" href="revenue-summary.html">📊 収益サマリー（模範解）</a>
+    <a class="btn btn-ghost btn-sm" href="../user/U-01_store.html">受講生入口：お客さん側 →</a>
+    <a class="btn btn-ghost btn-sm" href="../admin/A-00_signup.html">受講生入口：お店側 →</a>
+  </div>
+
+  <!-- ============================================================
+       1. 店舗ジャーニー（供給側・PC管理画面）
+       ============================================================ -->
+  <div class="map-section">
+    <div class="section-label journey-head">
+      <span>① 店舗ジャーニー（供給側・PC管理画面）</span>
+      <span class="flow">A-00 → A-01 → A-02 → A-03 ⇄ A-04 / A-05</span>
+    </div>
+    <div class="map-grid">
+
+      <a class="map-card card" href="../admin/A-00_signup.html">
+        <div class="id-row"><span class="id">A-00</span><span class="badge badge-muted">入口</span></div>
+        <div class="map-title">店舗 新規登録（サインアップ）</div>
+        <div class="map-desc">「お店として始める」の入口。登録＝初月課金・トライアルなし（月額12,000円）。</div>
+        <div class="jam-line"><span class="jam-key neutral">詰まり：</span>導線の起点（次のA-01で詰まる）</div>
+        <div class="map-href">../admin/A-00_signup.html</div>
+      </a>
+
+      <a class="map-card card is-jam" href="../admin/A-01_onboarding.html">
+        <div class="id-row"><span class="id">A-01</span><span class="badge badge-danger">詰まり①</span></div>
+        <div class="map-title">初期設定（オンボーディング）</div>
+        <div class="map-desc">店名／写真／住所電話／営業時間7行／メニュー複数／料金／スタイリスト複数／定休日。</div>
+        <div class="jam-line"><span class="jam-key">詰まり①：</span>入力項目が多く・進捗表示なし・CTAが何ステップ目か不明で完了まで遠い → <strong>設定完了で離脱</strong></div>
+        <div class="map-href">../admin/A-01_onboarding.html</div>
+      </a>
+
+      <a class="map-card card" href="../admin/A-02_publish.html">
+        <div class="id-row"><span class="id">A-02</span><span class="badge badge-muted">公開</span></div>
+        <div class="map-title">店舗ページ公開</div>
+        <div class="map-desc">設定完了後に店舗ページを公開する画面。公開した店舗ページ（U-01）への確認導線あり。</div>
+        <div class="jam-line"><span class="jam-key neutral">詰まり：</span>健全（A-01を抜けた店舗の出口）</div>
+        <div class="map-href">../admin/A-02_publish.html</div>
+      </a>
+
+      <a class="map-card card is-jam" href="../admin/A-03_dashboard.html">
+        <div class="id-row"><span class="id">A-03</span><span class="badge badge-danger">詰まり②</span></div>
+        <div class="map-title">管理ダッシュボード</div>
+        <div class="map-desc">店舗オーナーのホーム。キャンセル通知（トースト／バッジ）が目立つ。サンプル予約 6/25(水)14:00 カット／山田 花子 様。</div>
+        <div class="jam-line"><span class="jam-key">詰まり②：</span>キャンセル通知が目立ち、店舗のうんざり感 → <strong>3ヶ月目の早期解約の文脈</strong></div>
+        <div class="map-href">../admin/A-03_dashboard.html</div>
+      </a>
+
+      <a class="map-card card" href="../admin/A-04_reservations.html">
+        <div class="id-row"><span class="id">A-04</span><span class="badge badge-muted">店舗側</span></div>
+        <div class="map-title">予約一覧</div>
+        <div class="map-desc">店舗側の予約テーブル。A-03のサイドナビから相互遷移。同じサンプル予約が店舗側にも見える。</div>
+        <div class="jam-line"><span class="jam-key neutral">詰まり：</span>②の文脈の裏付け（キャンセル行が並ぶ）</div>
+        <div class="map-href">../admin/A-04_reservations.html</div>
+      </a>
+
+      <a class="map-card card" href="../admin/A-05_billing.html">
+        <div class="id-row"><span class="id">A-05</span><span class="badge badge-muted">店舗側</span></div>
+        <div class="map-title">請求・プラン</div>
+        <div class="map-desc">月額12,000円のサブスク請求画面。A-03のサイドナビから相互遷移。</div>
+        <div class="jam-line"><span class="jam-key neutral">詰まり：</span>収益①（店舗サブスク）の発生点</div>
+        <div class="map-href">../admin/A-05_billing.html</div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- ============================================================
+       2. 利用者ジャーニー（需要側・スマホ）
+       ============================================================ -->
+  <div class="map-section">
+    <div class="section-label journey-head">
+      <span>② 利用者ジャーニー（需要側・スマホ）</span>
+      <span class="flow">U-01 → U-02 → U-03 → U-03b → U-04（再予約は U-04 → U-02）</span>
+    </div>
+    <div class="map-grid">
+
+      <a class="map-card card" href="../user/U-01_store.html">
+        <div class="id-row"><span class="id">U-01</span><span class="badge badge-muted">入口</span></div>
+        <div class="map-title">公開店舗ページ（田中美容室）</div>
+        <div class="map-desc">受講生「お客さん側」の入口。メニューと料金（カット¥4,400／カラー¥8,800ほか）。「予約する」→ U-02。</div>
+        <div class="jam-line"><span class="jam-key neutral">詰まり：</span>予約導線の入口（次のU-02で詰まる）</div>
+        <div class="map-href">../user/U-01_store.html</div>
+      </a>
+
+      <a class="map-card card is-jam" href="../user/U-02_form.html">
+        <div class="id-row"><span class="id">U-02</span><span class="badge badge-danger">詰まり③a</span></div>
+        <div class="map-title">予約フォーム</div>
+        <div class="map-desc">メニュー／日付／時間／スタイリスト指名(必須)／名前／電話／要望(必須)／アンケート(必須)。</div>
+        <div class="jam-line"><span class="jam-key">詰まり③a：</span>項目が多くスクロールが長い＋送信CTAが下線青文字のテキストリンク風でボタンに見えない・固定フッターなし → <strong>訪問→予約で離脱</strong></div>
+        <div class="map-href">../user/U-02_form.html</div>
+      </a>
+
+      <a class="map-card card is-jam" href="../user/U-03_confirm.html">
+        <div class="id-row"><span class="id">U-03</span><span class="badge badge-danger">詰まり③b</span></div>
+        <div class="map-title">予約確認</div>
+        <div class="map-desc">「予約時のお支払いは不要・来店時に施術料金をお支払い」の後払い案内。確定ボタンと並んで「キャンセル」が目立つ。</div>
+        <div class="jam-line"><span class="jam-key">詰まり③b：</span>金銭コミットなしで気軽にキャンセルできる構造 → <strong>来店確定率が落ちる（当日キャンセル）</strong><br><span class="faint">「キャンセル」→ U-01に戻る／「予約を確定する」→ U-03b</span></div>
+        <div class="map-href">../user/U-03_confirm.html</div>
+      </a>
+
+      <a class="map-card card is-ok" href="../user/U-03b_done.html">
+        <div class="id-row"><span class="id">U-03b</span><span class="badge badge-ok">完了</span></div>
+        <div class="map-title">予約完了</div>
+        <div class="map-desc">予約確定の完了画面。「マイページ」→ U-04 への導線。</div>
+        <div class="jam-line ok"><span class="jam-key">健全：</span>確定後の正常な着地点</div>
+        <div class="map-href">../user/U-03b_done.html</div>
+      </a>
+
+      <a class="map-card card is-ok" href="../user/U-04_mypage.html">
+        <div class="id-row"><span class="id">U-04</span><span class="badge badge-ok">対照（健全）</span></div>
+        <div class="map-title">マイページ</div>
+        <div class="map-desc">次回予約・予約履歴。「次の予約を取る」→ U-02 へスムーズに戻れる。</div>
+        <div class="jam-line ok"><span class="jam-key">健全（対照）：</span>リピート導線はスムーズ＝詰まりがないことを見せる対照画面</div>
+        <div class="map-href">../user/U-04_mypage.html</div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- ============================================================
+       3. 講師用（模範解・受講生には伏せる）
+       ============================================================ -->
+  <div class="map-section">
+    <div class="section-label journey-head">
+      <span>③ 講師用（模範解・受講生には伏せる）</span>
+      <span class="flow">sitemap ⇄ revenue-summary</span>
+    </div>
+    <div class="map-grid">
+
+      <a class="map-card card is-ok" href="revenue-summary.html">
+        <div class="id-row"><span class="id">講師用</span><span class="badge badge-ok">答え合わせ</span></div>
+        <div class="map-title">収益サマリー（模範解）</div>
+        <div class="map-desc">サブスク＋決済手数料の収益分解、両側ファネルの詰まり、模範優先度（ROI）の答え合わせ。コマ7で開示。</div>
+        <div class="jam-line ok"><span class="jam-key">用途：</span>①〜③の詰まりがどう収益に効くかの正典。<strong>受講生には伏せる</strong></div>
+        <div class="map-href">revenue-summary.html</div>
+      </a>
+
+      <div class="map-card card" style="border-left-color:var(--gold);cursor:default;">
+        <div class="id-row"><span class="id">講師用</span><span class="badge"><span class="dot"></span>現在地</span></div>
+        <div class="map-title">全画面マップ（このページ）</div>
+        <div class="map-desc">ファシリが各画面へ飛ぶための一覧。これは講師用ナビであり、受講生体験の入口ではありません。</div>
+        <div class="jam-line"><span class="jam-key neutral">用途：</span>合宿中の画面投影・解説のハブ</div>
+        <div class="map-href">instructor/sitemap.html</div>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<!-- ===== フッター（共有footer） ===== -->
+<footer class="footer">
+  <div class="footer-links">
+    <a href="../index.html">トップ（index）</a>
+    <a href="revenue-summary.html">収益サマリー（模範解）</a>
+    <a href="../admin/A-00_signup.html">店舗ジャーニー先頭（A-00）</a>
+    <a href="../user/U-01_store.html">利用者ジャーニー先頭（U-01）</a>
+  </div>
+  講師用 全画面マップ（ファシリ用ナビ）｜ReServe 美容室予約SaaS・GTMエンジニア合宿モック。画面上の件数はレイアウト用の仮数字で、詰まりの特定・通過率・ROIはすべてSQL（シードDB）で出します。
+</footer>
+
+</body>
+</html>

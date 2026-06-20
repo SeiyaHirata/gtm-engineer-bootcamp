@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ReServe 管理画面 ｜ A-00 店舗登録・初月課金</title>
+<link rel="stylesheet" href="../assets/reserve.css">
+<style>
+  /* このページ固有の最小限のレイアウトのみ（見た目は共有CSSに統一） */
+  .signup-wrap { max-width: 760px; margin: 0 auto; padding: var(--sp-6) var(--sp-5) var(--sp-7); }
+  .signup-grid { display: grid; grid-template-columns: 1fr 320px; gap: var(--sp-5); align-items: start; }
+  .price-tag { display: flex; align-items: baseline; gap: 6px; margin: var(--sp-2) 0 var(--sp-4); }
+  .price-tag .amount { font-size: 2rem; font-weight: 800; color: var(--ink); letter-spacing: .01em; }
+  .price-tag .unit { font-size: .9rem; color: var(--muted); font-weight: 600; }
+  .plan-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .plan-list li { display: flex; gap: 9px; font-size: .85rem; color: var(--ink); line-height: 1.55; }
+  .plan-list li .ic { color: var(--gold-deep); font-weight: 800; flex: none; }
+  @media (max-width: 760px) { .signup-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+  <!-- 合宿用モック注記 -->
+  <div class="mocknote">
+    <span class="mocknote-badge">A-00</span>
+    <span>店舗 登録・初月課金（①の入口）</span>
+    <span class="sep">|</span>
+    <span>これは合宿用モック（<strong>数字は仮・分析はSQL</strong>）</span>
+  </div>
+
+  <!-- ブランドヘッダー：ロゴは店舗側トップ（A-03）へ -->
+  <header class="appbar">
+    <a class="brand" href="A-03_dashboard.html">
+      Re<span class="mark">Serve</span>
+      <span class="brand-tag">SALON RESERVATION CLOUD</span>
+    </a>
+    <div class="appbar-right">
+      アカウントをお持ちですか？<br>
+      <strong>ログイン</strong>
+    </div>
+  </header>
+
+  <div class="signup-wrap">
+
+    <!-- 戻る導線 -->
+    <div class="page-head">
+      <div class="crumb"><a href="../index.html" style="text-decoration:none;color:var(--muted);">← 戻る（モック一覧）</a></div>
+      <h1>お店として ReServe を始める</h1>
+      <p class="lede">店舗情報とお支払い方法をご入力ください。登録と同時に初月分（¥12,000）を課金し、初期設定（店舗情報の入力）へ進みます。</p>
+    </div>
+
+    <div class="signup-grid">
+
+      <!-- 登録フォーム（詰まりのない段：項目は最小限） -->
+      <div class="card">
+        <h2 class="card-h">アカウント登録</h2>
+
+        <div class="field">
+          <label class="label">店舗名 <span class="req">必須</span></label>
+          <input class="input" type="text" placeholder="例）田中美容室">
+          <span class="hint hint-block">お客様の予約ページに表示される店名です。</span>
+        </div>
+
+        <div class="field">
+          <label class="label">ご担当者名 <span class="req">必須</span></label>
+          <input class="input" type="text" placeholder="例）田中 太郎">
+        </div>
+
+        <div class="field">
+          <label class="label">メールアドレス <span class="req">必須</span></label>
+          <input class="input" type="email" placeholder="例）owner@tanaka-salon.jp">
+          <span class="hint hint-block">予約通知・領収書の送付先になります。</span>
+        </div>
+
+        <hr class="divider">
+
+        <!-- お支払い方法（登録＝即課金・月額サブスクのため必須） -->
+        <h2 class="card-h" style="border-bottom-color:var(--line-soft);">お支払い方法</h2>
+        <p class="hint hint-block" style="margin-left:0;margin-top:0;">
+          これは<strong>店舗がReServeに支払う月額サブスク（12,000円）</strong>のお支払いです。
+          利用者（お客様）の予約は来店時の後払いのため、別物です。
+        </p>
+
+        <div class="field">
+          <label class="label">カード番号 <span class="req">必須</span></label>
+          <input class="input" type="text" inputmode="numeric" autocomplete="cc-number" placeholder="1234 5678 9012 3456">
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label class="label">有効期限（MM/YY） <span class="req">必須</span></label>
+            <input class="input" type="text" inputmode="numeric" autocomplete="cc-exp" placeholder="例）04/28">
+          </div>
+          <div class="field">
+            <label class="label">セキュリティコード（CVC） <span class="req">必須</span></label>
+            <input class="input" type="text" inputmode="numeric" autocomplete="cc-csc" placeholder="例）123">
+          </div>
+        </div>
+
+        <label class="check mt-4" style="align-items:flex-start;">
+          <input type="checkbox" style="margin-top:3px;">
+          <span><a href="#" style="color:var(--link);">利用規約</a>・<a href="#" style="color:var(--link);">プライバシーポリシー</a>に同意します</span>
+        </label>
+
+        <div class="actions">
+          <span class="muted" style="font-size:.78rem;">無料トライアルはありません。登録と同時に初月分（¥12,000）が課金されます。</span>
+          <div class="actions-btns">
+            <a class="btn btn-primary btn-lg" href="A-01_onboarding.html">登録して始める（初月 ¥12,000 を今すぐお支払い）</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- プラン表示（月額12,000円・即課金・トライアルなし） -->
+      <div class="card" style="background:#fffdf9;border-color:var(--gold);">
+        <h2 class="card-h" style="border-bottom-color:var(--line-soft);">
+          ご契約プラン <span class="badge">スタンダード</span>
+        </h2>
+        <div class="price-tag">
+          <span class="amount">¥12,000</span>
+          <span class="unit">／ 月（税込）</span>
+        </div>
+        <ul class="plan-list">
+          <li><span class="ic">✓</span><span>予約ページの公開・予約受付（件数無制限）</span></li>
+          <li><span class="ic">✓</span><span>スタイリスト指名・メニュー登録</span></li>
+          <li><span class="ic">✓</span><span>店舗ダッシュボード／予約一覧</span></li>
+          <li><span class="ic">✓</span><span>来店時の後払い対応（予約時は決済なし）</span></li>
+        </ul>
+        <hr class="divider">
+        <p class="muted" style="font-size:.8rem;line-height:1.6;">
+          <strong class="danger-text">無料トライアルはありません。</strong>
+          登録と同時に初月の <strong>12,000円</strong> が課金され、以後は毎月自動更新となります。
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- フッター -->
+  <footer class="footer">
+    <div class="footer-links">
+      <a href="../index.html">モック一覧</a>
+      <a href="A-01_onboarding.html">初期設定</a>
+      <a href="A-03_dashboard.html">ダッシュボード</a>
+      <a href="../user/U-01_store.html">利用者サイト</a>
+    </div>
+    ReServe ｜ 美容室予約クラウド（合宿用モック）｜ 画面上の数字は仮・分析はSQLで
+  </footer>
+
+</body>
+</html>

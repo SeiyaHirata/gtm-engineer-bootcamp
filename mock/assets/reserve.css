@@ -1,0 +1,631 @@
+/* =============================================================================
+   ReServe — 美容室予約SaaS 共有デザインシステム
+   GTMエンジニア合宿モック用 / 1枚で全画面を本物のSaaSに見せる統一CSS
+   -----------------------------------------------------------------------------
+   使い方:
+     <link rel="stylesheet" href="../assets/reserve.css">   ← PC管理画面・利用者サイト共通
+   設計方針:
+     - 配色/角丸/影/間隔は :root のCSS変数に集約（ブランド準拠・1か所で調整可能）
+     - レイアウトは .container（PC幅 max1040）と .mobile（スマホ幅 max430・端末風）
+     - 単位はrem/em中心。ブラウザ拡大・印刷に強い相対設計
+     - ページ固有のアドホックなインラインstyleを排し、クラスで見た目を統一
+   ========================================================================== */
+
+/* ============================================================================
+   1. CSS変数（ブランドトークン）
+   - カラー: ゴールド / 濃インク / クリーム背景 / 白カード / 罫線 / 警告赤 / 成功緑
+   - 角丸 / 影 / 間隔 / タイポをここで一元管理
+   ========================================================================== */
+:root {
+  /* --- ブランドカラー --- */
+  --gold: #c9a96a;          /* 主役ゴールド（プライマリCTA・アクセント） */
+  --gold-deep: #b08e52;     /* ゴールドの濃いめ（hover・境界） */
+  --gold-soft: #f3ead8;     /* ゴールドの淡い面（バッジ背景など） */
+  --ink: #2b2622;           /* 濃インク（本文・見出し） */
+  --muted: #7a7065;         /* 補助テキスト（ヒント・キャプション） */
+  --faint: #a59c8f;         /* さらに薄い注記・プレースホルダ */
+  --cream: #faf7f2;         /* クリーム背景（ページ地） */
+  --card: #ffffff;          /* 白カード面 */
+  --line: #e7e0d6;          /* 罫線・区切り */
+  --line-soft: #f0ebe2;     /* さらに淡い内側罫線 */
+
+  /* --- 状態色 --- */
+  --danger: #c0392b;        /* 警告赤（必須・キャンセル・エラー） */
+  --danger-soft: #fdecec;   /* 警告赤の淡い面 */
+  --ok: #2e7d4f;            /* 成功緑（完了・正常） */
+  --ok-soft: #e8f5ec;       /* 成功緑の淡い面 */
+  --link: #2563b8;          /* 弱いCTA（リンク風）の青 */
+
+  /* --- 角丸（10-14px帯） --- */
+  --r-sm: 8px;
+  --r: 10px;
+  --r-lg: 14px;
+  --r-pill: 999px;
+
+  /* --- 影（やわらかい） --- */
+  --shadow-1: 0 1px 3px rgba(43, 38, 34, .05);
+  --shadow-2: 0 4px 16px rgba(43, 38, 34, .08);
+  --shadow-3: 0 10px 34px rgba(43, 38, 34, .14);
+  --shadow-gold: 0 4px 16px rgba(201, 169, 106, .22);
+
+  /* --- 間隔スケール --- */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 48px;
+
+  /* --- タイポ --- */
+  --font: system-ui, -apple-system, "Hiragino Kaku Gothic ProN", "Hiragino Sans",
+          "Yu Gothic", "Noto Sans JP", "Meiryo", sans-serif;
+  --fs-base: 14px;          /* 全体の基準（rem換算の起点） */
+}
+
+/* ============================================================================
+   2. ベース / リセット
+   ========================================================================== */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { font-size: var(--fs-base); -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  background: var(--cream);
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+button { font-family: inherit; cursor: pointer; }
+
+h1, h2, h3, h4 { margin: 0; line-height: 1.4; color: var(--ink); font-weight: 700; }
+p { margin: 0; }
+
+/* ページ見出し（パンくず + タイトル + リード） */
+.page-head { margin-bottom: var(--sp-5); }
+.page-head .crumb { font-size: .79rem; color: var(--faint); letter-spacing: .04em; }
+.page-head h1 { font-size: 1.55rem; letter-spacing: .01em; margin: 2px 0 4px; }
+.page-head .lede { color: var(--muted); font-size: .93rem; }
+
+/* セクション見出し（小ラベル風） */
+.section-label {
+  font-size: .8rem; letter-spacing: .07em; color: var(--muted);
+  border-bottom: 1px solid var(--line);
+  padding-bottom: var(--sp-2); margin: var(--sp-6) 0 var(--sp-3);
+}
+
+/* ============================================================================
+   3. レイアウトコンテナ
+   - .container : PC幅（管理画面・本文の最大1040px・中央寄せ）
+   - .mobile    : スマホ幅（最大430px・中央寄せ・枠＋影で端末風）
+   ========================================================================== */
+.container {
+  width: 100%;
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: var(--sp-5) var(--sp-5) var(--sp-7);
+}
+
+/* スマホ端末風キャンバス（利用者サイト用） */
+.mobile {
+  width: 100%;
+  max-width: 430px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: var(--cream);
+  box-shadow: 0 0 28px rgba(43, 38, 34, .14);
+  position: relative;
+}
+.mobile-body { padding: var(--sp-4) var(--sp-4) var(--sp-6); }
+
+/* 管理画面の本体レイアウト（サイドナビ + メイン） */
+.app-layout { display: flex; min-height: calc(100vh - 120px); }
+.app-main {
+  flex: 1;
+  padding: var(--sp-6) clamp(var(--sp-4), 4vw, var(--sp-7)) var(--sp-7);
+  max-width: 880px;
+}
+
+/* ============================================================================
+   4. ヘッダー（.appbar）
+   - .brand    : ロゴ（ReServe）。Serveをゴールドで強調
+   - .appbar-right : 右側のユーザー名・プラン・メニュー
+   ========================================================================== */
+.appbar {
+  background: var(--card);
+  border-bottom: 1px solid var(--line);
+  padding: var(--sp-4) var(--sp-5);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+}
+.brand {
+  font-size: 1.45rem;
+  font-weight: 800;
+  letter-spacing: .06em;
+  color: var(--ink);
+  line-height: 1.1;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.brand .mark { color: var(--gold); }       /* "Serve" 部分 */
+.brand .brand-tag {
+  display: block;
+  font-size: .58rem;
+  font-weight: 500;
+  color: var(--faint);
+  letter-spacing: .2em;
+  margin-top: 2px;
+}
+/* スマホ用の濃色ヘッダー（利用者サイト・反転） */
+.appbar.appbar-dark {
+  background: var(--ink);
+  border-bottom: none;
+  padding: var(--sp-3) var(--sp-4);
+}
+.appbar.appbar-dark .brand { color: #f3ede4; font-size: 1.2rem; letter-spacing: .12em; }
+.appbar.appbar-dark .brand-tag { color: #9a8f80; }
+
+.appbar-right { text-align: right; font-size: .8rem; color: var(--muted); }
+.appbar-right strong { color: var(--ink); font-weight: 600; }
+
+/* ============================================================================
+   5. サイドナビ（.sidenav）※店舗管理画面用
+   ========================================================================== */
+.sidenav {
+  width: 232px;
+  flex-shrink: 0;
+  background: #fbf9f5;
+  border-right: 1px solid var(--line);
+  padding: var(--sp-4) 0;
+}
+.sidenav .nav-group {
+  font-size: .68rem; color: var(--faint); letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: var(--sp-3) var(--sp-5) var(--sp-1);
+}
+.sidenav a {
+  display: flex; align-items: center; gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-5);
+  color: var(--muted);
+  text-decoration: none;
+  font-size: .9rem;
+  border-left: 3px solid transparent;
+}
+.sidenav a:hover { background: #f4efe6; color: var(--ink); }
+.sidenav a.active {
+  background: var(--gold-soft);
+  color: var(--ink);
+  border-left-color: var(--gold);
+  font-weight: 600;
+}
+.sidenav a small { color: var(--faint); font-size: .72rem; margin-left: auto; }
+
+/* ============================================================================
+   6. ボタン（.btn）
+   - .btn-primary : ゴールド主役CTA
+   - .btn-ghost   : 枠線のみの控えめボタン
+   - .btn-danger  : 警告赤（キャンセル等）
+   - .link-cta    : 「ボタンに見えない弱いCTA」= 下線つき青テキスト・背景なし（③a演出用）
+   ========================================================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  border: 1px solid transparent;
+  border-radius: var(--r);
+  padding: .65em 1.5em;
+  font-size: .9rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: .15s ease;
+  user-select: none;
+}
+.btn:active { transform: translateY(1px); }
+.btn-block { width: 100%; }                 /* 幅いっぱい（スマホCTA向き） */
+.btn-lg { padding: .85em 1.8em; font-size: 1rem; }
+.btn-sm { padding: .45em 1em; font-size: .8rem; }
+
+.btn-primary {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #fff;
+  box-shadow: var(--shadow-gold);
+}
+.btn-primary:hover { background: var(--gold-deep); border-color: var(--gold-deep); }
+
+.btn-ghost {
+  background: var(--card);
+  border-color: var(--line);
+  color: var(--muted);
+}
+.btn-ghost:hover { border-color: var(--gold); color: var(--ink); }
+
+.btn-danger {
+  background: var(--danger);
+  border-color: var(--danger);
+  color: #fff;
+}
+.btn-danger:hover { filter: brightness(.94); }
+/* 枠線だけの赤（淡いキャンセル動線） */
+.btn-danger.btn-outline { background: var(--card); color: var(--danger); }
+
+/* 弱いCTA：ボタンに見えないテキストリンク（③a：押せるか不明な送信導線の演出） */
+.link-cta {
+  display: inline;
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--link);
+  font-size: .9rem;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+.link-cta:hover { color: #1d4f94; }
+
+/* ============================================================================
+   7. フォーム部品
+   - .field    : 1項目のラッパ（縦積み）
+   - .label    : ラベル
+   - .req      : 必須バッジ（赤）
+   - .hint     : 補助テキスト
+   - .input / .select / .textarea / .check : 各入力
+   - .field-row : 横並び（2カラム）
+   ========================================================================== */
+.field { margin-bottom: var(--sp-4); }
+.field:last-child { margin-bottom: 0; }
+
+.label {
+  display: block;
+  font-size: .88rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+/* 必須バッジ */
+.req {
+  display: inline-block;
+  font-size: .68rem;
+  font-weight: 700;
+  color: var(--danger);
+  margin-left: 6px;
+  vertical-align: 1px;
+}
+/* ヘルプ・補足 */
+.hint {
+  display: inline-block;
+  font-size: .72rem;
+  font-weight: 400;
+  color: var(--faint);
+  margin-left: 6px;
+}
+.hint-block { display: block; margin: 5px 0 0; }   /* 入力の下に置くヒント */
+
+.input, .select, .textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  background: var(--card);
+  border-radius: var(--r-sm);
+  padding: .62em .8em;
+  font-size: .9rem;
+  font-family: inherit;
+  color: var(--ink);
+  transition: border-color .15s, box-shadow .15s;
+}
+.input::placeholder, .textarea::placeholder { color: var(--faint); }
+.input:focus, .select:focus, .textarea:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201, 169, 106, .18);
+}
+.textarea { resize: vertical; min-height: 4.5em; line-height: 1.6; }
+.select {
+  appearance: none;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23a59c8f' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right .9em center;
+  padding-right: 2.2em;
+}
+
+/* チェック/ラジオ行 */
+.check {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: .88rem;
+  font-weight: 500;
+  color: var(--ink);
+  cursor: pointer;
+}
+.check input { width: 15px; height: 15px; accent-color: var(--gold); }
+.check-group { display: flex; flex-wrap: wrap; gap: var(--sp-4); }
+
+/* 横並び2カラム（住所×電話 など） */
+.field-row { display: flex; gap: var(--sp-4); }
+.field-row > .field { flex: 1; }
+
+/* ファイルアップロードの枠（点線） */
+.upload {
+  border: 1px dashed var(--line);
+  background: #f8f5ef;
+  border-radius: var(--r-sm);
+  padding: var(--sp-6);
+  text-align: center;
+  color: var(--muted);
+  font-size: .88rem;
+}
+.upload .ic { font-size: 1.7rem; display: block; margin-bottom: 6px; color: var(--faint); }
+
+/* ============================================================================
+   8. カード（.card） / 見出し（.card-h）
+   ========================================================================== */
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: var(--sp-5);
+  box-shadow: var(--shadow-1);
+  margin-bottom: var(--sp-4);
+}
+.card-h {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0 0 var(--sp-4);
+  padding-bottom: var(--sp-3);
+  border-bottom: 1px solid var(--line-soft);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+.card-h .req { margin-left: 0; }
+/* 統計表示用の数値カード */
+.stat { display: grid; gap: 2px; }
+.stat .stat-label { font-size: .76rem; color: var(--muted); letter-spacing: .03em; }
+.stat .stat-value { font-size: 1.6rem; font-weight: 800; color: var(--ink); letter-spacing: .01em; }
+.stat .stat-sub { font-size: .74rem; color: var(--faint); }
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--sp-4);
+}
+
+/* ============================================================================
+   9. テーブル / リスト（.table）
+   ========================================================================== */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .88rem;
+}
+.table th, .table td {
+  padding: .65em .8em;
+  text-align: left;
+  border-bottom: 1px solid var(--line-soft);
+}
+.table thead th {
+  background: #f7f3ec;
+  color: var(--muted);
+  font-weight: 600;
+  font-size: .78rem;
+  letter-spacing: .03em;
+  border-bottom: 1px solid var(--line);
+}
+.table tbody tr:hover { background: #fbf9f5; }
+.table td.num, .table th.num { text-align: right; font-variant-numeric: tabular-nums; }
+/* 罫線で全セルを囲うタイプ（営業時間など） */
+.table.table-bordered th, .table.table-bordered td {
+  border: 1px solid var(--line);
+  text-align: center;
+}
+.table.table-bordered td.day { background: #f7f3ec; font-weight: 600; width: 64px; }
+
+/* ============================================================================
+   10. バッジ（.badge） / ステータスチップ
+   - .badge-danger : 警告赤系
+   - .badge-ok     : 成功緑系
+   - 既定: ゴールド系の淡いチップ
+   ========================================================================== */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .03em;
+  line-height: 1;
+  padding: .35em .6em;
+  border-radius: var(--r-pill);
+  background: var(--gold-soft);
+  color: var(--gold-deep);
+  white-space: nowrap;
+}
+.badge-danger { background: var(--danger-soft); color: var(--danger); }
+.badge-ok { background: var(--ok-soft); color: var(--ok); }
+.badge-muted { background: #f1ece3; color: var(--muted); }
+/* 丸ドット付きステータス（・稼働中／・停止 など） */
+.badge .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+/* ============================================================================
+   11. トースト通知（.toast）
+   - .toast-danger : 警告（キャンセル通知など。A-03でうんざり感を出す用）
+   - .toast-ok     : 成功
+   ========================================================================== */
+.toast {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--gold);
+  border-radius: var(--r);
+  padding: var(--sp-3) var(--sp-4);
+  box-shadow: var(--shadow-2);
+  font-size: .85rem;
+  color: var(--ink);
+}
+.toast .toast-ic { flex: none; font-size: 1.1rem; line-height: 1.4; }
+.toast .toast-title { font-weight: 700; }
+.toast .toast-text { color: var(--muted); }
+.toast .toast-time { margin-left: auto; font-size: .72rem; color: var(--faint); white-space: nowrap; }
+
+.toast-danger { border-left-color: var(--danger); background: #fffafa; }
+.toast-danger .toast-ic { color: var(--danger); }
+.toast-ok { border-left-color: var(--ok); background: #fafdfb; }
+.toast-ok .toast-ic { color: var(--ok); }
+
+/* 通知が積み重なる縦スタック */
+.toast-stack { display: grid; gap: var(--sp-2); }
+
+/* ============================================================================
+   12. ステップ表示（.steps）※汎用
+   - A-01では「使わない＝進捗が見えない」を演出するため、ここでは部品として用意のみ
+   ========================================================================== */
+.steps {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: .8rem;
+  color: var(--muted);
+}
+.steps .step {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.steps .step .num {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: .72rem; font-weight: 700;
+  background: var(--card); color: var(--faint);
+}
+.steps .step.is-current .num { background: var(--gold); border-color: var(--gold); color: #fff; }
+.steps .step.is-done .num { background: var(--ok); border-color: var(--ok); color: #fff; }
+.steps .step-line { flex: 1; height: 1px; background: var(--line); min-width: 16px; }
+
+/* ============================================================================
+   13. フッター（.footer）
+   ========================================================================== */
+.footer {
+  border-top: 1px solid var(--line);
+  background: var(--card);
+  color: var(--faint);
+  font-size: .76rem;
+  padding: var(--sp-5);
+  text-align: center;
+  letter-spacing: .02em;
+}
+.footer a { color: var(--muted); text-decoration: none; }
+.footer a:hover { color: var(--gold-deep); }
+.footer .footer-links { display: flex; gap: var(--sp-4); justify-content: center; flex-wrap: wrap; margin-bottom: 6px; }
+
+/* ============================================================================
+   14. 合宿モック注記（.mocknote）
+   - 全画面の隅に出す小さな帯。「合宿用モック・数字は仮・分析はSQL」を共通表示
+   ========================================================================== */
+.mocknote {
+  background: var(--ink);
+  color: #d8d3c8;
+  font-size: .72rem;
+  line-height: 1.5;
+  padding: 6px var(--sp-5);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  letter-spacing: .02em;
+}
+.mocknote .mocknote-badge {
+  background: var(--gold);
+  color: #fff;
+  font-weight: 700;
+  padding: 1px 7px;
+  border-radius: 4px;
+  font-size: .66rem;
+  letter-spacing: .05em;
+  flex: none;
+}
+.mocknote .sep { opacity: .4; }
+.mocknote strong { color: #f0b884; font-weight: 700; }
+/* スマホ幅キャンバスの内側に置くとき用に幅を合わせる */
+.mobile > .mocknote { max-width: 430px; }
+
+/* ============================================================================
+   15. ユーティリティ（最小限）
+   ========================================================================== */
+.muted { color: var(--muted); }
+.faint { color: var(--faint); }
+.danger-text { color: var(--danger); }
+.ok-text { color: var(--ok); }
+.right { text-align: right; }
+.center { text-align: center; }
+.row { display: flex; align-items: center; gap: var(--sp-3); }
+.row-between { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3); }
+.spacer { flex: 1; }
+.mt-2 { margin-top: var(--sp-2); }
+.mt-4 { margin-top: var(--sp-4); }
+.mt-6 { margin-top: var(--sp-6); }
+.mb-0 { margin-bottom: 0; }
+.divider { height: 1px; background: var(--line); border: none; margin: var(--sp-4) 0; }
+
+/* フォーム末尾のアクション帯（保存／次へ など） */
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  margin-top: var(--sp-5);
+  padding-top: var(--sp-4);
+  border-top: 1px solid var(--line);
+}
+.actions .actions-btns { display: flex; gap: var(--sp-3); }
+
+/* ============================================================================
+   16. レスポンシブ
+   - 管理画面はPC幅前提。狭幅ではサイドナビを上部へ畳む
+   - .mobile系はそのままスマホ幅で中央表示
+   ========================================================================== */
+@media (max-width: 880px) {
+  .app-layout { flex-direction: column; }
+  .sidenav {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    flex-wrap: wrap;
+    padding: var(--sp-2) var(--sp-3);
+  }
+  .sidenav .nav-group { display: none; }
+  .sidenav a { border-left: none; border-radius: var(--r-pill); padding: 6px 12px; }
+  .sidenav a small { display: none; }
+  .app-main { padding: var(--sp-4); max-width: none; }
+  .field-row { flex-direction: column; gap: 0; }
+  .actions { flex-direction: column; align-items: stretch; }
+  .actions .actions-btns { flex-direction: column-reverse; }
+}
+
+/* ============================================================================
+   17. 印刷
+   - 影や装飾を抑え、端末枠を外して全幅で読める形に
+   ========================================================================== */
+@media print {
+  body { background: #fff; }
+  .mocknote, .sidenav, .footer { display: none; }
+  .card, .toast { box-shadow: none; }
+  .mobile { max-width: none; box-shadow: none; }
+  .container, .app-main { max-width: none; }
+}

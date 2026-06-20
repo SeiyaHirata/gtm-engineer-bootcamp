@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>予約完了｜ReServe（U-03b）</title>
+<link rel="stylesheet" href="../assets/reserve.css">
+<style>
+  /* このページ固有の最小限のみ（成功の達成感を出す装飾） */
+  .done-hero { text-align: center; padding: var(--sp-6) var(--sp-2) var(--sp-2); }
+  .done-check {
+    width: 72px; height: 72px; margin: 0 auto var(--sp-4);
+    border-radius: 50%;
+    background: var(--ok-soft);
+    border: 1px solid #cde8d6;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--ok); font-size: 2rem; line-height: 1;
+    box-shadow: 0 6px 22px rgba(46, 125, 79, .14);
+  }
+  .done-hero h1 { font-size: 1.45rem; letter-spacing: .01em; }
+  .done-hero .lede { color: var(--muted); font-size: .9rem; margin-top: 6px; }
+
+  /* 予約番号の控え */
+  .resv-no {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: var(--sp-3);
+    background: #faf7f1;
+    border: 1px dashed var(--line);
+    border-radius: var(--r);
+    padding: var(--sp-3) var(--sp-4);
+    margin-top: var(--sp-2);
+  }
+  .resv-no .resv-label { font-size: .76rem; color: var(--muted); letter-spacing: .04em; }
+  .resv-no .resv-value {
+    font-size: 1.1rem; font-weight: 800; letter-spacing: .08em;
+    color: var(--ink); font-variant-numeric: tabular-nums;
+  }
+
+  /* 予約内容の控え（読み取り専用の行） */
+  .recap-row {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: var(--sp-4);
+    padding: .65em 0;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .recap-row:last-child { border-bottom: none; }
+  .recap-row .k { font-size: .8rem; color: var(--muted); flex: none; }
+  .recap-row .v { font-size: .9rem; font-weight: 600; text-align: right; }
+  .recap-row .v small { display: block; font-size: .74rem; font-weight: 400; color: var(--faint); }
+
+  /* 後払いの再案内（決済なしを念押し） */
+  .pay-recap {
+    display: flex; gap: var(--sp-3); align-items: flex-start;
+    background: var(--gold-soft);
+    border: 1px solid #ecdcbf;
+    border-radius: var(--r);
+    padding: var(--sp-3) var(--sp-4);
+    margin-bottom: var(--sp-4);
+  }
+  .pay-recap .ic {
+    width: 30px; height: 30px; border-radius: 50%; flex: none;
+    background: #fff; border: 1px solid #ecdcbf;
+    display: flex; align-items: center; justify-content: center; font-size: 1rem;
+  }
+  .pay-recap .ttl { font-size: .88rem; font-weight: 700; color: var(--gold-deep); margin-bottom: 2px; }
+  .pay-recap .body { font-size: .8rem; color: #8a734a; line-height: 1.6; }
+  .pay-recap .free-pill {
+    display: inline-block; margin-top: 6px;
+    background: #fff; border: 1px solid #ecdcbf; color: var(--gold-deep);
+    font-size: .7rem; font-weight: 700; border-radius: var(--r-pill); padding: 2px 9px;
+  }
+
+  .done-actions { display: grid; gap: var(--sp-2); margin-top: var(--sp-5); }
+  .calendar-link {
+    text-align: center; font-size: .8rem; color: var(--muted);
+    text-decoration: none; padding: var(--sp-2);
+  }
+  .calendar-link:hover { color: var(--gold-deep); }
+</style>
+</head>
+<body>
+
+<div class="mobile">
+
+  <!-- ヘッダー：ReServeロゴ → 利用者トップ(U-01)／戻る導線 -->
+  <header class="appbar appbar-dark">
+    <a class="brand" href="U-01_store.html">Re<span class="mark">Serve</span><span class="brand-tag">SALON RESERVATION</span></a>
+    <a href="U-03_confirm.html" style="color:#cdbfa9;text-decoration:none;font-size:.8rem;">← 戻る</a>
+  </header>
+
+  <!-- モック注記（数字は仮・分析はSQL） -->
+  <div class="mocknote">
+    <span class="mocknote-badge">U-03b</span>
+    合宿用モック ・ 予約完了 <span class="sep">／</span> 画面上の件数は<strong>仮の数字</strong>・通過率はSQLで出す
+  </div>
+
+  <div class="mobile-body">
+
+    <!-- 完了ヒーロー -->
+    <div class="done-hero">
+      <div class="done-check">✓</div>
+      <h1>予約が完了しました</h1>
+      <p class="lede">田中美容室 から確認メールをお送りしました。<br>当日お会いできるのを楽しみにしています。</p>
+    </div>
+
+    <!-- 成功トースト -->
+    <div class="toast toast-ok mt-4">
+      <div class="toast-ic">✓</div>
+      <div>
+        <div class="toast-title">予約を受け付けました</div>
+        <div class="toast-text">来店時のお支払いです。事前の決済はありません。</div>
+      </div>
+      <div class="toast-time">たった今</div>
+    </div>
+
+    <!-- 予約番号 -->
+    <div class="resv-no mt-4">
+      <div>
+        <div class="resv-label">予約番号</div>
+        <div class="resv-value">RSV-260625-0142</div>
+      </div>
+      <span class="badge badge-ok"><span class="dot"></span>確定</span>
+    </div>
+
+    <!-- 予約内容の控え -->
+    <section class="card mt-4">
+      <h2 class="card-h">予約内容</h2>
+      <div class="recap-row">
+        <div class="k">店舗</div>
+        <div class="v">田中美容室<small>東京都渋谷区</small></div>
+      </div>
+      <div class="recap-row">
+        <div class="k">メニュー</div>
+        <div class="v">カット<small>¥4,400（来店時お支払い）</small></div>
+      </div>
+      <div class="recap-row">
+        <div class="k">日時</div>
+        <div class="v">6/25(水) 14:00<small>2026年</small></div>
+      </div>
+      <div class="recap-row">
+        <div class="k">スタイリスト</div>
+        <div class="v">佐藤 葵</div>
+      </div>
+      <div class="recap-row">
+        <div class="k">お名前</div>
+        <div class="v">山田 花子 様</div>
+      </div>
+    </section>
+
+    <!-- 後払いの再案内 -->
+    <div class="pay-recap">
+      <div class="ic">🕒</div>
+      <div>
+        <div class="ttl">予約時のお支払いは不要です</div>
+        <div class="body">来店時に施術料金（¥4,400）をお支払いください。事前の決済・カード登録はありません。</div>
+        <span class="free-pill">いまの支払い ¥0</span>
+      </div>
+    </div>
+
+    <!-- 次の導線：マイページ(U-04) -->
+    <div class="done-actions">
+      <a href="U-04_mypage.html" class="btn btn-primary btn-block btn-lg">マイページで確認</a>
+      <a href="#" class="calendar-link">カレンダーに追加する</a>
+    </div>
+
+  </div>
+
+  <!-- フッター -->
+  <footer class="footer">
+    <div class="footer-links">
+      <a href="U-01_store.html">店舗ページ</a>
+      <a href="U-04_mypage.html">マイページ</a>
+      <a href="#">ヘルプ</a>
+    </div>
+    ReServe ・ 美容室予約 ／ 田中美容室（東京都渋谷区）
+  </footer>
+
+</div>
+
+</body>
+</html>

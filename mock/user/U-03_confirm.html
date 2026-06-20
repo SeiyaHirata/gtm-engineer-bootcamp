@@ -3,351 +3,204 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ReServe｜予約の確認（U-03）</title>
+<title>予約の確認 ｜ ReServe（U-03・合宿用モック）</title>
+<link rel="stylesheet" href="../assets/reserve.css">
 <style>
-  :root{
-    --bg:#f4f1ec;
-    --surface:#ffffff;
-    --ink:#2c2a26;
-    --muted:#7d756a;
-    --line:#e7e1d7;
-    --brand:#5c6e58;       /* 落ち着いたセージグリーン（美容室の上質感） */
-    --brand-deep:#46553f;
-    --accent:#b9926a;      /* くすみゴールド */
-    --danger:#c25a4a;
-    --warn-bg:#fbf3e8;
-    --warn-line:#ecd9bd;
+  /* このページ固有の最小スタイルのみ（後払い案内・サマリー行・固定フッター） */
+  .summary-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--sp-4);
+    padding: var(--sp-3) 0;
+    border-bottom: 1px solid var(--line-soft);
   }
-  *{box-sizing:border-box;margin:0;padding:0;}
-  html,body{background:var(--bg);}
-  body{
-    font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif;
-    color:var(--ink);
-    line-height:1.65;
-    -webkit-font-smoothing:antialiased;
-    display:flex;
-    justify-content:center;
-  }
-  /* スマホ幅に固定 */
-  .phone{
-    width:100%;
-    max-width:390px;
-    min-height:100vh;
-    background:var(--bg);
-    position:relative;
-    padding-bottom:120px; /* 固定フッター分 */
-  }
+  .summary-line:last-child { border-bottom: none; }
+  .summary-line .k { font-size: .82rem; color: var(--muted); flex: none; }
+  .summary-line .v { font-size: .94rem; font-weight: 600; text-align: right; }
+  .summary-line .v small { display: block; font-size: .74rem; font-weight: 400; color: var(--faint); margin-top: 1px; }
 
-  /* 合宿モック注記バー */
-  .mock-note{
-    background:#2c2a26;
-    color:#d8d2c6;
-    font-size:11px;
-    letter-spacing:.02em;
-    text-align:center;
-    padding:6px 10px;
-    line-height:1.4;
+  .salon-head {
+    display: flex;
+    gap: var(--sp-3);
+    align-items: center;
+    padding-bottom: var(--sp-3);
+    margin-bottom: var(--sp-2);
+    border-bottom: 1px solid var(--line);
   }
-  .mock-note b{color:#f0e9da;}
+  .salon-head .thumb {
+    width: 52px; height: 52px; border-radius: var(--r); flex: none;
+    background: linear-gradient(135deg, #d8c7a8, #b09469);
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 1.3rem;
+  }
+  .salon-head .name { font-size: .98rem; font-weight: 700; }
+  .salon-head .area { font-size: .76rem; color: var(--muted); margin-top: 1px; }
 
-  /* ブランドヘッダー */
-  header.brand{
-    background:var(--surface);
-    border-bottom:1px solid var(--line);
-    padding:14px 18px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-  }
-  .logo{
-    font-size:20px;
-    font-weight:700;
-    letter-spacing:.04em;
-    color:var(--brand-deep);
-  }
-  .logo span{color:var(--accent);}
-  .logo small{
-    display:block;
-    font-size:9px;
-    font-weight:500;
-    letter-spacing:.22em;
-    color:var(--muted);
-    margin-top:-2px;
-  }
-  .screen-id{
-    font-size:11px;
-    font-weight:600;
-    color:var(--brand);
-    border:1px solid var(--brand);
-    border-radius:999px;
-    padding:3px 9px;
-  }
+  .amount-row { display: flex; justify-content: space-between; align-items: baseline; padding: 2px 0 var(--sp-1); }
+  .amount-row .k { font-size: .9rem; font-weight: 600; }
+  .amount-row .v { font-size: 1.55rem; font-weight: 800; letter-spacing: .01em; }
+  .amount-row .v small { font-size: .76rem; font-weight: 500; color: var(--faint); margin-left: 3px; }
 
-  /* ステップインジケータ（予約完了の一歩手前） */
-  .steps{
-    display:flex;
-    gap:6px;
-    padding:14px 18px 4px;
-    font-size:11px;
-    color:var(--muted);
+  /* 後払い案内（③bの根本原因：予約時は決済なし） */
+  .pay-notice {
+    display: flex;
+    gap: var(--sp-3);
+    align-items: flex-start;
+    background: var(--gold-soft);
+    border: 1px solid #e6d6b4;
+    border-radius: var(--r-lg);
+    padding: var(--sp-4);
+    margin-bottom: var(--sp-4);
   }
-  .steps .step{flex:1;text-align:center;}
-  .steps .bar{
-    height:4px;border-radius:2px;background:var(--line);margin-bottom:5px;
+  .pay-notice .ic {
+    width: 34px; height: 34px; border-radius: 50%; flex: none;
+    background: var(--card); border: 1px solid #e6d6b4;
+    display: flex; align-items: center; justify-content: center; font-size: 1.05rem;
   }
-  .steps .step.done .bar{background:var(--brand);}
-  .steps .step.active .bar{background:var(--accent);}
-  .steps .step.active{color:var(--ink);font-weight:600;}
+  .pay-notice .ttl { font-size: .9rem; font-weight: 700; color: var(--gold-deep); margin-bottom: 2px; }
+  .pay-notice .body { font-size: .8rem; color: #8a7448; line-height: 1.6; }
 
-  main{padding:8px 18px 0;}
+  /* 戻る導線 */
+  .backbar { padding: var(--sp-3) var(--sp-4) 0; }
+  .backbar a { color: var(--muted); text-decoration: none; font-size: .82rem; }
+  .backbar a:hover { color: var(--gold-deep); }
 
-  h1.page-title{
-    font-size:20px;
-    font-weight:700;
-    color:var(--ink);
-    margin:10px 2px 4px;
+  /* 固定フッター：確定とキャンセルを同じ重みで並べる（③bの体感） */
+  .confirm-footer {
+    position: sticky;
+    bottom: 0;
+    background: rgba(255, 255, 255, .96);
+    backdrop-filter: blur(6px);
+    border-top: 1px solid var(--line);
+    padding: var(--sp-3) var(--sp-4) calc(var(--sp-3) + env(safe-area-inset-bottom));
   }
-  .page-sub{
-    font-size:12.5px;
-    color:var(--muted);
-    margin:0 2px 16px;
+  .confirm-footer .footer-hint {
+    text-align: center; font-size: .72rem; color: var(--faint); margin-bottom: var(--sp-2);
   }
-
-  /* カード */
-  .card{
-    background:var(--surface);
-    border:1px solid var(--line);
-    border-radius:14px;
-    padding:16px 16px 4px;
-    margin-bottom:14px;
-    box-shadow:0 1px 2px rgba(44,42,38,.03);
-  }
-  .card.flush{padding-bottom:16px;}
-  .card-label{
-    font-size:11px;
-    font-weight:600;
-    letter-spacing:.08em;
-    color:var(--brand);
-    text-transform:uppercase;
-    margin-bottom:10px;
-  }
-
-  /* 店舗ヘッダー（サマリー上部） */
-  .salon{
-    display:flex;
-    gap:12px;
-    align-items:center;
-    padding-bottom:14px;
-    border-bottom:1px solid var(--line);
-    margin-bottom:6px;
-  }
-  .salon .thumb{
-    width:54px;height:54px;border-radius:10px;flex-shrink:0;
-    background:linear-gradient(135deg,#cdbfa6,#a7b39a);
-    display:flex;align-items:center;justify-content:center;
-    color:#fff;font-size:20px;
-  }
-  .salon .name{font-size:15px;font-weight:700;}
-  .salon .area{font-size:12px;color:var(--muted);}
-
-  /* サマリー行 */
-  .summary-row{
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-start;
-    gap:14px;
-    padding:11px 0;
-    border-bottom:1px solid var(--line);
-  }
-  .summary-row:last-child{border-bottom:none;}
-  .summary-row .k{font-size:12.5px;color:var(--muted);flex-shrink:0;}
-  .summary-row .v{font-size:14px;font-weight:600;text-align:right;}
-  .summary-row .v small{display:block;font-size:11.5px;font-weight:400;color:var(--muted);}
-
-  /* 金額目安 */
-  .amount{
-    display:flex;
-    justify-content:space-between;
-    align-items:baseline;
-    padding:13px 0 6px;
-  }
-  .amount .k{font-size:13px;color:var(--ink);font-weight:600;}
-  .amount .v{font-size:24px;font-weight:700;color:var(--ink);}
-  .amount .v small{font-size:12px;font-weight:500;color:var(--muted);margin-left:3px;}
-  .amount-note{
-    font-size:11px;color:var(--muted);padding-bottom:14px;
-  }
-
-  /* 支払い案内（後払い）— ③bの根本原因が一目で伝わる */
-  .pay-notice{
-    background:var(--warn-bg);
-    border:1px solid var(--warn-line);
-    border-radius:12px;
-    padding:14px 14px;
-    margin-bottom:16px;
-    display:flex;
-    gap:11px;
-    align-items:flex-start;
-  }
-  .pay-notice .ic{
-    width:30px;height:30px;border-radius:50%;flex-shrink:0;
-    background:#fff;border:1px solid var(--warn-line);
-    display:flex;align-items:center;justify-content:center;font-size:16px;
-  }
-  .pay-notice .ttl{font-size:13.5px;font-weight:700;color:var(--accent);margin-bottom:2px;}
-  .pay-notice .body{font-size:12.5px;color:#7a6a52;}
-  .pay-notice .free-pill{
-    display:inline-block;margin-top:7px;
-    background:#fff;border:1px solid var(--warn-line);
-    color:var(--accent);font-size:11px;font-weight:700;
-    border-radius:999px;padding:2px 9px;
-  }
-
-  /* 規約の薄い注記 */
-  .terms{
-    font-size:11px;color:var(--muted);text-align:center;
-    padding:2px 6px 6px;
-  }
-  .terms a{color:var(--brand);text-decoration:none;}
-
-  /* 固定フッター：確定 と キャンセル を並列で目立たせる（③bの体感） */
-  .footer{
-    position:fixed;
-    left:50%;
-    transform:translateX(-50%);
-    bottom:0;
-    width:100%;
-    max-width:390px;
-    background:rgba(255,255,255,.96);
-    backdrop-filter:blur(6px);
-    border-top:1px solid var(--line);
-    padding:12px 18px calc(12px + env(safe-area-inset-bottom));
-    display:flex;
-    gap:10px;
-  }
-  .btn{
-    flex:1;
-    text-align:center;
-    border-radius:12px;
-    padding:14px 8px;
-    font-size:15px;
-    font-weight:700;
-    cursor:pointer;
-    border:1.5px solid transparent;
-    user-select:none;
-  }
-  .btn-confirm{
-    background:var(--brand);
-    color:#fff;
-    box-shadow:0 2px 8px rgba(92,110,88,.28);
-  }
-  /* キャンセルも確定と同じ大きさ・同じ目立ち方＝金銭コミットがないので軽く押せる */
-  .btn-cancel{
-    background:#fff;
-    color:var(--danger);
-    border-color:var(--danger);
-  }
-  .footer-hint{
-    position:fixed;
-    bottom:calc(78px + env(safe-area-inset-bottom));
-    left:50%;
-    transform:translateX(-50%);
-    width:100%;
-    max-width:390px;
-    text-align:center;
-    font-size:11px;
-    color:var(--muted);
-    pointer-events:none;
-  }
+  .confirm-footer .btn-pair { display: flex; gap: var(--sp-3); }
+  .confirm-footer .btn-pair .btn { flex: 1; }
 </style>
 </head>
 <body>
-<div class="phone">
 
-  <!-- 合宿モック注記 -->
-  <div class="mock-note">
-    これは合宿用モック（<b>数字は仮・分析はSQL</b>）／ 画面ID <b>U-03</b>　予約確認・完了 ★③b
-  </div>
+  <!-- スマホ幅キャンバス -->
+  <div class="mobile">
 
-  <!-- ブランドヘッダー -->
-  <header class="brand">
-    <div class="logo">Re<span>Serve</span><small>SALON RESERVATION</small></div>
-    <div class="screen-id">U-03</div>
-  </header>
+    <!-- 合宿モック注記（隅・全画面共通：数字は仮／分析はSQL） -->
+    <div class="mocknote">
+      <span class="mocknote-badge">U-03</span>
+      合宿用モック <span class="sep">/</span> 数字は仮・<strong>分析はSQL</strong>
+      <span class="sep">/</span> 詰まり ③b 予約確認（後払い）
+    </div>
 
-  <!-- ステップ -->
-  <div class="steps">
-    <div class="step done"><div class="bar"></div>店舗を選ぶ</div>
-    <div class="step done"><div class="bar"></div>内容を入力</div>
-    <div class="step active"><div class="bar"></div>確認・確定</div>
-  </div>
+    <!-- ブランドヘッダー（ReServeロゴ → 利用者側トップ U-01） -->
+    <header class="appbar appbar-dark">
+      <a class="brand" href="U-01_store.html">Re<span class="mark">Serve</span>
+        <span class="brand-tag">SALON RESERVATION</span>
+      </a>
+      <span class="badge badge-muted">後払い</span>
+    </header>
 
-  <main>
-    <h1 class="page-title">予約内容の確認</h1>
-    <p class="page-sub">下記の内容で予約します。お支払いは来店時です。</p>
-
-    <!-- 予約サマリー -->
-    <section class="card">
-      <div class="card-label">予約サマリー</div>
-
-      <div class="salon">
-        <div class="thumb">✂</div>
-        <div>
-          <div class="name">hair atelier LUFA 表参道店</div>
-          <div class="area">東京都渋谷区 ・ 表参道駅 徒歩4分</div>
-        </div>
-      </div>
-
-      <div class="summary-row">
-        <div class="k">メニュー</div>
-        <div class="v">カット＋カラー<small>所要 約90分</small></div>
-      </div>
-      <div class="summary-row">
-        <div class="k">日時</div>
-        <div class="v">6月27日（土） 14:00<small>2026年</small></div>
-      </div>
-      <div class="summary-row">
-        <div class="k">スタイリスト</div>
-        <div class="v">佐藤 みなみ</div>
-      </div>
-      <div class="summary-row">
-        <div class="k">お名前</div>
-        <div class="v">山田 さくら 様</div>
-      </div>
-    </section>
-
-    <!-- 金額目安 -->
-    <section class="card flush">
-      <div class="card-label">お支払い金額の目安</div>
-      <div class="amount">
-        <div class="k">合計（税込）</div>
-        <div class="v">¥7,700<small>目安</small></div>
-      </div>
-      <div class="amount-note">※ 当日の仕上がり・追加メニューにより変動します。この画面では決済は行いません。</div>
-    </section>
-
-    <!-- 支払い案内（後払い）＝③bの根本原因 -->
-    <div class="pay-notice">
-      <div class="ic">🕒</div>
-      <div>
-        <div class="ttl">予約時のお支払いは不要です</div>
-        <div class="body">来店時に施術料金をお支払いください。事前の決済・カード登録はありません。</div>
-        <span class="free-pill">いまの支払い ¥0</span>
+    <!-- ステップ（確認・確定の段階） -->
+    <div class="mobile-body" style="padding-bottom:0;">
+      <div class="steps mb-0">
+        <span class="step is-done"><span class="num">1</span>店舗</span>
+        <span class="step-line"></span>
+        <span class="step is-done"><span class="num">2</span>入力</span>
+        <span class="step-line"></span>
+        <span class="step is-current"><span class="num">3</span>確認</span>
       </div>
     </div>
 
-    <p class="terms">
-      「予約を確定する」を押すと<a href="#">予約規約</a>に同意したものとみなされます。
-    </p>
-  </main>
+    <!-- 戻る導線（NAV：前画面 U-02 予約フォームへ） -->
+    <div class="backbar">
+      <a href="U-02_form.html">← 入力に戻る</a>
+    </div>
 
-  <!-- 固定フッター：確定とキャンセルが同じ重みで並ぶ -->
-  <div class="footer-hint">キャンセルはいつでも無料です</div>
-  <div class="footer">
-    <div class="btn btn-cancel">キャンセル</div>
-    <div class="btn btn-confirm">予約を確定する</div>
+    <!-- 本体 -->
+    <div class="mobile-body" style="padding-top:var(--sp-3);">
+
+      <div class="page-head">
+        <div class="crumb">ご予約 ・ 確認</div>
+        <h1 style="font-size:1.3rem;">予約内容の確認</h1>
+        <p class="lede">下記の内容で予約します。お支払いは来店時です。</p>
+      </div>
+
+      <!-- 予約サマリー -->
+      <section class="card">
+        <div class="card-h">予約内容</div>
+
+        <div class="salon-head">
+          <div class="thumb">✂</div>
+          <div>
+            <div class="name">田中美容室</div>
+            <div class="area">東京都渋谷区 ・ 渋谷駅 徒歩5分</div>
+          </div>
+        </div>
+
+        <div class="summary-line">
+          <span class="k">メニュー</span>
+          <span class="v">カット<small>所要 約60分</small></span>
+        </div>
+        <div class="summary-line">
+          <span class="k">日時</span>
+          <span class="v">6月25日（水） 14:00<small>2026年</small></span>
+        </div>
+        <div class="summary-line">
+          <span class="k">スタイリスト</span>
+          <span class="v">佐藤 葵<small>ご指名</small></span>
+        </div>
+        <div class="summary-line">
+          <span class="k">お名前</span>
+          <span class="v">山田 花子 様</span>
+        </div>
+        <div class="summary-line">
+          <span class="k">ご連絡先</span>
+          <span class="v">090-1234-5678</span>
+        </div>
+      </section>
+
+      <!-- 参考金額（決済はしない） -->
+      <section class="card">
+        <div class="card-h">お支払い金額の目安</div>
+        <div class="amount-row">
+          <span class="k">合計（税込）</span>
+          <span class="v">¥4,400<small>目安</small></span>
+        </div>
+        <p class="hint hint-block">※ 当日の仕上がり・追加メニューにより変動します。この画面では決済は行いません。</p>
+      </section>
+
+      <!-- 後払い案内（③bの根本原因） -->
+      <div class="pay-notice">
+        <div class="ic">🕒</div>
+        <div>
+          <div class="ttl">予約時のお支払いは不要です</div>
+          <div class="body">来店時に施術料金をお支払いください。事前の決済・カード登録はありません。</div>
+          <span class="badge mt-2">いまのお支払い ¥0</span>
+        </div>
+      </div>
+
+      <p class="faint center" style="font-size:.74rem;">
+        「予約を確定する」を押すと<a href="#" style="color:var(--gold-deep);">予約規約</a>に同意したものとみなされます。
+      </p>
+
+      <p class="mocknote-inline faint center" style="font-size:.7rem;margin-top:var(--sp-3);">
+        （隅メモ：確定率・キャンセル率はこの画面のイベントから <strong style="color:var(--gold-deep);">SQL</strong> で集計。数字は仮）
+      </p>
+
+    </div>
+
+    <!-- 固定フッター：確定 と キャンセル を同じ重みで並列（後払いで気軽に押せる構造＝③b） -->
+    <div class="confirm-footer">
+      <div class="footer-hint">キャンセルはいつでも無料です</div>
+      <div class="btn-pair">
+        <a class="btn btn-danger" href="U-01_store.html">キャンセル</a>
+        <a class="btn btn-primary" href="U-03b_done.html">予約を確定する</a>
+      </div>
+    </div>
+
   </div>
 
-</div>
 </body>
 </html>

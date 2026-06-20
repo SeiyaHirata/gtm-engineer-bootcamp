@@ -3,70 +3,233 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ReServe 合宿モック一覧</title>
+<title>ReServe — 美容室の予約を、かんたんに。</title>
+<link rel="stylesheet" href="assets/reserve.css">
 <style>
-  :root { --gold:#c9a96a; --ink:#2b2622; --muted:#7a7065; --line:#e7e0d6; --bg:#faf7f2; }
-  * { box-sizing:border-box; }
-  body { margin:0; font-family:-apple-system,"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif; background:var(--bg); color:var(--ink); line-height:1.7; }
-  header { background:#fff; border-bottom:1px solid var(--line); padding:28px 24px; }
-  .brand { font-size:22px; font-weight:800; letter-spacing:.08em; color:var(--gold); }
-  .sub { color:var(--muted); font-size:13px; margin-top:4px; }
-  main { max-width:880px; margin:0 auto; padding:28px 24px 60px; }
-  .note { background:#fff8ec; border:1px solid #f0e2c4; border-radius:10px; padding:14px 16px; font-size:13px; color:#7a6a45; margin-bottom:28px; }
-  h2 { font-size:15px; letter-spacing:.06em; color:var(--muted); border-bottom:1px solid var(--line); padding-bottom:8px; margin:32px 0 14px; }
-  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:14px; }
-  a.card { display:block; background:#fff; border:1px solid var(--line); border-radius:12px; padding:16px; text-decoration:none; color:inherit; transition:.15s; box-shadow:0 1px 3px rgba(0,0,0,.03); }
-  a.card:hover { border-color:var(--gold); box-shadow:0 4px 14px rgba(201,169,106,.18); transform:translateY(-1px); }
-  .id { font-size:11px; font-weight:700; color:var(--gold); letter-spacing:.08em; }
-  .title { font-size:15px; font-weight:700; margin:4px 0 6px; }
-  .desc { font-size:12.5px; color:var(--muted); }
-  .tag { display:inline-block; font-size:11px; background:#fdecec; color:#c0392b; border-radius:5px; padding:1px 7px; margin-top:8px; }
-  .tag.ok { background:#e8f5ec; color:#2e7d4f; }
+  /* ページ固有：トップLPのヒーロー帯・導線カード（このページだけの最小限） */
+  .lp-hero {
+    background:
+      radial-gradient(1100px 420px at 78% -8%, rgba(201,169,106,.18), transparent 60%),
+      linear-gradient(180deg, #fffdf9 0%, var(--cream) 100%);
+    border-bottom: 1px solid var(--line);
+  }
+  .lp-hero-inner {
+    max-width: 1040px; margin: 0 auto;
+    padding: var(--sp-7) var(--sp-5) var(--sp-6);
+    display: grid; grid-template-columns: 1.15fr .85fr; gap: var(--sp-7); align-items: center;
+  }
+  .lp-eyebrow {
+    display: inline-flex; align-items: center; gap: var(--sp-2);
+    font-size: .76rem; font-weight: 700; letter-spacing: .08em; color: var(--gold-deep);
+    background: var(--gold-soft); border-radius: var(--r-pill);
+    padding: .4em .85em; margin-bottom: var(--sp-4);
+  }
+  .lp-title { font-size: 2.5rem; line-height: 1.22; letter-spacing: .01em; }
+  .lp-title .mark { color: var(--gold); }
+  .lp-sub { margin-top: var(--sp-4); color: var(--muted); font-size: 1.02rem; max-width: 30em; }
+  .lp-trust { display: flex; flex-wrap: wrap; gap: var(--sp-2) var(--sp-5); margin-top: var(--sp-5);
+    font-size: .82rem; color: var(--muted); }
+  .lp-trust span { display: inline-flex; align-items: center; gap: 6px; }
+  .lp-trust .ck { color: var(--ok); font-weight: 800; }
+
+  /* ヒーロー右：本物のSaaSっぽいダッシュボード・プレビューカード */
+  .lp-preview {
+    background: var(--card); border: 1px solid var(--line); border-radius: var(--r-lg);
+    box-shadow: var(--shadow-3); overflow: hidden;
+  }
+  .lp-preview-bar {
+    display: flex; align-items: center; gap: 7px;
+    padding: 10px var(--sp-4); border-bottom: 1px solid var(--line-soft); background: #fbf9f5;
+  }
+  .lp-preview-bar .dot3 { width: 9px; height: 9px; border-radius: 50%; background: #e2d9c9; }
+  .lp-preview-bar .url {
+    margin-left: var(--sp-2); font-size: .72rem; color: var(--faint);
+    background: #fff; border: 1px solid var(--line); border-radius: var(--r-pill);
+    padding: 2px 12px; letter-spacing: .02em;
+  }
+  .lp-preview-body { padding: var(--sp-4); display: grid; gap: var(--sp-3); }
+  .lp-mini-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--sp-2); }
+  .lp-mini { background: #fbf9f5; border: 1px solid var(--line-soft); border-radius: var(--r-sm); padding: 10px 12px; }
+  .lp-mini .v { font-size: 1.15rem; font-weight: 800; }
+  .lp-mini .l { font-size: .68rem; color: var(--muted); }
+
+  /* 2つの大きな導線カード */
+  .lp-choose { max-width: 1040px; margin: 0 auto; padding: var(--sp-6) var(--sp-5) var(--sp-5); }
+  .lp-choose-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-5); }
+  .lp-entry {
+    display: flex; flex-direction: column;
+    background: var(--card); border: 1px solid var(--line); border-radius: var(--r-lg);
+    box-shadow: var(--shadow-2); padding: var(--sp-6); text-decoration: none; color: inherit;
+    transition: .16s ease; position: relative; overflow: hidden;
+  }
+  .lp-entry:hover { transform: translateY(-2px); box-shadow: var(--shadow-3); border-color: var(--gold); }
+  .lp-entry::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 4px; }
+  .lp-entry.is-store::before { background: var(--gold); }
+  .lp-entry.is-user::before { background: var(--ink); }
+  .lp-entry .ic {
+    width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center;
+    font-size: 1.35rem; margin-bottom: var(--sp-4);
+  }
+  .lp-entry.is-store .ic { background: var(--gold-soft); color: var(--gold-deep); }
+  .lp-entry.is-user .ic { background: #efeae2; color: var(--ink); }
+  .lp-entry h3 { font-size: 1.18rem; }
+  .lp-entry .role { font-size: .74rem; font-weight: 700; letter-spacing: .06em; color: var(--faint); margin-bottom: 4px; }
+  .lp-entry .desc { color: var(--muted); font-size: .9rem; margin-top: var(--sp-2); flex: 1; }
+  .lp-entry .go {
+    margin-top: var(--sp-5); display: inline-flex; align-items: center; justify-content: center; gap: var(--sp-2);
+    font-weight: 700; font-size: .92rem;
+  }
+  .lp-entry.is-store .go {
+    background: var(--gold); color: #fff; border-radius: var(--r); padding: .8em 1.2em; box-shadow: var(--shadow-gold);
+  }
+  .lp-entry.is-user .go {
+    background: var(--ink); color: #fff; border-radius: var(--r); padding: .8em 1.2em;
+  }
+
+  /* 合宿の入口だと分かる一文 */
+  .lp-bootcamp {
+    max-width: 1040px; margin: 0 auto; padding: 0 var(--sp-5) var(--sp-6);
+  }
+  .lp-bootcamp-inner {
+    background: #fbf9f5; border: 1px dashed var(--gold-deep); border-radius: var(--r);
+    padding: var(--sp-4) var(--sp-5); display: flex; align-items: flex-start; gap: var(--sp-3);
+    font-size: .85rem; color: var(--muted);
+  }
+  .lp-bootcamp-inner .tag {
+    flex: none; background: var(--gold); color: #fff; font-size: .68rem; font-weight: 700;
+    letter-spacing: .05em; padding: 2px 8px; border-radius: 4px; margin-top: 2px;
+  }
+  .lp-bootcamp-inner a { color: var(--gold-deep); font-weight: 700; }
+
+  @media (max-width: 880px) {
+    .lp-hero-inner { grid-template-columns: 1fr; gap: var(--sp-5); padding: var(--sp-6) var(--sp-4) var(--sp-5); }
+    .lp-title { font-size: 2rem; }
+    .lp-choose-grid { grid-template-columns: 1fr; }
+    .lp-preview { order: -1; }
+  }
 </style>
 </head>
 <body>
-<header>
-  <div class="brand">ReServe</div>
-  <div class="sub">美容室予約SaaS ｜ GTMエンジニア合宿 UIモック一覧（静的・数字は仮。分析はSQLで）</div>
-</header>
-<main>
-  <div class="note">これは合宿用のUIモックです。画面上の件数はレイアウト用の<b>仮の数字</b>で、詰まりの特定・通過率・ROIは<b>すべてSupabaseのSQL</b>で出します。各画面は「根本原因」が一目で伝わるように作っています。</div>
 
-  <h2>店舗管理画面（PC・供給側）</h2>
-  <div class="grid">
-    <a class="card" href="admin/A-01_onboarding.html">
-      <div class="id">A-01</div><div class="title">店舗オンボーディング</div>
-      <div class="desc">初期設定。項目が多く進捗も見えない。</div><span class="tag">詰まり① 設定完了</span>
-    </a>
-    <a class="card" href="admin/A-03_dashboard.html">
-      <div class="id">A-03</div><div class="title">管理ダッシュボード</div>
-      <div class="desc">キャンセル通知が目立ち、店舗がうんざり。</div><span class="tag">詰まり② 早期解約の文脈</span>
-    </a>
+  <!-- ===== 合宿モック注記バー（共通） ===== -->
+  <div class="mocknote">
+    <span class="mocknote-badge">合宿モック</span>
+    <span>ReServe トップ（サービス入口）</span>
+    <span class="sep">｜</span>
+    <span>画面の数字はレイアウト用の<strong>仮</strong>。詰まり・通過率・ROIの<strong>分析はSQL</strong>で出します。</span>
   </div>
 
-  <h2>利用者向けサイト（スマホ・需要側）</h2>
-  <div class="grid">
-    <a class="card" href="user/U-01_store.html">
-      <div class="id">U-01</div><div class="title">公開店舗ページ</div>
-      <div class="desc">予約導線の入口。「予約する」→ U-02。</div><span class="tag">詰まり③a の入口</span>
+  <!-- ===== ヘッダー（ReServeロゴ → トップ＝index） ===== -->
+  <header class="appbar">
+    <a class="brand" href="index.html">Re<span class="mark">Serve</span>
+      <span class="brand-tag">SALON RESERVATION SAAS</span>
     </a>
-    <a class="card" href="user/U-02_form.html">
-      <div class="id">U-02</div><div class="title">初回予約フォーム</div>
-      <div class="desc">項目が多く、送信CTAがテキスト風で押せるか不明。</div><span class="tag">詰まり③a 初回予約</span>
-    </a>
-    <a class="card" href="user/U-03_confirm.html">
-      <div class="id">U-03</div><div class="title">予約確認・完了</div>
-      <div class="desc">後払い案内＋目立つキャンセルボタン。</div><span class="tag">詰まり③b キャンセル</span>
-    </a>
-  </div>
+    <div class="row" style="gap:var(--sp-3);">
+      <a class="btn btn-ghost btn-sm" href="user/U-01_store.html">予約サイトを見る</a>
+      <a class="btn btn-primary btn-sm" href="admin/A-00_signup.html">お店として始める</a>
+    </div>
+  </header>
 
-  <h2>講師用（模範解・コマ7開示）</h2>
-  <div class="grid">
-    <a class="card" href="instructor/revenue-summary.html">
-      <div class="id">講師用</div><div class="title">ReServe 収益サマリー</div>
-      <div class="desc">サブスク＋手数料の答え合わせ用ダッシュボード。</div><span class="tag ok">答え（受講生には伏せる）</span>
-    </a>
-  </div>
-</main>
+  <!-- ===== ヒーロー ===== -->
+  <section class="lp-hero">
+    <div class="lp-hero-inner">
+      <div>
+        <span class="lp-eyebrow">美容室のための予約・顧客管理</span>
+        <h1 class="lp-title">美容室の予約を、<br>かんたんに。<span class="mark">ReServe</span></h1>
+        <p class="lp-sub">
+          公開ページの作成から、ネット予約・スタイリスト指名・来店時のお支払いまで。
+          サロンの予約まわりをまるごと、ひとつの画面で。
+        </p>
+        <div class="lp-trust">
+          <span><span class="ck">✓</span> 月額12,000円・初月から利用開始</span>
+          <span><span class="ck">✓</span> 予約時の決済なし（来店時お支払い）</span>
+          <span><span class="ck">✓</span> スマホ予約ページが自動で完成</span>
+        </div>
+      </div>
+
+      <!-- 右：本物のSaaSっぽいダッシュボード・プレビュー -->
+      <div class="lp-preview" aria-hidden="true">
+        <div class="lp-preview-bar">
+          <span class="dot3"></span><span class="dot3"></span><span class="dot3"></span>
+          <span class="url">reserve.app/田中美容室</span>
+        </div>
+        <div class="lp-preview-body">
+          <div class="row-between">
+            <div>
+              <div style="font-weight:700;">田中美容室</div>
+              <div class="faint" style="font-size:.74rem;">東京都渋谷区 ／ 火-日 10:00-20:00</div>
+            </div>
+            <span class="badge badge-ok"><span class="dot"></span>公開中</span>
+          </div>
+          <div class="lp-mini-stats">
+            <div class="lp-mini"><div class="v">12</div><div class="l">今週の予約</div></div>
+            <div class="lp-mini"><div class="v">¥4,000</div><div class="l">平均単価</div></div>
+            <div class="lp-mini"><div class="v">2名</div><div class="l">スタイリスト</div></div>
+          </div>
+          <div class="toast" style="margin:0;">
+            <span class="toast-ic">🗓</span>
+            <div>
+              <div class="toast-title">6/25(水) 14:00 カット</div>
+              <div class="toast-text">山田 花子 様・佐藤 葵 指名</div>
+            </div>
+            <span class="toast-time">新着</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 2つの大きな導線 ===== -->
+  <section class="lp-choose">
+    <div class="section-label" style="margin-top:0;">デモを体験する　— どちらの立場で見ますか？</div>
+    <div class="lp-choose-grid">
+
+      <a class="lp-entry is-store" href="admin/A-00_signup.html">
+        <span class="role">サロン運営者として</span>
+        <div class="ic">🏪</div>
+        <h3>お店として始める</h3>
+        <div class="desc">
+          店舗を登録して、公開ページの作成から予約・売上の管理画面までを体験します。
+          初期設定 → 公開 → ダッシュボードの流れを確認できます。
+        </div>
+        <span class="go">店舗管理画面デモへ進む →</span>
+      </a>
+
+      <a class="lp-entry is-user" href="user/U-01_store.html">
+        <span class="role">来店するお客さんとして</span>
+        <div class="ic">💇</div>
+        <h3>お客さんとして予約する</h3>
+        <div class="desc">
+          公開された田中美容室の予約サイトから、メニューと日時を選んでネット予約します。
+          予約 → 確認 → 完了 → マイページの流れを体験できます。
+        </div>
+        <span class="go">予約サイトデモへ進む →</span>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ===== 合宿の入口だと分かる一文 ===== -->
+  <section class="lp-bootcamp">
+    <div class="lp-bootcamp-inner">
+      <span class="tag">合宿</span>
+      <div>
+        ここはGTMエンジニア合宿の入口です。受講生は上の2つの導線（供給側＝店舗／需要側＝お客さん）を実際に通って、
+        どこで離脱・キャンセルが起きるかを自分の手で体感します。講師の方は
+        <a href="instructor/sitemap.html">講師用：全画面マップ</a> から全画面へ移動できます。
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== フッター ===== -->
+  <footer class="footer">
+    <div class="footer-links">
+      <a href="admin/A-00_signup.html">お店として始める</a>
+      <a href="user/U-01_store.html">お客さんとして予約する</a>
+      <a href="instructor/sitemap.html">講師用：全画面マップ</a>
+    </div>
+    <div>ReServe ｜ 美容室予約SaaS（GTMエンジニア合宿 UIモック・数字は仮／分析はSQL）</div>
+  </footer>
+
 </body>
 </html>

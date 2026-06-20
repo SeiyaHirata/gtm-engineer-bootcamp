@@ -2,173 +2,192 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>A-03 店舗管理ダッシュボード｜ReServe（合宿用モック）</title>
+<meta name="viewport" content="width=1100">
+<title>ReServe 管理画面 ｜ A-03 店舗ダッシュボード</title>
+<link rel="stylesheet" href="../assets/reserve.css">
+<style>
+  /* ページ固有の最小限の補助（共有CSSにない見た目だけ） */
+  /* 右上のアバター（店舗イニシャル） */
+  .avatar {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: var(--gold-soft); color: var(--gold-deep);
+    font-size: .85rem; font-weight: 700;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+
+  /* カード見出しの右肩リンク */
+  .card-h-link { margin-left: auto; font-size: .8rem; color: var(--gold-deep); text-decoration: none; font-weight: 600; }
+  .card-h-link:hover { text-decoration: underline; }
+</style>
 </head>
-<body style="margin:0; padding:0; font-family:'Hiragino Kaku Gothic ProN','Hiragino Sans','Noto Sans JP',sans-serif; background:#f4f5f7; color:#2b2f36; -webkit-font-smoothing:antialiased;">
+<body>
 
-<!-- ===== モック注記バー（最上部・常時） ===== -->
-<div style="background:#1f2430; color:#cfd4dd; font-size:12px; line-height:1.5; padding:7px 24px; text-align:center; letter-spacing:0.02em;">
-  画面ID <strong style="color:#fff;">A-03</strong>　店舗管理ダッシュボード｜
-  <span style="color:#ffd9a0;">これは合宿用モック（数字は仮・分析はSQL）</span>
-</div>
-
-<!-- ===== ヘッダー（ブランド） ===== -->
-<header style="background:#ffffff; border-bottom:1px solid #e4e7ec; padding:0 24px;">
-  <div style="max-width:1180px; margin:0 auto; height:60px; display:flex; align-items:center; justify-content:space-between;">
-    <!-- ロゴ風テキスト -->
-    <div style="display:flex; align-items:center; gap:10px;">
-      <span style="display:inline-block; width:28px; height:28px; border-radius:8px; background:#3f6f63; color:#fff; font-weight:700; font-size:16px; text-align:center; line-height:28px;">R</span>
-      <span style="font-size:20px; font-weight:700; letter-spacing:0.04em; color:#27463f;">ReServe</span>
-      <span style="font-size:11px; color:#8a929e; border-left:1px solid #d7dbe0; padding-left:10px; margin-left:4px;">美容室予約管理</span>
-    </div>
-    <!-- 右上：店舗名・継続ステータス -->
-    <div style="display:flex; align-items:center; gap:16px; font-size:13px; color:#5a626d;">
-      <span style="color:#a06800; background:#fff4dd; border:1px solid #f0d9a8; border-radius:14px; padding:3px 11px; font-size:12px;">契約 3ヶ月目</span>
-      <span style="font-weight:600; color:#2b2f36;">田中美容室</span>
-      <span style="display:inline-block; width:30px; height:30px; border-radius:50%; background:#e7ebef; color:#7a828d; text-align:center; line-height:30px; font-size:13px; font-weight:600;">田</span>
-    </div>
+  <!-- 合宿用モック注記（最上部） -->
+  <div class="mocknote">
+    <span class="mocknote-badge">A-03</span>
+    <span>店舗ダッシュボード</span>
+    <span class="sep">|</span>
+    <span>これは合宿用モック。画面の件数は<strong>仮</strong>・詰まりの特定と分析は<strong>SQL</strong>で行います</span>
   </div>
-</header>
 
-<!-- ===== 本体：サイドナビ ＋ メイン ===== -->
-<div style="max-width:1180px; margin:0 auto; display:flex; min-height:760px;">
-
-  <!-- サイドナビ -->
-  <nav style="width:210px; flex-shrink:0; background:#ffffff; border-right:1px solid #e4e7ec; padding:20px 0;">
-    <div style="font-size:11px; color:#9aa1ab; padding:0 22px 10px; letter-spacing:0.06em;">メニュー</div>
-    <a href="#" style="display:flex; align-items:center; gap:10px; text-decoration:none; padding:11px 22px; font-size:14px; font-weight:600; color:#27463f; background:#eef4f1; border-left:3px solid #3f6f63;">
-      <span style="font-size:15px;">▣</span> ダッシュボード
+  <!-- ブランドヘッダー（ロゴ→A-03トップ） -->
+  <header class="appbar">
+    <a class="brand" href="A-03_dashboard.html">
+      Re<span class="mark">Serve</span>
+      <span class="brand-tag">SALON RESERVATION CLOUD</span>
     </a>
-    <a href="#" style="display:flex; align-items:center; gap:10px; text-decoration:none; padding:11px 25px; font-size:14px; color:#5a626d; border-left:3px solid transparent;">
-      <span style="font-size:15px;">▤</span> 予約一覧
-    </a>
-    <a href="#" style="display:flex; align-items:center; gap:10px; text-decoration:none; padding:11px 25px; font-size:14px; color:#5a626d; border-left:3px solid transparent;">
-      <span style="font-size:15px;">▥</span> 請求・プラン
-    </a>
-  </nav>
-
-  <!-- メイン -->
-  <main style="flex:1; padding:26px 30px 40px;">
-
-    <h1 style="margin:0 0 4px; font-size:22px; font-weight:700; color:#2b2f36;">ダッシュボード</h1>
-    <p style="margin:0 0 22px; font-size:13px; color:#8a929e;">2026年6月のサマリー（今月）</p>
-
-    <!-- ===== 目立つキャンセル通知（うんざり演出の主役） ===== -->
-    <div style="background:#fdecec; border:1px solid #f3b4b4; border-left:6px solid #d94141; border-radius:10px; padding:16px 20px; margin-bottom:24px; display:flex; align-items:center; gap:16px;">
-      <span style="display:inline-block; width:40px; height:40px; border-radius:50%; background:#d94141; color:#fff; font-size:22px; font-weight:700; text-align:center; line-height:40px; flex-shrink:0;">!</span>
-      <div style="flex:1;">
-        <div style="font-size:16px; font-weight:700; color:#b02a2a; margin-bottom:2px;">本日3件キャンセルされました</div>
-        <div style="font-size:13px; color:#9a4a4a;">またキャンセルです。予約は入るのに、当日になると次々と取り消されます…</div>
+    <div class="row" style="gap:var(--sp-4)">
+      <div class="appbar-right">
+        <strong>田中美容室</strong>　<span class="badge badge-ok"><span class="dot"></span>稼働中</span><br>
+        管理者：田中 様 ／ プラン：月額 12,000円（課金中）
       </div>
-      <span style="font-size:12px; color:#c06b6b; white-space:nowrap;">12:48 受信</span>
+      <span class="avatar">田</span>
     </div>
+  </header>
 
-    <!-- ===== サマリーカード（仮数字） ===== -->
-    <div style="display:flex; gap:16px; margin-bottom:8px;">
-      <!-- 今月の予約 -->
-      <div style="flex:1; background:#fff; border:1px solid #e4e7ec; border-radius:10px; padding:18px 20px;">
-        <div style="font-size:12px; color:#8a929e; margin-bottom:8px;">今月の予約</div>
-        <div style="font-size:30px; font-weight:700; color:#2b2f36; line-height:1;">42<span style="font-size:14px; font-weight:500; color:#8a929e; margin-left:3px;">件</span></div>
+  <!-- 本体：サイドナビ ＋ メイン -->
+  <div class="app-layout">
+
+    <!-- サイドナビ：ダッシュボード／予約一覧／請求・プラン -->
+    <nav class="sidenav">
+      <div class="nav-group">店舗管理</div>
+      <a href="A-03_dashboard.html" class="active">ダッシュボード</a>
+      <a href="A-04_reservations.html">予約一覧</a>
+      <a href="A-05_billing.html">請求・プラン</a>
+      <div class="nav-group">店舗ページ</div>
+      <a href="../user/U-01_store.html">公開ページを見る</a>
+    </nav>
+
+    <!-- メイン -->
+    <main class="app-main">
+
+      <div class="page-head">
+        <div class="crumb">店舗管理 ＞ ダッシュボード</div>
+        <h1>店舗ダッシュボード</h1>
+        <p class="lede">2026年6月のサマリー（今月）｜ 田中美容室（東京都渋谷区／火-日 10:00-20:00・月曜定休）</p>
       </div>
-      <!-- キャンセル（強調） -->
-      <div style="flex:1; background:#fff6f6; border:1px solid #f3b4b4; border-radius:10px; padding:18px 20px; position:relative;">
-        <div style="font-size:12px; color:#c06b6b; margin-bottom:8px;">キャンセル</div>
-        <div style="font-size:30px; font-weight:700; color:#d94141; line-height:1;">18<span style="font-size:14px; font-weight:500; color:#cf8a8a; margin-left:3px;">件</span></div>
-        <div style="position:absolute; top:16px; right:18px; font-size:11px; color:#d94141; background:#fbe0e0; border-radius:10px; padding:2px 8px;">▲ 多い</div>
+
+      <!-- サマリーカード（仮数字） -->
+      <div class="card-grid" style="grid-template-columns:repeat(3,1fr); margin-bottom:var(--sp-3)">
+        <div class="card stat-card mb-0">
+          <div class="stat">
+            <span class="stat-label">今月の予約</span>
+            <span class="stat-value">42<span style="font-size:.9rem;font-weight:600;color:var(--muted);margin-left:3px">件</span></span>
+            <span class="stat-sub">うち確定 24・処理待ち 0</span>
+          </div>
+        </div>
+        <div class="card stat-card mb-0">
+          <div class="stat">
+            <span class="stat-label">来店済</span>
+            <span class="stat-value" style="color:var(--ok)">30<span style="font-size:.9rem;font-weight:600;color:var(--muted);margin-left:3px">件</span></span>
+            <span class="stat-sub">今月の来店</span>
+          </div>
+        </div>
+        <div class="card stat-card mb-0">
+          <div class="stat">
+            <span class="stat-label">平均客単価</span>
+            <span class="stat-value">¥6,200</span>
+            <span class="stat-sub">来店1回あたり</span>
+          </div>
+        </div>
       </div>
-      <!-- 来店済 -->
-      <div style="flex:1; background:#fff; border:1px solid #e4e7ec; border-radius:10px; padding:18px 20px;">
-        <div style="font-size:12px; color:#8a929e; margin-bottom:8px;">来店済</div>
-        <div style="font-size:30px; font-weight:700; color:#3f6f63; line-height:1;">12<span style="font-size:14px; font-weight:500; color:#8a929e; margin-left:3px;">件</span></div>
+
+      <!-- サマリー直下の仮数字注記 -->
+      <p class="faint" style="font-size:.74rem; line-height:1.6; margin:0 2px var(--sp-5)">
+        ※ 上の数字（予約42／来店30／平均客単価¥6,200）は<strong style="color:var(--muted)">レイアウト確認用の仮数字</strong>です。
+        実際の件数・通過率・各指標の集計は<strong style="color:var(--muted)">すべてSupabaseのSQL</strong>で行います。この画面の数字から結論を出さないでください。
+      </p>
+
+      <!-- 直近の予約一覧 -->
+      <div class="card">
+        <div class="card-h">
+          直近の予約
+          <a class="card-h-link" href="A-04_reservations.html">予約一覧をすべて見る →</a>
+        </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>日時</th>
+              <th>メニュー</th>
+              <th>指名スタイリスト</th>
+              <th>お客様</th>
+              <th>ステータス</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- 山田様の確定予約（U側・店舗側で同一に見える基準データ） -->
+            <tr>
+              <td>6/25（水）14:00</td>
+              <td>カット <span class="faint">¥4,400</span></td>
+              <td>佐藤 葵</td>
+              <td>山田 花子 様</td>
+              <td><span class="badge badge-ok"><span class="dot"></span>確定</span></td>
+            </tr>
+            <tr>
+              <td>6/24（火）11:00</td>
+              <td>カラー <span class="faint">¥8,800</span></td>
+              <td>鈴木 大地</td>
+              <td>中村 様</td>
+              <td><span class="badge badge-ok"><span class="dot"></span>確定</span></td>
+            </tr>
+            <tr>
+              <td>6/22（日）17:00</td>
+              <td>トリートメント <span class="faint">¥3,300</span></td>
+              <td>鈴木 大地</td>
+              <td>高橋 様</td>
+              <td><span class="badge badge-muted">来店済</span></td>
+            </tr>
+            <tr>
+              <td>6/22（日）13:30</td>
+              <td>縮毛矯正 <span class="faint">¥13,200</span></td>
+              <td>佐藤 葵</td>
+              <td>渡辺 様</td>
+              <td><span class="badge badge-muted">来店済</span></td>
+            </tr>
+            <tr>
+              <td>6/21（土）16:00</td>
+              <td>カット <span class="faint">¥4,400</span></td>
+              <td>鈴木 大地</td>
+              <td>山本 様</td>
+              <td><span class="badge badge-muted">来店済</span></td>
+            </tr>
+            <tr>
+              <td>6/20（金）18:30</td>
+              <td>カラー <span class="faint">¥8,800</span></td>
+              <td>佐藤 葵</td>
+              <td>小林 様</td>
+              <td><span class="badge badge-danger">キャンセル</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="faint mb-0" style="font-size:.72rem; margin-top:var(--sp-3)">
+          ※ 並んでいる予約は<strong style="color:var(--muted)">レイアウト用の仮データ</strong>です。実際の発生件数・各指標はSQLで集計します。
+        </p>
       </div>
+
+      <!-- 画面内の遷移（A-04 / A-05 へ） -->
+      <div class="actions">
+        <span class="left-note faint" style="font-size:.78rem">← サイドナビからも各画面へ移動できます</span>
+        <div class="actions-btns">
+          <a class="btn btn-ghost" href="A-05_billing.html">請求・プランを見る</a>
+          <a class="btn btn-primary" href="A-04_reservations.html">予約一覧を開く</a>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- フッター -->
+  <footer class="footer">
+    <div class="footer-links">
+      <a href="A-03_dashboard.html">ダッシュボード</a>
+      <a href="A-04_reservations.html">予約一覧</a>
+      <a href="A-05_billing.html">請求・プラン</a>
+      <a href="../user/U-01_store.html">公開店舗ページ</a>
+      <a href="../instructor/sitemap.html">講師用サイトマップ</a>
     </div>
-
-    <!-- サマリー直下の注記 -->
-    <p style="margin:10px 2px 26px; font-size:11px; color:#a7adb6; line-height:1.6;">
-      ※ 上の数字（予約42／キャンセル18／来店12）は<strong style="color:#8a929e;">レイアウト確認用の仮数字</strong>であり、ファネルの正典（キャンセル件数・通過率等）とは無関係です。
-      詰まりの特定・通過率・ROIの判断は<strong style="color:#8a929e;">すべてSQL</strong>で行います。この画面の数字から結論を出さないでください。
-    </p>
-
-    <!-- ===== 直近の予約一覧 ===== -->
-    <div style="background:#fff; border:1px solid #e4e7ec; border-radius:10px; overflow:hidden;">
-      <div style="display:flex; align-items:center; justify-content:space-between; padding:15px 20px; border-bottom:1px solid #eef0f3;">
-        <span style="font-size:15px; font-weight:700; color:#2b2f36;">直近の予約</span>
-        <a href="#" style="font-size:12px; color:#3f6f63; text-decoration:none;">予約一覧をすべて見る →</a>
-      </div>
-      <table style="width:100%; border-collapse:collapse; font-size:13px;">
-        <thead>
-          <tr style="background:#fafbfc; color:#8a929e; text-align:left;">
-            <th style="padding:10px 20px; font-weight:600;">日時</th>
-            <th style="padding:10px 20px; font-weight:600;">メニュー</th>
-            <th style="padding:10px 20px; font-weight:600;">お客様</th>
-            <th style="padding:10px 20px; font-weight:600;">ステータス</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- キャンセル行が並び、うんざり感を出す -->
-          <tr style="border-top:1px solid #f0f2f4; background:#fff8f8;">
-            <td style="padding:12px 20px; color:#4a515b;">6/20（金）13:00</td>
-            <td style="padding:12px 20px; color:#4a515b;">カット＋カラー</td>
-            <td style="padding:12px 20px; color:#4a515b;">佐藤 様</td>
-            <td style="padding:12px 20px;"><span style="display:inline-block; font-size:12px; font-weight:600; color:#d94141; background:#fbe0e0; border-radius:12px; padding:3px 11px;">キャンセル</span></td>
-          </tr>
-          <tr style="border-top:1px solid #f0f2f4; background:#fff8f8;">
-            <td style="padding:12px 20px; color:#4a515b;">6/20（金）15:30</td>
-            <td style="padding:12px 20px; color:#4a515b;">カット</td>
-            <td style="padding:12px 20px; color:#4a515b;">鈴木 様</td>
-            <td style="padding:12px 20px;"><span style="display:inline-block; font-size:12px; font-weight:600; color:#d94141; background:#fbe0e0; border-radius:12px; padding:3px 11px;">キャンセル</span></td>
-          </tr>
-          <tr style="border-top:1px solid #f0f2f4;">
-            <td style="padding:12px 20px; color:#4a515b;">6/20（金）17:00</td>
-            <td style="padding:12px 20px; color:#4a515b;">パーマ</td>
-            <td style="padding:12px 20px; color:#4a515b;">高橋 様</td>
-            <td style="padding:12px 20px;"><span style="display:inline-block; font-size:12px; font-weight:600; color:#a06800; background:#fff4dd; border-radius:12px; padding:3px 11px;">確定</span></td>
-          </tr>
-          <tr style="border-top:1px solid #f0f2f4; background:#fff8f8;">
-            <td style="padding:12px 20px; color:#4a515b;">6/21（土）11:00</td>
-            <td style="padding:12px 20px; color:#4a515b;">カット＋トリートメント</td>
-            <td style="padding:12px 20px; color:#4a515b;">伊藤 様</td>
-            <td style="padding:12px 20px;"><span style="display:inline-block; font-size:12px; font-weight:600; color:#d94141; background:#fbe0e0; border-radius:12px; padding:3px 11px;">キャンセル</span></td>
-          </tr>
-          <tr style="border-top:1px solid #f0f2f4;">
-            <td style="padding:12px 20px; color:#4a515b;">6/21（土）14:00</td>
-            <td style="padding:12px 20px; color:#4a515b;">カラー</td>
-            <td style="padding:12px 20px; color:#4a515b;">渡辺 様</td>
-            <td style="padding:12px 20px;"><span style="display:inline-block; font-size:12px; font-weight:600; color:#a06800; background:#fff4dd; border-radius:12px; padding:3px 11px;">確定</span></td>
-          </tr>
-          <tr style="border-top:1px solid #f0f2f4;">
-            <td style="padding:12px 20px; color:#4a515b;">6/19（木）16:00</td>
-            <td style="padding:12px 20px; color:#4a515b;">カット</td>
-            <td style="padding:12px 20px; color:#4a515b;">山本 様</td>
-            <td style="padding:12px 20px;"><span style="display:inline-block; font-size:12px; font-weight:600; color:#3f6f63; background:#e6f0ec; border-radius:12px; padding:3px 11px;">来店済</span></td>
-          </tr>
-          <tr style="border-top:1px solid #f0f2f4; background:#fff8f8;">
-            <td style="padding:12px 20px; color:#4a515b;">6/19（木）18:30</td>
-            <td style="padding:12px 20px; color:#4a515b;">カット＋カラー</td>
-            <td style="padding:12px 20px; color:#4a515b;">中村 様</td>
-            <td style="padding:12px 20px;"><span style="display:inline-block; font-size:12px; font-weight:600; color:#d94141; background:#fbe0e0; border-radius:12px; padding:3px 11px;">キャンセル</span></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- 店舗オーナーの心の声（うんざり演出・補足） -->
-    <div style="margin-top:18px; background:#f0f2f4; border-radius:10px; padding:14px 18px; font-size:13px; color:#6a727d; line-height:1.7;">
-      <span style="font-weight:700; color:#5a626d;">店舗オーナーの本音：</span>
-      「予約は入るのに、半分以上が当日キャンセル。通知が鳴るたびにガッカリする。これで月1万2千円払う価値、あるのかな…」
-      <span style="color:#a7adb6;">（この“うんざり感”が3ヶ月目の解約 ＝ ② につながる。原因の特定はSQLで）</span>
-    </div>
-
-  </main>
-</div>
-
-<!-- ===== フッター注記 ===== -->
-<footer style="max-width:1180px; margin:0 auto; padding:18px 30px 30px; font-size:11px; color:#a7adb6; line-height:1.7;">
-  <strong style="color:#8a929e;">合宿用モック（A-03 店舗管理ダッシュボード）</strong>｜
-  この画面は「②早期チャーン」の文脈を体感するための演出用です。表示している件数はすべて仮の数字で、実DBの値（reservations のキャンセル件数など）とは一致させていません。
-  通過率・詰まりの特定・ROIの算出は <strong style="color:#8a929e;">SQL（シードDB）</strong> で行ってください。
-</footer>
+    ReServe ｜ 合宿用モック（A-03 店舗ダッシュボード）｜ 件数はすべて仮の数字で、詰まりの特定・通過率・ROIの判断は<strong style="color:var(--muted)">SQL（シードDB）</strong>で行ってください。
+  </footer>
 
 </body>
 </html>

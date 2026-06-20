@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>U-04 マイページ | ReServe（合宿用モック）</title>
+<link rel="stylesheet" href="../assets/reserve.css">
+<style>
+  /* ページ固有の最小限のみ。見た目の統一は reserve.css のクラスに従う */
+  .mp-back {
+    display: inline-flex; align-items: center; gap: 4px;
+    color: #cdbfa9; font-size: .8rem; text-decoration: none; letter-spacing: .02em;
+  }
+  .mp-back:hover { color: #f3ede4; }
+
+  /* マイページ上部の挨拶 */
+  .mp-greet { padding: var(--sp-5) var(--sp-4) var(--sp-2); }
+  .mp-greet .hello { font-size: .82rem; color: var(--muted); }
+  .mp-greet .name { font-size: 1.35rem; font-weight: 800; letter-spacing: .01em; margin-top: 2px; }
+
+  /* 次回予約のハイライトカード（健全＝主役を明快に） */
+  .next-card {
+    background: linear-gradient(160deg, #ffffff 0%, #fcf8f0 100%);
+    border: 1px solid var(--gold);
+    box-shadow: var(--shadow-gold);
+  }
+  .next-card .next-flag {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: .72rem; font-weight: 700; letter-spacing: .04em;
+    color: var(--gold-deep); background: var(--gold-soft);
+    border-radius: var(--r-pill); padding: .3em .7em; margin-bottom: var(--sp-3);
+  }
+  .next-when { font-size: 1.25rem; font-weight: 800; letter-spacing: .01em; }
+  .next-menu { font-size: .95rem; color: var(--ink); font-weight: 600; margin-top: 2px; }
+
+  /* 予約の詳細グリッド（次回予約の中身・履歴の中身共通） */
+  .resv-meta { display: grid; gap: 7px; margin-top: var(--sp-3); }
+  .resv-meta .line { display: flex; gap: var(--sp-3); align-items: baseline; }
+  .resv-meta .k { width: 78px; flex: none; font-size: .78rem; color: var(--muted); }
+  .resv-meta .v { font-size: .88rem; color: var(--ink); }
+
+  /* 履歴の1件 */
+  .hist {
+    display: flex; gap: var(--sp-3); align-items: flex-start;
+    padding: var(--sp-3) 0; border-bottom: 1px solid var(--line-soft);
+  }
+  .hist:last-child { border-bottom: none; }
+  .hist .date {
+    flex: none; width: 52px; text-align: center;
+    background: #f7f3ec; border: 1px solid var(--line); border-radius: var(--r-sm);
+    padding: 6px 0; line-height: 1.2;
+  }
+  .hist .date .m { font-size: .68rem; color: var(--muted); }
+  .hist .date .d { font-size: 1.05rem; font-weight: 800; color: var(--ink); }
+  .hist .body { flex: 1; min-width: 0; }
+  .hist .body .menu { font-size: .9rem; font-weight: 600; }
+  .hist .body .sub { font-size: .76rem; color: var(--muted); margin-top: 1px; }
+  .hist .price { flex: none; font-size: .88rem; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+  /* 店舗ミニ見出し */
+  .salon-mini { display: flex; align-items: center; gap: var(--sp-3); }
+  .salon-mini .thumb {
+    width: 44px; height: 44px; border-radius: var(--r-sm); flex: none;
+    background: linear-gradient(135deg, #d8c7a8, #b69a72);
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 1.1rem;
+  }
+  .salon-mini .nm { font-size: .95rem; font-weight: 700; }
+  .salon-mini .ar { font-size: .76rem; color: var(--muted); }
+</style>
+</head>
+<body>
+
+  <div class="mobile">
+
+    <!-- 合宿モック注記（隅に：数字は仮・分析はSQL） -->
+    <div class="mocknote">
+      <span class="mocknote-badge">U-04</span>
+      <span>マイページ（リピートは健全＝対照）</span>
+      <span class="sep">|</span>
+      <span>合宿用モック・数字は仮・<strong>分析はSQL</strong></span>
+    </div>
+
+    <!-- ヘッダー：ロゴは利用者側トップ(U-01)へ／←戻るも実装 -->
+    <header class="appbar appbar-dark">
+      <a class="brand" href="U-01_store.html">Re<span class="mark">Serve</span><span class="brand-tag">SALON RESERVATION</span></a>
+      <a class="mp-back" href="U-01_store.html">← 店舗ページへ</a>
+    </header>
+
+    <!-- 挨拶 -->
+    <div class="mp-greet">
+      <div class="hello">こんにちは</div>
+      <div class="name">山田 花子 様</div>
+    </div>
+
+    <div class="mobile-body" style="padding-top:0;">
+
+      <!-- ===== 次回の予約（主役）===== -->
+      <div class="section-label" style="margin-top:var(--sp-2);">次回のご予約</div>
+
+      <div class="card next-card">
+        <span class="next-flag">● 予約済み</span>
+        <div class="next-when">6/25（水） 14:00</div>
+        <div class="next-menu">カット</div>
+
+        <div class="resv-meta">
+          <div class="line"><span class="k">店舗</span><span class="v">田中美容室（渋谷区）</span></div>
+          <div class="line"><span class="k">スタイリスト</span><span class="v">佐藤 葵</span></div>
+          <div class="line"><span class="k">所要時間</span><span class="v">約60分</span></div>
+          <div class="line"><span class="k">お支払い</span><span class="v">¥4,400（来店時にお支払い）</span></div>
+        </div>
+
+        <div class="row mt-4" style="gap:var(--sp-2);">
+          <a href="#" class="btn btn-ghost btn-sm">予約を変更</a>
+          <span class="spacer"></span>
+          <a href="#" class="btn btn-ghost btn-sm">店舗に連絡</a>
+        </div>
+      </div>
+
+      <!-- ===== いつもの店舗（ワンタップ再予約＝スムーズ）===== -->
+      <div class="card">
+        <div class="salon-mini">
+          <div class="thumb">✂</div>
+          <div>
+            <div class="nm">田中美容室</div>
+            <div class="ar">東京都渋谷区 ・ 火-日 10:00-20:00（月曜定休）</div>
+          </div>
+        </div>
+        <hr class="divider">
+        <!-- 次の予約導線：はっきりしたゴールドCTA＝迷いなく押せる（健全） -->
+        <a href="U-02_form.html" class="btn btn-primary btn-block btn-lg">次の予約を取る</a>
+        <p class="hint hint-block center" style="margin-top:var(--sp-3);">前回と同じ内容なら最短2タップで予約できます</p>
+      </div>
+
+      <!-- ===== 来店履歴（過去の来店）===== -->
+      <div class="section-label">来店履歴</div>
+
+      <div class="card">
+        <div class="salon-mini" style="margin-bottom:var(--sp-3);">
+          <div class="thumb">✂</div>
+          <div>
+            <div class="nm">田中美容室</div>
+            <div class="ar">これまでのご来店 4回</div>
+          </div>
+        </div>
+
+        <div class="hist">
+          <div class="date"><div class="m">5月</div><div class="d">28</div></div>
+          <div class="body">
+            <div class="menu">カット</div>
+            <div class="sub">佐藤 葵 ・ 来店時にお支払い済み</div>
+          </div>
+          <div class="price">¥4,400</div>
+        </div>
+
+        <div class="hist">
+          <div class="date"><div class="m">4月</div><div class="d">15</div></div>
+          <div class="body">
+            <div class="menu">カット ＋ トリートメント</div>
+            <div class="sub">鈴木 大地 ・ 来店時にお支払い済み</div>
+          </div>
+          <div class="price">¥7,700</div>
+        </div>
+
+        <div class="hist">
+          <div class="date"><div class="m">3月</div><div class="d">02</div></div>
+          <div class="body">
+            <div class="menu">カラー</div>
+            <div class="sub">佐藤 葵 ・ 来店時にお支払い済み</div>
+          </div>
+          <div class="price">¥8,800</div>
+        </div>
+
+        <div class="hist">
+          <div class="date"><div class="m">1月</div><div class="d">20</div></div>
+          <div class="body">
+            <div class="menu">カット</div>
+            <div class="sub">佐藤 葵 ・ 来店時にお支払い済み</div>
+          </div>
+          <div class="price">¥4,400</div>
+        </div>
+
+        <hr class="divider">
+        <div class="row-between">
+          <span class="hint" style="margin-left:0;">累計のご利用 <strong class="muted">4回</strong>（※件数はレイアウト用の仮数字）</span>
+          <a href="#" class="link-cta">すべて見る</a>
+        </div>
+      </div>
+
+      <!-- ===== 対照メモ（合宿の文脈：リピートは健全）===== -->
+      <div class="toast toast-ok mt-4">
+        <span class="toast-ic">✓</span>
+        <div>
+          <div class="toast-title">対照：リピートは健全</div>
+          <div class="toast-text">既存客の再予約は「次の予約を取る」がゴールドCTAで明快・迷いがない。詰まりは①初期設定 / ③a初回フォーム / ③bキャンセルに集中。リピート率・LTVはSQLで出す。</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- フッター -->
+    <footer class="footer">
+      <div class="footer-links">
+        <a href="U-01_store.html">店舗ページ</a>
+        <a href="U-02_form.html">予約する</a>
+        <a href="../index.html">モック一覧</a>
+      </div>
+      ReServe ｜ 美容室予約SaaS（合宿用モック）
+    </footer>
+
+  </div>
+
+</body>
+</html>

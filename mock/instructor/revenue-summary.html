@@ -3,282 +3,300 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ReServe 収益サマリー（講師用・模範解）｜SUM</title>
+<title>収益サマリー（講師用・模範解）｜ReServe</title>
+<link rel="stylesheet" href="../assets/reserve.css">
 </head>
-<body style="margin:0;padding:0;background:#eef1f4;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Hiragino Kaku Gothic ProN','Hiragino Sans','Yu Gothic',Meiryo,sans-serif;color:#1f2733;line-height:1.6;-webkit-font-smoothing:antialiased;">
+<body>
 
-  <!-- ===== ヘッダー ===== -->
-  <header style="background:#2d3a4a;color:#ffffff;padding:18px 32px;">
-    <div style="max-width:1080px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
-      <div style="display:flex;align-items:center;gap:14px;">
-        <span style="display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:10px;background:#c8a45c;color:#2d3a4a;font-weight:800;font-size:20px;letter-spacing:-0.5px;">R</span>
-        <span style="font-size:21px;font-weight:700;letter-spacing:0.5px;">Re<span style="color:#c8a45c;">Serve</span></span>
-        <span style="font-size:12px;color:#aab6c4;border-left:1px solid #4a5868;padding-left:14px;">美容室向け予約管理SaaS</span>
+<!-- ===== モック注記（常時・最上部） ===== -->
+<div class="mocknote">
+  <span class="mocknote-badge">講師用</span>
+  収益サマリー（模範解 / コマ7開示）
+  <span class="sep">｜</span>
+  画面上の数字は<strong>仮の演出値</strong>。詰まりの特定・通過率・ROIは<strong>すべてSQL（シードDB）</strong>で出す。収益額は設計書（正典）と一致させた答え合わせ用。
+</div>
+
+<!-- ===== ヘッダー（ロゴ→講師トップ=sitemap） ===== -->
+<header class="appbar">
+  <a class="brand" href="sitemap.html">Re<span class="mark">Serve</span>
+    <span class="brand-tag">INSTRUCTOR / REVENUE SUMMARY</span>
+  </a>
+  <div class="appbar-right">
+    <span class="badge badge-ok"><span class="dot"></span>模範解</span>
+    <div class="mt-2"><strong>コマ7 開示用</strong>　受講生には伏せる</div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- パンくず + 戻る + タイトル -->
+  <div class="page-head">
+    <div class="row-between">
+      <div class="crumb">講師用 ／ 収益サマリー（模範解）</div>
+      <a class="btn btn-ghost btn-sm" href="sitemap.html">← 全画面マップに戻る</a>
+    </div>
+    <h1>ReServe 月間収益サマリー</h1>
+    <p class="lede">獲得は順調だが売上が伸びない「両側から漏れるバケツ」── コマ7の答え合わせ用。<strong class="danger-text">受講生には伏せること。</strong></p>
+  </div>
+
+  <!-- ===== 月商ハイライト（ヒーロー） ===== -->
+  <section class="card" style="background:linear-gradient(135deg,var(--ink) 0%,#3b332c 100%);border-color:#3b332c;box-shadow:var(--shadow-3);color:#f3ede4;">
+    <div class="row-between" style="align-items:flex-end;flex-wrap:wrap;gap:var(--sp-5);">
+      <div>
+        <div style="font-size:.78rem;letter-spacing:.1em;color:#b8ad9c;text-transform:uppercase;">月間 ReServe 収益合計</div>
+        <div style="font-size:2.9rem;font-weight:800;line-height:1.05;letter-spacing:-.01em;margin-top:6px;">
+          ¥1,250,760<span style="font-size:1.05rem;font-weight:600;color:#cabda8;margin-left:8px;">/ 月</span>
+        </div>
+        <div style="font-size:.85rem;color:#b8ad9c;margin-top:8px;">
+          サブスク <strong style="color:#f0b884;">¥1,068,000</strong> ＋ 決済手数料 <strong style="color:#f0b884;">¥182,760</strong>
+        </div>
       </div>
-      <div style="display:flex;align-items:center;gap:10px;">
-        <span style="font-size:11px;font-weight:700;letter-spacing:1px;background:#c8a45c;color:#2d3a4a;padding:4px 10px;border-radius:6px;">画面ID: SUM</span>
-        <span style="font-size:12px;color:#aab6c4;">収益サマリー（講師用・模範解 / コマ7開示）</span>
+      <div class="row" style="flex-wrap:wrap;gap:var(--sp-3);">
+        <div style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:var(--r);padding:var(--sp-3) var(--sp-4);min-width:150px;">
+          <div style="font-size:.72rem;color:#cabda8;margin-bottom:4px;">月間 GMV（来店決済）</div>
+          <div style="font-size:1.45rem;font-weight:700;">¥18,276,000</div>
+        </div>
+        <div style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:var(--r);padding:var(--sp-3) var(--sp-4);min-width:150px;">
+          <div style="font-size:.72rem;color:#cabda8;margin-bottom:4px;">3ヶ月目継続 店舗数</div>
+          <div style="font-size:1.45rem;font-weight:700;">89<span style="font-size:.85rem;font-weight:500;color:#cabda8;"> 店舗</span></div>
+        </div>
+        <div style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:var(--r);padding:var(--sp-3) var(--sp-4);min-width:150px;">
+          <div style="font-size:.72rem;color:#cabda8;margin-bottom:4px;">来店決済 件数</div>
+          <div style="font-size:1.45rem;font-weight:700;">4,569<span style="font-size:.85rem;font-weight:500;color:#cabda8;"> 件</span></div>
+        </div>
       </div>
     </div>
-  </header>
+  </section>
 
-  <!-- ===== 合宿用モック注記 ===== -->
-  <div style="background:#fff8e6;border-bottom:1px solid #f0e0b0;color:#7a5d12;">
-    <div style="max-width:1080px;margin:0 auto;padding:10px 32px;font-size:12.5px;">
-      <strong>⚠ これは合宿用モックです。</strong>
-      画面上の数字は<strong>仮置きの演出値</strong>であり、詰まりの特定・通過率・ROIの判断は<strong>すべてSQL（シードDB）</strong>で行ってください。本サマリーの収益額は設計書（正典）の値と一致させた模範解です。
+  <!-- ===== 2つのキャッシュポイント ===== -->
+  <div class="section-label">2つのキャッシュポイント</div>
+  <div class="card-grid" style="grid-template-columns:1fr 1fr;">
+
+    <!-- ① サブスク -->
+    <div class="card mb-0">
+      <div class="card-h" style="border:none;padding-bottom:0;margin-bottom:var(--sp-3);">
+        <span class="badge">① 店舗サブスク</span>
+        <span class="hint" style="margin:0;">固定収益</span>
+      </div>
+      <div class="stat">
+        <div class="stat-value">¥1,068,000<span style="font-size:.85rem;font-weight:600;color:var(--muted);"> /月</span></div>
+      </div>
+      <hr class="divider">
+      <p class="muted" style="font-size:.85rem;">単価 <strong>¥12,000/月</strong> × 母数 <strong>89 店舗</strong>（3ヶ月目継続）</p>
+      <p style="font-size:.78rem;color:var(--muted);font-family:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;background:#f7f3ec;border:1px solid var(--line-soft);border-radius:var(--r-sm);padding:8px 10px;margin-top:var(--sp-3);line-height:1.5;">
+        COUNT(DISTINCT store_id) FROM billing_periods<br>WHERE period_month=3 AND status='paid' → 89
+      </p>
+    </div>
+
+    <!-- ② 手数料 -->
+    <div class="card mb-0">
+      <div class="card-h" style="border:none;padding-bottom:0;margin-bottom:var(--sp-3);">
+        <span class="badge badge-ok">② 予約決済GMVの1%</span>
+        <span class="hint" style="margin:0;">変動収益</span>
+      </div>
+      <div class="stat">
+        <div class="stat-value">¥182,760<span style="font-size:.85rem;font-weight:600;color:var(--muted);"> /月</span></div>
+      </div>
+      <hr class="divider">
+      <p class="muted" style="font-size:.85rem;">GMV <strong>¥18,276,000</strong>（4,569件 × 平均¥4,000）× 手数料 <strong>1%</strong></p>
+      <p style="font-size:.78rem;color:var(--muted);font-family:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;background:#f7f3ec;border:1px solid var(--line-soft);border-radius:var(--r-sm);padding:8px 10px;margin-top:var(--sp-3);line-height:1.5;">
+        ROUND(SUM(amount)*0.01) FROM payments → 182760
+      </p>
     </div>
   </div>
 
-  <main style="max-width:1080px;margin:0 auto;padding:28px 32px 56px;">
+  <!-- ===== 決済内訳 ===== -->
+  <div class="section-label">来店決済 4,569件の内訳（GMVの源泉）</div>
+  <div class="card" style="padding:0;overflow:hidden;">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>区分</th>
+          <th class="num">件数</th>
+          <th>内訳の根拠</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>初回来店 決済</td>
+          <td class="num"><strong>1,944 件</strong></td>
+          <td class="muted">来店確定2,160 × 90%（初回来店）</td>
+        </tr>
+        <tr>
+          <td>リピーター 決済</td>
+          <td class="num"><strong>2,625 件</strong></td>
+          <td class="muted">リピーター875人 × 3回</td>
+        </tr>
+        <tr style="background:#fbf9f5;">
+          <td><strong>合計（payments / checkins と1:1）</strong></td>
+          <td class="num"><strong class="ok-text">4,569 件</strong></td>
+          <td class="muted">SUM(amount)=¥18,276,000 / AVG=¥4,000</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-    <!-- ===== タイトル ===== -->
-    <div style="margin-bottom:22px;">
-      <h1 style="margin:0 0 4px;font-size:24px;font-weight:800;color:#1f2733;">ReServe 月間収益サマリー</h1>
-      <p style="margin:0;font-size:13.5px;color:#5a6776;">獲得は順調だが売上が伸びない「両側から漏れるバケツ」── 模範解の答え合わせ用。</p>
-    </div>
+  <!-- ===== 詰まりの根本原因 ===== -->
+  <div class="section-label" style="color:var(--danger);border-color:var(--danger);">なぜ伸びないか ── 4つの詰まり ＋ 健全なリピート</div>
+  <p class="muted" style="font-size:.85rem;margin-bottom:var(--sp-4);">獲得（登録500）は順調。下流の各段で漏れた結果、収益母数（継続89・決済4,569）まで縮む。<strong>通過率はSQLで割り算して特定する。</strong></p>
 
-    <!-- ===== 月商ハイライト ===== -->
-    <section style="background:linear-gradient(135deg,#2d3a4a 0%,#3a4a5e 100%);border-radius:16px;padding:26px 30px;color:#ffffff;margin-bottom:24px;box-shadow:0 6px 18px rgba(45,58,74,0.18);">
-      <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:18px;">
-        <div>
-          <div style="font-size:12px;letter-spacing:1px;color:#aab6c4;text-transform:uppercase;margin-bottom:6px;">月間 ReServe 収益合計</div>
-          <div style="font-size:46px;font-weight:800;line-height:1;letter-spacing:-1px;">¥1,250,760<span style="font-size:18px;font-weight:600;color:#c8d2dd;margin-left:6px;">/ 月</span></div>
-          <div style="font-size:12.5px;color:#aab6c4;margin-top:8px;">サブスク ¥1,068,000 ＋ 決済手数料 ¥182,760</div>
-        </div>
-        <div style="display:flex;gap:10px;flex-wrap:wrap;">
-          <div style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.14);border-radius:10px;padding:12px 16px;min-width:148px;">
-            <div style="font-size:11px;color:#c8d2dd;margin-bottom:4px;">月間 GMV（来店決済）</div>
-            <div style="font-size:22px;font-weight:700;">¥18,276,000</div>
-          </div>
-          <div style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.14);border-radius:10px;padding:12px 16px;min-width:148px;">
-            <div style="font-size:11px;color:#c8d2dd;margin-bottom:4px;">3ヶ月目継続 店舗数</div>
-            <div style="font-size:22px;font-weight:700;">89<span style="font-size:13px;font-weight:500;color:#c8d2dd;"> 店舗</span></div>
-          </div>
-          <div style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.14);border-radius:10px;padding:12px 16px;min-width:148px;">
-            <div style="font-size:11px;color:#c8d2dd;margin-bottom:4px;">来店決済 件数</div>
-            <div style="font-size:22px;font-weight:700;">4,569<span style="font-size:13px;font-weight:500;color:#c8d2dd;"> 件</span></div>
-          </div>
-        </div>
+  <div class="card-grid" style="grid-template-columns:1fr 1fr;">
+
+    <!-- 店舗側ファネル -->
+    <div class="card mb-0">
+      <div style="font-size:.82rem;font-weight:700;color:var(--gold-deep);margin-bottom:var(--sp-4);letter-spacing:.04em;">店舗側ファネル（供給）── 収益①の母数へ</div>
+
+      <div class="row" style="gap:var(--sp-2);margin-bottom:5px;">
+        <div style="flex:1;background:var(--line-soft);border-radius:var(--r-sm);height:30px;display:flex;align-items:center;padding:0 12px;font-size:.82rem;font-weight:600;">登録＝初月課金</div>
+        <div style="width:60px;text-align:right;font-weight:700;font-size:.92rem;">500</div>
       </div>
-    </section>
+      <div class="danger-text" style="font-size:.74rem;font-weight:700;margin:0 0 5px 4px;">↓ 56% ★① 初期設定UIが複雑（項目多・進捗表示なし）／通常80%</div>
 
-    <!-- ===== 2つのキャッシュポイント ===== -->
-    <h2 style="font-size:15px;font-weight:700;color:#2d3a4a;margin:0 0 12px;display:flex;align-items:center;gap:8px;">
-      <span style="display:inline-block;width:4px;height:16px;background:#c8a45c;border-radius:2px;"></span>2つのキャッシュポイント
-    </h2>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:28px;">
-
-      <!-- ① サブスク -->
-      <div style="background:#ffffff;border:1px solid #e2e8ee;border-radius:14px;padding:20px 22px;">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
-          <span style="font-size:11px;font-weight:700;background:#eaf2ff;color:#2c5fa8;padding:3px 9px;border-radius:5px;">① 店舗サブスク</span>
-          <span style="font-size:11px;color:#8a96a3;">固定収益</span>
-        </div>
-        <div style="font-size:30px;font-weight:800;color:#1f2733;line-height:1.1;">¥1,068,000<span style="font-size:13px;font-weight:600;color:#8a96a3;"> /月</span></div>
-        <div style="font-size:12.5px;color:#5a6776;margin-top:8px;border-top:1px dashed #e2e8ee;padding-top:10px;">
-          単価 <strong>¥12,000/月</strong> × 母数 <strong>89 店舗</strong>（3ヶ月目継続）
-        </div>
-        <div style="font-size:11.5px;color:#8a96a3;margin-top:8px;font-family:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;background:#f6f8fa;border-radius:6px;padding:8px 10px;line-height:1.5;">
-          COUNT(DISTINCT store_id) FROM billing_periods<br>WHERE period_month=3 AND status='paid' → 89
-        </div>
+      <div class="row" style="gap:var(--sp-2);margin-bottom:5px;">
+        <div style="flex:1;background:var(--danger-soft);border:1px solid #f3c9c9;border-radius:var(--r-sm);height:30px;display:flex;align-items:center;padding:0 12px;font-size:.82rem;font-weight:600;color:var(--danger);">設定完了</div>
+        <div style="width:60px;text-align:right;font-weight:700;font-size:.92rem;color:var(--danger);">280</div>
       </div>
+      <div class="faint" style="font-size:.74rem;margin:0 0 5px 4px;">↓ 71%（健全）</div>
 
-      <!-- ② 手数料 -->
-      <div style="background:#ffffff;border:1px solid #e2e8ee;border-radius:14px;padding:20px 22px;">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
-          <span style="font-size:11px;font-weight:700;background:#eafaf0;color:#1f8a52;padding:3px 9px;border-radius:5px;">② 予約決済GMVの1%</span>
-          <span style="font-size:11px;color:#8a96a3;">変動収益</span>
-        </div>
-        <div style="font-size:30px;font-weight:800;color:#1f2733;line-height:1.1;">¥182,760<span style="font-size:13px;font-weight:600;color:#8a96a3;"> /月</span></div>
-        <div style="font-size:12.5px;color:#5a6776;margin-top:8px;border-top:1px dashed #e2e8ee;padding-top:10px;">
-          GMV <strong>¥18,276,000</strong>（4,569件 × 平均¥4,000）× 手数料 <strong>1%</strong>
-        </div>
-        <div style="font-size:11.5px;color:#8a96a3;margin-top:8px;font-family:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;background:#f6f8fa;border-radius:6px;padding:8px 10px;line-height:1.5;">
-          ROUND(SUM(amount)*0.01) FROM payments → 182760
-        </div>
+      <div class="row" style="gap:var(--sp-2);margin-bottom:5px;">
+        <div style="flex:1;background:var(--line-soft);border-radius:var(--r-sm);height:28px;display:flex;align-items:center;padding:0 12px;font-size:.82rem;font-weight:600;">公開（掲載）</div>
+        <div style="width:60px;text-align:right;font-weight:700;font-size:.92rem;">198</div>
       </div>
-    </div>
+      <div class="faint" style="font-size:.74rem;margin:0 0 5px 4px;">↓ 90%（健全）</div>
 
-    <!-- ===== 決済内訳 ===== -->
-    <h2 style="font-size:15px;font-weight:700;color:#2d3a4a;margin:0 0 12px;display:flex;align-items:center;gap:8px;">
-      <span style="display:inline-block;width:4px;height:16px;background:#c8a45c;border-radius:2px;"></span>来店決済 4,569件の内訳（GMVの源泉）
-    </h2>
-    <div style="background:#ffffff;border:1px solid #e2e8ee;border-radius:14px;overflow:hidden;margin-bottom:28px;">
-      <table style="width:100%;border-collapse:collapse;font-size:13px;">
-        <thead>
-          <tr style="background:#f6f8fa;color:#5a6776;text-align:left;">
-            <th style="padding:11px 18px;font-weight:600;">区分</th>
-            <th style="padding:11px 18px;font-weight:600;text-align:right;">件数</th>
-            <th style="padding:11px 18px;font-weight:600;">内訳の根拠</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr style="border-top:1px solid #eef1f4;">
-            <td style="padding:11px 18px;">初回来店 決済</td>
-            <td style="padding:11px 18px;text-align:right;font-weight:700;">1,944 件</td>
-            <td style="padding:11px 18px;color:#5a6776;">来店確定2,160 × 90%（初回来店）</td>
-          </tr>
-          <tr style="border-top:1px solid #eef1f4;">
-            <td style="padding:11px 18px;">リピーター 決済</td>
-            <td style="padding:11px 18px;text-align:right;font-weight:700;">2,625 件</td>
-            <td style="padding:11px 18px;color:#5a6776;">リピーター875人 × 3回</td>
-          </tr>
-          <tr style="border-top:2px solid #e2e8ee;background:#fbfcfd;">
-            <td style="padding:12px 18px;font-weight:800;">合計（payments / checkins と1:1）</td>
-            <td style="padding:12px 18px;text-align:right;font-weight:800;color:#1f8a52;">4,569 件</td>
-            <td style="padding:12px 18px;color:#5a6776;">SUM(amount)=¥18,276,000 / AVG=¥4,000</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- ===== 詰まりの根本原因（一目で伝わる本体） ===== -->
-    <h2 style="font-size:15px;font-weight:700;color:#2d3a4a;margin:0 0 6px;display:flex;align-items:center;gap:8px;">
-      <span style="display:inline-block;width:4px;height:16px;background:#e03131;border-radius:2px;"></span>なぜ伸びないか ── 4つの詰まり ＋ 健全なリピート
-    </h2>
-    <p style="margin:0 0 14px;font-size:12.5px;color:#5a6776;">獲得（登録500）は順調。下流の各段で漏れた結果、収益母数（継続89・決済4,569）まで縮む。<strong>通過率はSQLで割り算して特定する</strong>。</p>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:8px;">
-
-      <!-- 店舗側ファネル -->
-      <div style="background:#ffffff;border:1px solid #e2e8ee;border-radius:14px;padding:18px 20px;">
-        <div style="font-size:12px;font-weight:700;color:#2c5fa8;margin-bottom:14px;letter-spacing:0.5px;">店舗側ファネル（供給）── 収益①の母数へ</div>
-
-        <!-- 登録 -->
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
-          <div style="flex:1;background:#eef1f4;border-radius:6px;height:30px;display:flex;align-items:center;padding:0 12px;font-size:12.5px;font-weight:600;">登録＝初月課金</div>
-          <div style="width:62px;text-align:right;font-weight:700;font-size:14px;">500</div>
-        </div>
-        <div style="font-size:11px;color:#e03131;font-weight:700;margin:0 0 6px 4px;">↓ 56% ★① 初期設定UIが複雑（項目多・進捗表示なし）／通常80%</div>
-        <!-- 設定完了 -->
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
-          <div style="flex:1;background:#ffe3e3;border:1px solid #f5b5b5;border-radius:6px;height:30px;display:flex;align-items:center;padding:0 12px;font-size:12.5px;font-weight:600;color:#c0392b;">設定完了</div>
-          <div style="width:62px;text-align:right;font-weight:700;font-size:14px;color:#c0392b;">280</div>
-        </div>
-        <div style="font-size:11px;color:#8a96a3;margin:0 0 6px 4px;">↓ 71%（健全）</div>
-        <!-- 公開 -->
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
-          <div style="flex:1;background:#eef1f4;border-radius:6px;height:28px;display:flex;align-items:center;padding:0 12px;font-size:12.5px;font-weight:600;">公開（掲載）</div>
-          <div style="width:62px;text-align:right;font-weight:700;font-size:14px;">198</div>
-        </div>
-        <div style="font-size:11px;color:#8a96a3;margin:0 0 6px 4px;">↓ 90%（健全）</div>
-        <!-- 2ヶ月 -->
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
-          <div style="flex:1;background:#eef1f4;border-radius:6px;height:28px;display:flex;align-items:center;padding:0 12px;font-size:12.5px;font-weight:600;">2ヶ月目継続</div>
-          <div style="width:62px;text-align:right;font-weight:700;font-size:14px;">178</div>
-        </div>
-        <div style="font-size:11px;color:#e03131;font-weight:700;margin:0 0 6px 4px;">↓ 50% ★② 予約が回らず店舗がうんざり→解約／通常85%</div>
-        <!-- 3ヶ月 -->
-        <div style="display:flex;align-items:center;gap:10px;">
-          <div style="flex:1;background:#2d3a4a;border-radius:6px;height:32px;display:flex;align-items:center;padding:0 12px;font-size:12.5px;font-weight:700;color:#fff;">3ヶ月目継続 <span style="font-size:10px;font-weight:500;color:#c8d2dd;margin-left:6px;">＝サブスク母数</span></div>
-          <div style="width:62px;text-align:right;font-weight:800;font-size:16px;color:#c8a45c;">89</div>
-        </div>
+      <div class="row" style="gap:var(--sp-2);margin-bottom:5px;">
+        <div style="flex:1;background:var(--line-soft);border-radius:var(--r-sm);height:28px;display:flex;align-items:center;padding:0 12px;font-size:.82rem;font-weight:600;">2ヶ月目継続</div>
+        <div style="width:60px;text-align:right;font-weight:700;font-size:.92rem;">178</div>
       </div>
+      <div class="danger-text" style="font-size:.74rem;font-weight:700;margin:0 0 5px 4px;">↓ 50% ★② 予約が回らず店舗がうんざり→解約／通常85%</div>
 
-      <!-- ユーザー側ファネル -->
-      <div style="background:#ffffff;border:1px solid #e2e8ee;border-radius:14px;padding:18px 20px;">
-        <div style="font-size:12px;font-weight:700;color:#1f8a52;margin-bottom:14px;letter-spacing:0.5px;">ユーザー側ファネル（需要）── 収益②（GMV）の母数へ</div>
-
-        <!-- 訪問 -->
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
-          <div style="flex:1;background:#eef1f4;border-radius:6px;height:30px;display:flex;align-items:center;padding:0 12px;font-size:12.5px;font-weight:600;">訪問 <span style="font-size:10px;color:#8a96a3;margin-left:6px;">（定数）</span></div>
-          <div style="width:62px;text-align:right;font-weight:700;font-size:14px;">40,000</div>
-        </div>
-        <div style="font-size:11px;color:#e03131;font-weight:700;margin:0 0 6px 4px;">↓ 12% ★③a フォームが重い＋送信CTAがボタンに見えない／通常25%</div>
-        <!-- 初回予約 -->
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
-          <div style="flex:1;background:#ffe3e3;border:1px solid #f5b5b5;border-radius:6px;height:30px;display:flex;align-items:center;padding:0 12px;font-size:12.5px;font-weight:600;color:#c0392b;">初回予約</div>
-          <div style="width:62px;text-align:right;font-weight:700;font-size:14px;color:#c0392b;">4,800</div>
-        </div>
-        <div style="font-size:11px;color:#e03131;font-weight:700;margin:0 0 6px 4px;">↓ 45% ★③b 後払いで金銭コミットなし＝キャンセル率55%／通常80%</div>
-        <!-- 来店確定 -->
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
-          <div style="flex:1;background:#ffe3e3;border:1px solid #f5b5b5;border-radius:6px;height:30px;display:flex;align-items:center;padding:0 12px;font-size:12.5px;font-weight:600;color:#c0392b;">来店確定（キャンセルなし）</div>
-          <div style="width:62px;text-align:right;font-weight:700;font-size:14px;color:#c0392b;">2,160</div>
-        </div>
-        <div style="font-size:11px;color:#8a96a3;margin:0 0 6px 4px;">↓ 90%（健全）</div>
-        <!-- 初回来店 -->
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
-          <div style="flex:1;background:#2d3a4a;border-radius:6px;height:30px;display:flex;align-items:center;padding:0 12px;font-size:12.5px;font-weight:700;color:#fff;">初回来店（決済）</div>
-          <div style="width:62px;text-align:right;font-weight:800;font-size:15px;color:#c8a45c;">1,944</div>
-        </div>
-        <div style="font-size:11px;color:#1f8a52;font-weight:700;margin:0 0 6px 4px;">↓ 45% ✓ 健全（業界標準どおり・課題ではない）</div>
-        <!-- リピート -->
-        <div style="display:flex;align-items:center;gap:10px;">
-          <div style="flex:1;background:#eafaf0;border:1px solid #b5e6c9;border-radius:6px;height:28px;display:flex;align-items:center;padding:0 12px;font-size:12.5px;font-weight:600;color:#1f8a52;">リピート</div>
-          <div style="width:62px;text-align:right;font-weight:700;font-size:14px;color:#1f8a52;">875</div>
-        </div>
+      <div class="row" style="gap:var(--sp-2);">
+        <div style="flex:1;background:var(--ink);border-radius:var(--r-sm);height:32px;display:flex;align-items:center;padding:0 12px;font-size:.82rem;font-weight:700;color:#fff;">3ヶ月目継続 <span style="font-size:.68rem;font-weight:500;color:#cabda8;margin-left:6px;">＝サブスク母数</span></div>
+        <div style="width:60px;text-align:right;font-weight:800;font-size:1.05rem;color:var(--gold);">89</div>
       </div>
     </div>
 
-    <!-- 因果の一文 -->
-    <div style="background:#fbeaea;border:1px solid #f3c9c9;border-radius:12px;padding:14px 18px;margin:18px 0 28px;font-size:12.5px;color:#a23636;">
-      <strong>因果（②の根本原因は③a＋③b）</strong>：初回予約が少なく（③a）、入った予約もキャンセルだらけ（③b）。店舗は「ReServeを使っても予約が回らない」と感じて<strong>3ヶ月目に解約（②）</strong>する。①は別レイヤー（公開以前に設定で離脱）。<strong>②に直接クーポンを打っても③を直さなければ再発する</strong>。
-    </div>
+    <!-- ユーザー側ファネル -->
+    <div class="card mb-0">
+      <div style="font-size:.82rem;font-weight:700;color:var(--ok);margin-bottom:var(--sp-4);letter-spacing:.04em;">ユーザー側ファネル（需要）── 収益②（GMV）の母数へ</div>
 
-    <!-- ===== 模範優先度 ===== -->
-    <h2 style="font-size:15px;font-weight:700;color:#2d3a4a;margin:0 0 6px;display:flex;align-items:center;gap:8px;">
-      <span style="display:inline-block;width:4px;height:16px;background:#c8a45c;border-radius:2px;"></span>模範優先度（40時間 / 20万円 の予算想定）
-    </h2>
-    <p style="margin:0 0 12px;font-size:12.5px;color:#5a6776;">コスト＝工数(h)×時給¥5,000。リターンは2軸で混ぜない（管理側＝継続店舗増×¥12,000×12ヶ月／ユーザー側＝来店決済増×¥4,000×1%×12ヶ月）。</p>
-    <div style="background:#ffffff;border:1px solid #e2e8ee;border-radius:14px;overflow:hidden;margin-bottom:24px;">
-      <table style="width:100%;border-collapse:collapse;font-size:12.5px;">
-        <thead>
-          <tr style="background:#f6f8fa;color:#5a6776;text-align:left;">
-            <th style="padding:10px 16px;font-weight:600;">優先</th>
-            <th style="padding:10px 16px;font-weight:600;">施策</th>
-            <th style="padding:10px 16px;font-weight:600;">対象</th>
-            <th style="padding:10px 16px;font-weight:600;text-align:right;">工数</th>
-            <th style="padding:10px 16px;font-weight:600;text-align:right;">ROI</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr style="border-top:1px solid #eef1f4;">
-            <td style="padding:10px 16px;"><span style="font-weight:700;color:#c8a45c;">第1</span></td>
-            <td style="padding:10px 16px;font-weight:600;">ステップガイド（進捗バー）</td>
-            <td style="padding:10px 16px;color:#5a6776;">① 設定完了 56%→72%</td>
-            <td style="padding:10px 16px;text-align:right;">16h</td>
-            <td style="padding:10px 16px;text-align:right;font-weight:700;color:#1f8a52;">約45倍</td>
-          </tr>
-          <tr style="border-top:1px solid #eef1f4;">
-            <td style="padding:10px 16px;"><span style="font-weight:700;color:#c8a45c;">第2</span></td>
-            <td style="padding:10px 16px;font-weight:600;">CTAボタン化 ＋ フォーム簡素化</td>
-            <td style="padding:10px 16px;color:#5a6776;">③a 訪問→予約</td>
-            <td style="padding:10px 16px;text-align:right;">4h＋8h</td>
-            <td style="padding:10px 16px;text-align:right;font-weight:700;color:#1f8a52;">8倍 / 7.8倍</td>
-          </tr>
-          <tr style="border-top:1px solid #eef1f4;">
-            <td style="padding:10px 16px;"><span style="font-weight:700;color:#c8a45c;">第3</span></td>
-            <td style="padding:10px 16px;font-weight:600;">キャンセル料の明示表示</td>
-            <td style="padding:10px 16px;color:#5a6776;">③b 確定率 45%→50%</td>
-            <td style="padding:10px 16px;text-align:right;">2h</td>
-            <td style="padding:10px 16px;text-align:right;font-weight:700;color:#1f8a52;">10倍</td>
-          </tr>
-          <tr style="border-top:1px solid #eef1f4;background:#fbfbfb;">
-            <td style="padding:10px 16px;color:#8a96a3;">後回し</td>
-            <td style="padding:10px 16px;color:#8a96a3;">② 解約クーポン</td>
-            <td style="padding:10px 16px;color:#8a96a3;">③を直さないと再発する罠</td>
-            <td style="padding:10px 16px;text-align:right;color:#8a96a3;">12h</td>
-            <td style="padding:10px 16px;text-align:right;color:#8a96a3;">34倍※</td>
-          </tr>
-          <tr style="border-top:1px solid #eef1f4;background:#fbfbfb;">
-            <td style="padding:10px 16px;color:#8a96a3;">後回し</td>
-            <td style="padding:10px 16px;color:#8a96a3;">③b デポジット（決済改修）</td>
-            <td style="padding:10px 16px;color:#8a96a3;">効果大だが工数大</td>
-            <td style="padding:10px 16px;text-align:right;color:#8a96a3;">48h</td>
-            <td style="padding:10px 16px;text-align:right;color:#8a96a3;">1.7倍</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+      <div class="row" style="gap:var(--sp-2);margin-bottom:5px;">
+        <div style="flex:1;background:var(--line-soft);border-radius:var(--r-sm);height:30px;display:flex;align-items:center;padding:0 12px;font-size:.82rem;font-weight:600;">訪問 <span class="faint" style="font-size:.68rem;margin-left:6px;">（定数）</span></div>
+        <div style="width:60px;text-align:right;font-weight:700;font-size:.92rem;">40,000</div>
+      </div>
+      <div class="danger-text" style="font-size:.74rem;font-weight:700;margin:0 0 5px 4px;">↓ 12% ★③a フォームが重い＋送信CTAがボタンに見えない／通常25%</div>
 
-    <!-- ===== フッター注記 ===== -->
-    <div style="border-top:1px solid #dde3ea;padding-top:16px;font-size:11.5px;color:#8a96a3;line-height:1.7;">
-      <strong>正典の検算値：</strong>stores 500 / setup_done 280 / published 198 / month2 178 / month3 89 / 初回予約利用者 4,800 / confirmed 4,785 / cancelled 2,640 / checkins 4,569 / リピーター 875 / GMV 18,276,000 / 手数料 182,760。<br>
-      ダッシュボード（A-03）のキャンセル18件などは<strong>演出用の仮数</strong>で、DBの cancelled 2,640件・確定率45%とは無関係です。詰まりの特定は必ず <code style="background:#f6f8fa;padding:1px 5px;border-radius:4px;">reservations / billing_periods / payments</code> をSQLで数えてください。
-    </div>
+      <div class="row" style="gap:var(--sp-2);margin-bottom:5px;">
+        <div style="flex:1;background:var(--danger-soft);border:1px solid #f3c9c9;border-radius:var(--r-sm);height:30px;display:flex;align-items:center;padding:0 12px;font-size:.82rem;font-weight:600;color:var(--danger);">初回予約</div>
+        <div style="width:60px;text-align:right;font-weight:700;font-size:.92rem;color:var(--danger);">4,800</div>
+      </div>
+      <div class="danger-text" style="font-size:.74rem;font-weight:700;margin:0 0 5px 4px;">↓ 45% ★③b 後払いで金銭コミットなし＝キャンセル率55%／通常80%</div>
 
-  </main>
+      <div class="row" style="gap:var(--sp-2);margin-bottom:5px;">
+        <div style="flex:1;background:var(--danger-soft);border:1px solid #f3c9c9;border-radius:var(--r-sm);height:30px;display:flex;align-items:center;padding:0 12px;font-size:.82rem;font-weight:600;color:var(--danger);">来店確定（キャンセルなし）</div>
+        <div style="width:60px;text-align:right;font-weight:700;font-size:.92rem;color:var(--danger);">2,160</div>
+      </div>
+      <div class="faint" style="font-size:.74rem;margin:0 0 5px 4px;">↓ 90%（健全）</div>
+
+      <div class="row" style="gap:var(--sp-2);margin-bottom:5px;">
+        <div style="flex:1;background:var(--ink);border-radius:var(--r-sm);height:30px;display:flex;align-items:center;padding:0 12px;font-size:.82rem;font-weight:700;color:#fff;">初回来店（決済）</div>
+        <div style="width:60px;text-align:right;font-weight:800;font-size:1rem;color:var(--gold);">1,944</div>
+      </div>
+      <div class="ok-text" style="font-size:.74rem;font-weight:700;margin:0 0 5px 4px;">↓ 45% ✓ 健全（業界標準どおり・課題ではない）</div>
+
+      <div class="row" style="gap:var(--sp-2);">
+        <div style="flex:1;background:var(--ok-soft);border:1px solid #b5e6c9;border-radius:var(--r-sm);height:28px;display:flex;align-items:center;padding:0 12px;font-size:.82rem;font-weight:600;color:var(--ok);">リピート</div>
+        <div style="width:60px;text-align:right;font-weight:700;font-size:.92rem;color:var(--ok);">875</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 因果の一文 -->
+  <div class="card mt-4" style="background:var(--danger-soft);border-color:#f3c9c9;">
+    <p style="font-size:.85rem;color:#a23636;">
+      <strong>因果（②の根本原因は③a＋③b）</strong>：初回予約が少なく（③a）、入った予約もキャンセルだらけ（③b）。店舗は「ReServeを使っても予約が回らない」と感じて<strong>3ヶ月目に解約（②）</strong>する。①は別レイヤー（公開以前に設定で離脱）。<strong>②に直接クーポンを打っても③を直さなければ再発する。</strong>
+    </p>
+  </div>
+
+  <!-- ===== 模範優先度 ===== -->
+  <div class="section-label">模範優先度（40時間 / 20万円 の予算想定）</div>
+  <p class="muted" style="font-size:.85rem;margin-bottom:var(--sp-3);">コスト＝工数(h)×時給¥5,000。リターンは2軸で混ぜない（管理側＝継続店舗増×¥12,000×12ヶ月／ユーザー側＝来店決済増×¥4,000×1%×12ヶ月）。</p>
+  <div class="card" style="padding:0;overflow:hidden;">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>優先</th>
+          <th>施策</th>
+          <th>対象</th>
+          <th class="num">工数</th>
+          <th class="num">ROI</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="badge">第1</span></td>
+          <td><strong>ステップガイド（進捗バー）</strong></td>
+          <td class="muted">① 設定完了 56%→72%</td>
+          <td class="num">16h</td>
+          <td class="num"><strong class="ok-text">約45倍</strong></td>
+        </tr>
+        <tr>
+          <td><span class="badge">第2</span></td>
+          <td><strong>CTAボタン化 ＋ フォーム簡素化</strong></td>
+          <td class="muted">③a 訪問→予約</td>
+          <td class="num">4h＋8h</td>
+          <td class="num"><strong class="ok-text">8倍 / 7.8倍</strong></td>
+        </tr>
+        <tr>
+          <td><span class="badge">第3</span></td>
+          <td><strong>キャンセル料の明示表示</strong></td>
+          <td class="muted">③b 確定率 45%→50%</td>
+          <td class="num">2h</td>
+          <td class="num"><strong class="ok-text">10倍</strong></td>
+        </tr>
+        <tr style="background:#fbf9f5;">
+          <td><span class="badge badge-muted">後回し</span></td>
+          <td class="faint">② 解約クーポン</td>
+          <td class="faint">③を直さないと再発する罠</td>
+          <td class="num faint">12h</td>
+          <td class="num faint">34倍※</td>
+        </tr>
+        <tr style="background:#fbf9f5;">
+          <td><span class="badge badge-muted">後回し</span></td>
+          <td class="faint">③b デポジット（決済改修）</td>
+          <td class="faint">効果大だが工数大</td>
+          <td class="num faint">48h</td>
+          <td class="num faint">1.7倍</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ===== 正典の検算値 ===== -->
+  <div class="card mt-4" style="background:#fbf9f5;">
+    <p class="muted" style="font-size:.8rem;line-height:1.8;">
+      <strong class="muted">正典の検算値：</strong>stores 500 / setup_done 280 / published 198 / month2 178 / month3 89 / 初回予約利用者 4,800 / confirmed 4,785 / cancelled 2,640 / checkins 4,569 / リピーター 875 / GMV 18,276,000 / 手数料 182,760。<br>
+      ダッシュボード（A-03）のキャンセル18件などは<strong class="muted">演出用の仮数</strong>で、DBの cancelled 2,640件・確定率45%とは無関係です。詰まりの特定は必ず <code style="background:var(--gold-soft);padding:1px 5px;border-radius:4px;">reservations / billing_periods / payments</code> をSQLで数えてください。
+    </p>
+  </div>
+
+  <div class="actions">
+    <a class="btn btn-ghost" href="sitemap.html">← 全画面マップに戻る</a>
+    <div class="actions-btns">
+      <a class="btn btn-ghost" href="../admin/A-03_dashboard.html">A-03 ダッシュボードを見る</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== フッター ===== -->
+<footer class="footer">
+  <div class="footer-links">
+    <a href="sitemap.html">全画面マップ</a>
+    <a href="../index.html">モック一覧トップ</a>
+  </div>
+  講師用 収益サマリー（模範解 / コマ7開示）｜この収益額は設計書（正典）と一致させた答え合わせ用です。<strong>受講生には伏せてください。</strong>通過率・詰まりの特定・ROIの算出は SQL（シードDB）で行います。
+</footer>
+
 </body>
 </html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1024">
+<title>ReServe 管理画面 ｜ A-02 公開確認（設定内容のプレビュー）</title>
+<link rel="stylesheet" href="../assets/reserve.css">
+<style>
+  /* このページ固有の最小限のみ（共有CSSに無い要素だけ） */
+  .publish-url {
+    display: flex; align-items: center; gap: var(--sp-3);
+    background: #f8f5ef; border: 1px solid var(--line);
+    border-radius: var(--r); padding: var(--sp-3) var(--sp-4);
+    font-size: .92rem; word-break: break-all;
+  }
+  .publish-url .url-ic { color: var(--gold-deep); font-size: 1rem; flex: none; }
+  .publish-url code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    color: var(--ink); font-size: .9rem;
+  }
+  .preview-card { display: flex; gap: var(--sp-4); align-items: flex-start; }
+  .preview-photo {
+    width: 132px; height: 132px; flex: none;
+    border-radius: var(--r); border: 1px solid var(--line);
+    background:
+      linear-gradient(135deg, #efe7d6 0%, #e3d6bd 100%);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gold-deep); font-size: 1.9rem;
+  }
+  .preview-meta { flex: 1; }
+  .preview-meta .shop-name { font-size: 1.15rem; font-weight: 700; }
+  .preview-meta .shop-line { font-size: .86rem; color: var(--muted); margin-top: 4px; }
+  .summary-grid { display: grid; grid-template-columns: 120px 1fr; gap: 0; }
+  .summary-grid dt {
+    font-size: .84rem; color: var(--muted); font-weight: 600;
+    padding: 10px 0; border-top: 1px solid var(--line-soft);
+  }
+  .summary-grid dd {
+    font-size: .9rem; color: var(--ink); margin: 0;
+    padding: 10px 0; border-top: 1px solid var(--line-soft);
+  }
+  .summary-grid dt:first-of-type, .summary-grid dd:first-of-type { border-top: none; }
+  .price-line { display: flex; justify-content: space-between; max-width: 320px; }
+  .price-line .name { color: var(--ink); }
+  .price-line .yen { font-variant-numeric: tabular-nums; color: var(--ink); font-weight: 600; }
+  .chip-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .ready-banner {
+    display: flex; align-items: center; gap: var(--sp-3);
+    background: var(--ok-soft); border: 1px solid #bfe0c9;
+    border-radius: var(--r); padding: var(--sp-3) var(--sp-4);
+    font-size: .9rem; color: var(--ok);
+  }
+  .ready-banner .ic { font-size: 1.2rem; flex: none; }
+</style>
+</head>
+<body>
+
+  <!-- 合宿用モック注記（最上部） -->
+  <div class="mocknote">
+    <span class="mocknote-badge">A-02</span>
+    <span>店舗 公開確認（設定内容のプレビュー）</span>
+    <span class="sep">|</span>
+    <span>これは合宿用モック（数字は仮・分析は<strong>SQL</strong>）</span>
+  </div>
+
+  <!-- ブランドヘッダー：ロゴは店舗側トップ（A-03）へ -->
+  <header class="appbar">
+    <a class="brand" href="A-03_dashboard.html">
+      Re<span class="mark">Serve</span>
+      <span class="brand-tag">SALON RESERVATION CLOUD</span>
+    </a>
+    <div class="appbar-right">
+      <strong>田中美容室</strong> ／ 管理者：田中 様<br>
+      プラン：月額 12,000円（課金中）
+    </div>
+  </header>
+
+  <div class="app-layout">
+
+    <!-- サイドナビ -->
+    <nav class="sidenav">
+      <div class="nav-group">店舗管理</div>
+      <a href="A-01_onboarding.html">初期設定</a>
+      <a href="#" class="active">公開確認</a>
+      <a href="A-03_dashboard.html">ダッシュボード</a>
+      <a href="A-04_reservations.html">予約一覧</a>
+      <a href="A-05_billing.html">請求・プラン</a>
+      <div class="nav-group">アカウント</div>
+      <a href="#">通知設定</a>
+      <a href="#">スタッフ権限</a>
+    </nav>
+
+    <main class="app-main">
+
+      <div class="page-head">
+        <div class="crumb"><a href="A-01_onboarding.html" style="color:var(--faint);text-decoration:none;">← 戻る</a>　店舗管理 ＞ 初期設定 ＞ 公開確認</div>
+        <h1>公開前の最終確認</h1>
+        <p class="lede">入力した設定内容を確認し、問題なければ店舗ページを公開してください。公開すると、下記のURLからお客様が予約できるようになります。</p>
+      </div>
+
+      <!-- 公開準備OKバナー -->
+      <div class="ready-banner">
+        <span class="ic">✓</span>
+        必須項目の入力が完了しました。あとは公開するだけです。
+      </div>
+
+      <!-- 公開URL -->
+      <div class="section-label">公開URL</div>
+      <div class="card">
+        <div class="publish-url">
+          <span class="url-ic">🔗</span>
+          <code>https://reserve.example/s/田中美容室</code>
+          <span class="spacer"></span>
+          <span class="badge badge-muted">未公開</span>
+        </div>
+        <p class="hint hint-block">公開後、このURLをお客様に共有すると予約ページが開きます。QRコードはダッシュボードからも発行できます。</p>
+      </div>
+
+      <!-- 設定内容プレビュー -->
+      <div class="section-label">設定内容のプレビュー</div>
+
+      <!-- 店舗基本情報 -->
+      <div class="card">
+        <h3 class="card-h">店舗ページのプレビュー</h3>
+        <div class="preview-card">
+          <div class="preview-photo">✂</div>
+          <div class="preview-meta">
+            <div class="shop-name">田中美容室</div>
+            <div class="shop-line">東京都渋谷区</div>
+            <div class="shop-line">火〜日 10:00–20:00 ／ 月曜定休</div>
+            <div class="shop-line">TEL 03-1234-5678</div>
+            <div class="mt-2">
+              <span class="badge">後払いOK</span>
+              <span class="badge badge-muted">クレジット不要</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- メニューと料金 -->
+      <div class="card">
+        <h3 class="card-h">メニューと料金</h3>
+        <div class="price-line"><span class="name">カット</span><span class="yen">¥4,400</span></div>
+        <hr class="divider">
+        <div class="price-line"><span class="name">カラー</span><span class="yen">¥8,800</span></div>
+        <hr class="divider">
+        <div class="price-line"><span class="name">縮毛矯正</span><span class="yen">¥13,200</span></div>
+        <hr class="divider">
+        <div class="price-line"><span class="name">トリートメント</span><span class="yen">¥3,300</span></div>
+        <p class="hint hint-block">お支払いは<strong>来店時</strong>です（予約時の決済はありません）。</p>
+      </div>
+
+      <!-- スタイリスト -->
+      <div class="card">
+        <h3 class="card-h">スタイリスト</h3>
+        <div class="chip-list">
+          <span class="badge badge-muted">佐藤 葵</span>
+          <span class="badge badge-muted">鈴木 大地</span>
+        </div>
+      </div>
+
+      <!-- 営業時間・定休日 -->
+      <div class="card">
+        <h3 class="card-h">営業時間・定休日</h3>
+        <table class="table table-bordered">
+          <thead>
+            <tr><th>月</th><th>火</th><th>水</th><th>木</th><th>金</th><th>土</th><th>日</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="muted">定休</td>
+              <td>10:00–20:00</td>
+              <td>10:00–20:00</td>
+              <td>10:00–20:00</td>
+              <td>10:00–20:00</td>
+              <td>10:00–20:00</td>
+              <td>10:00–20:00</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- その他の設定サマリー -->
+      <div class="card">
+        <h3 class="card-h">その他の設定</h3>
+        <dl class="summary-grid">
+          <dt>お支払い方法</dt>
+          <dd>来店時に施術料金をお支払い（予約時の事前決済なし）</dd>
+          <dt>店舗プラン</dt>
+          <dd>月額 12,000円（登録と同時に初月課金・トライアルなし）</dd>
+          <dt>予約受付</dt>
+          <dd>公開後すぐに受付開始</dd>
+        </dl>
+      </div>
+
+      <!-- アクション帯：公開する／戻って編集 -->
+      <div class="actions">
+        <a class="link-cta" href="../user/U-01_store.html">公開した店舗ページを見る →</a>
+        <div class="actions-btns">
+          <a class="btn btn-ghost" href="A-01_onboarding.html">戻って編集</a>
+          <a class="btn btn-primary btn-lg" href="A-03_dashboard.html">公開する</a>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- フッター -->
+  <footer class="footer">
+    <div class="footer-links">
+      <a href="../index.html">モック一覧</a>
+      <a href="A-01_onboarding.html">初期設定</a>
+      <a href="A-03_dashboard.html">ダッシュボード</a>
+      <a href="../user/U-01_store.html">公開店舗ページ</a>
+    </div>
+    ReServe ｜ 美容室予約クラウド（GTMエンジニア合宿モック）｜
+    この画面は「① 設定完了」直後の公開判断を体感する演出用です。表示内容はレイアウト確認用で、詰まりの特定・通過率・ROIの算出はすべて <strong>SQL</strong> で行います。
+  </footer>
+
+</body>
+</html>

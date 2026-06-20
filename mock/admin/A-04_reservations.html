@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>予約一覧｜ReServe（店舗管理）</title>
+<link rel="stylesheet" href="../assets/reserve.css">
+<style>
+  /* ページ固有の最小限：フィルタのタブ帯のみ（共有CSSに該当部品がないため） */
+  .filterbar {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-2);
+    flex-wrap: wrap;
+    margin-bottom: var(--sp-4);
+  }
+  .filterbar .filter {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: .4em 1em;
+    border: 1px solid var(--line);
+    background: var(--card);
+    border-radius: var(--r-pill);
+    font-size: .82rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .filterbar .filter:hover { border-color: var(--gold); color: var(--ink); }
+  .filterbar .filter.is-active {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: #fff;
+  }
+  .filterbar .filter .count { font-size: .72rem; opacity: .8; font-variant-numeric: tabular-nums; }
+  .filterbar .filter.is-active .count { opacity: .85; }
+</style>
+</head>
+<body>
+
+<!-- ===== モック注記バー（最上部・常時） ===== -->
+<div class="mocknote">
+  <span class="mocknote-badge">A-04</span>
+  店舗 予約一覧
+  <span class="sep">｜</span>
+  <span>これは合宿用モック。画面の<strong>件数は仮</strong>です（詰まり・通過率の分析は<strong>SQL</strong>で出します）。</span>
+</div>
+
+<!-- ===== ヘッダー（ロゴ→A-03 ダッシュボードへ） ===== -->
+<header class="appbar">
+  <a class="brand" href="A-03_dashboard.html" title="ダッシュボードへ">Re<span class="mark">Serve</span>
+    <span class="brand-tag">SALON RESERVATION</span>
+  </a>
+  <div class="appbar-right">
+    <div><strong>田中美容室</strong>（東京都渋谷区）</div>
+    <div>プラン：月額12,000円　<span class="badge badge-ok"><span class="dot"></span>公開中</span></div>
+  </div>
+</header>
+
+<!-- ===== 本体：サイドナビ ＋ メイン ===== -->
+<div class="app-layout">
+
+  <!-- サイドナビ（予約一覧 = active） -->
+  <nav class="sidenav">
+    <div class="nav-group">店舗管理</div>
+    <a href="A-03_dashboard.html">ダッシュボード</a>
+    <a href="A-04_reservations.html" class="active">予約一覧</a>
+    <a href="A-05_billing.html">請求・プラン</a>
+    <div class="nav-group">店舗ページ</div>
+    <a href="../user/U-01_store.html">公開ページを見る</a>
+  </nav>
+
+  <!-- メイン -->
+  <main class="app-main">
+
+    <div class="page-head">
+      <div class="crumb">店舗管理　/　予約一覧</div>
+      <h1>予約一覧</h1>
+      <p class="lede">確定・来店済・キャンセルの予約をまとめて確認できます。</p>
+    </div>
+
+    <!-- ← 戻る -->
+    <div class="row" style="margin-bottom: var(--sp-4);">
+      <a class="btn btn-ghost btn-sm" href="A-03_dashboard.html">← ダッシュボードに戻る</a>
+    </div>
+
+    <!-- フィルタ（すべて / 確定 / 来店済 / キャンセル）※数字はレイアウト用 -->
+    <div class="filterbar" role="tablist" aria-label="予約ステータスで絞り込み">
+      <a href="#" class="filter is-active">すべて</a>
+      <a href="#" class="filter">確定</a>
+      <a href="#" class="filter">来店済</a>
+      <a href="#" class="filter">キャンセル</a>
+    </div>
+
+    <!-- 予約一覧テーブル（確定・来店済を中心に自然な混在） -->
+    <div class="card mb-0" style="padding:0; overflow:hidden;">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>日時</th>
+            <th>メニュー</th>
+            <th>利用者</th>
+            <th>担当</th>
+            <th>ステータス</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- 直近の確定（一貫サンプル：6/25 山田花子 様 カット） -->
+          <tr>
+            <td>6/25（水）14:00</td>
+            <td>カット <span class="faint">¥4,400</span></td>
+            <td>山田 花子 様</td>
+            <td>佐藤 葵</td>
+            <td><span class="badge badge-ok"><span class="dot"></span>確定</span></td>
+          </tr>
+
+          <tr>
+            <td>6/24（火）11:00</td>
+            <td>カラー <span class="faint">¥8,800</span></td>
+            <td>田中 美咲 様</td>
+            <td>鈴木 大地</td>
+            <td><span class="badge badge-ok"><span class="dot"></span>確定</span></td>
+          </tr>
+
+          <tr>
+            <td>6/24（火）16:30</td>
+            <td>トリートメント <span class="faint">¥3,300</span></td>
+            <td>小林 直人 様</td>
+            <td>佐藤 葵</td>
+            <td><span class="badge badge-ok"><span class="dot"></span>確定</span></td>
+          </tr>
+
+          <tr>
+            <td>6/23（月）13:30</td>
+            <td>縮毛矯正 <span class="faint">¥13,200</span></td>
+            <td>渡辺 さくら 様</td>
+            <td>鈴木 大地</td>
+            <td><span class="badge badge-ok"><span class="dot"></span>確定</span></td>
+          </tr>
+
+          <tr>
+            <td>6/23（月）18:00</td>
+            <td>カット <span class="faint">¥4,400</span></td>
+            <td>伊藤 健太 様</td>
+            <td>佐藤 葵</td>
+            <td><span class="badge badge-ok"><span class="dot"></span>確定</span></td>
+          </tr>
+
+          <tr>
+            <td>6/22（日）10:30</td>
+            <td>カラー <span class="faint">¥8,800</span></td>
+            <td>中村 由美 様</td>
+            <td>佐藤 葵</td>
+            <td><span class="badge badge-muted">来店済</span></td>
+          </tr>
+
+          <tr>
+            <td>6/22（日）15:00</td>
+            <td>カット <span class="faint">¥4,400</span></td>
+            <td>高橋 翔 様</td>
+            <td>鈴木 大地</td>
+            <td><span class="badge badge-muted">来店済</span></td>
+          </tr>
+
+          <tr>
+            <td>6/21（土）12:00</td>
+            <td>トリートメント <span class="faint">¥3,300</span></td>
+            <td>松本 麻衣 様</td>
+            <td>鈴木 大地</td>
+            <td><span class="badge badge-muted">来店済</span></td>
+          </tr>
+
+          <tr>
+            <td>6/21（土）17:30</td>
+            <td>縮毛矯正 <span class="faint">¥13,200</span></td>
+            <td>木村 涼 様</td>
+            <td>佐藤 葵</td>
+            <td><span class="badge badge-muted">来店済</span></td>
+          </tr>
+
+          <tr>
+            <td>6/20（金）11:30</td>
+            <td>カット <span class="faint">¥4,400</span></td>
+            <td>林 千夏 様</td>
+            <td>佐藤 葵</td>
+            <td><span class="badge badge-muted">来店済</span></td>
+          </tr>
+
+          <tr>
+            <td>6/20（金）19:00</td>
+            <td>カラー <span class="faint">¥8,800</span></td>
+            <td>清水 拓也 様</td>
+            <td>鈴木 大地</td>
+            <td><span class="badge badge-danger">キャンセル</span></td>
+          </tr>
+
+          <tr>
+            <td>6/19（木）14:30</td>
+            <td>カット <span class="faint">¥4,400</span></td>
+            <td>山口 彩 様</td>
+            <td>鈴木 大地</td>
+            <td><span class="badge badge-muted">来店済</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- テーブル下の注記（仮数字・分析はSQL） -->
+    <p class="hint hint-block mt-4">
+      ※ 表示している件数・行は<strong>レイアウト確認用の仮データ</strong>です。
+      実際の件数・通過率・各ステータスの内訳の特定は<strong>SQL（シードDB）</strong>で行います。この画面の数字から結論を出さないでください。
+    </p>
+
+  </main>
+</div>
+
+<!-- ===== フッター ===== -->
+<footer class="footer">
+  <div class="footer-links">
+    <a href="A-03_dashboard.html">ダッシュボード</a>
+    <a href="A-04_reservations.html">予約一覧</a>
+    <a href="A-05_billing.html">請求・プラン</a>
+    <a href="../user/U-01_store.html">公開店舗ページ</a>
+    <a href="../instructor/sitemap.html">講師用サイトマップ</a>
+  </div>
+  © 2026 ReServe（合宿用モック）｜田中美容室・東京都渋谷区／火-日 10:00-20:00（月曜定休）
+</footer>
+
+</body>
+</html>
