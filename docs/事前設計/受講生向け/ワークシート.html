@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ReServe合宿 受講生ワークシート</title>
+<style>
+  :root{
+    --gold:#c9a96a; --gold-deep:#b08e52; --gold-soft:#f3ead8;
+    --ink:#2b2622; --muted:#7a7065; --faint:#a59c8f;
+    --cream:#faf7f2; --card:#fff; --line:#e7e0d6;
+    --danger:#c0392b; --ok:#2e7d4f; --link:#2563b8;
+    --r:12px; --sh:0 4px 16px rgba(43,38,34,.08);
+    --font:system-ui,-apple-system,"Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP",sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:var(--font);background:var(--cream);color:var(--ink);line-height:1.7}
+  .wrap{max-width:880px;margin:0 auto;padding:24px 20px 80px}
+  header.top{background:var(--ink);color:#f3ede4;border-radius:var(--r);padding:20px 24px;margin-bottom:8px}
+  .brand{font-size:1.3rem;font-weight:800;letter-spacing:.06em}.brand .m{color:var(--gold)}
+  .top .sub{font-size:.82rem;color:#b9ad9b;margin-top:4px}
+  .note{background:var(--gold-soft);border:1px solid #ecdcb8;border-radius:10px;padding:12px 16px;font-size:.82rem;color:#7a6a45;margin:14px 0 26px}
+  .step{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh);padding:22px 24px;margin-bottom:20px}
+  .step-h{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+  .num{flex:none;width:34px;height:34px;border-radius:50%;background:var(--gold);color:#fff;font-weight:800;display:grid;place-items:center}
+  .step-h h2{font-size:1.12rem;margin:0}
+  .lead{color:var(--muted);font-size:.86rem;margin:2px 0 16px}
+  .hint{font-size:.78rem;color:var(--faint)}
+  .tag{display:inline-block;font-size:.7rem;font-weight:700;background:#eef1f6;color:var(--link);border-radius:5px;padding:1px 8px}
+
+  /* ファネル */
+  .funnel{display:flex;flex-direction:column;align-items:center;gap:6px;margin:10px 0}
+  .fstage{background:#fffdf8;border:2px dashed var(--gold);border-radius:8px;height:46px;display:flex;align-items:center;justify-content:center;color:var(--faint);font-size:.8rem}
+  .fstage .ci{margin-left:8px;width:18px;height:18px;border:2px solid var(--danger);border-radius:50%}
+  .farrow{color:var(--gold-deep);font-size:.9rem;line-height:1}
+  .legend{font-size:.74rem;color:var(--muted);margin-top:8px}
+  .legend .ci{display:inline-block;width:12px;height:12px;border:2px solid var(--danger);border-radius:50%;vertical-align:-2px;margin:0 4px}
+
+  table{width:100%;border-collapse:collapse;font-size:.84rem;margin-top:6px}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left}
+  th{background:#faf7f1;font-weight:700;color:var(--muted);font-size:.78rem}
+  td.blank{background:#fffdf8;color:var(--faint)}
+  .judge span{display:inline-block;border:1px solid var(--line);border-radius:5px;padding:0 6px;font-size:.72rem;color:var(--faint);margin-right:4px}
+
+  /* 施策ブレスト */
+  .clog{font-size:.8rem;color:var(--muted);margin:4px 0 6px}
+  .slots{display:grid;grid-template-columns:1fr;gap:8px}
+  .slot{border:1px dashed var(--line);border-radius:8px;background:#fffdf8;min-height:38px;display:flex;align-items:center;padding:0 12px;color:var(--faint);font-size:.8rem}
+
+  /* マトリクス */
+  .matrix-wrap{display:grid;grid-template-columns:26px 1fr;gap:6px;margin:12px 0 6px}
+  .yaxis{writing-mode:vertical-rl;text-orientation:mixed;text-align:center;font-size:.74rem;font-weight:700;color:var(--muted);background:#faf7f1;border-radius:6px;display:grid;place-items:center}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,70px);gap:6px}
+  .cell{border:1px solid var(--line);border-radius:8px;background:#fffdf8;font-size:.66rem;color:var(--faint);padding:5px}
+  .cell.hot{background:#fbf3e3;border-color:var(--gold);}
+  .cell.hot::after{content:"まずここ";font-size:.62rem;color:var(--gold-deep);font-weight:700}
+  .xaxis{grid-column:2;display:grid;grid-template-columns:repeat(3,1fr);text-align:center;font-size:.74rem;font-weight:700;color:var(--muted);margin-top:2px}
+  .axis-label{font-size:.74rem;color:var(--muted);text-align:center;margin-top:4px}
+
+  /* 提案テンプレ */
+  .prop{display:grid;gap:8px}
+  .prow{display:grid;grid-template-columns:120px 1fr;gap:10px;align-items:stretch}
+  .plabel{background:var(--ink);color:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:700;padding:8px}
+  .pfill{border:1px dashed var(--line);border-radius:8px;background:#fffdf8;min-height:44px}
+  .pseq{font-size:.74rem;color:var(--faint);text-align:center;margin:2px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="brand">Re<span class="m">Serve</span> 合宿 ｜ 受講生ワークシート</div>
+    <div class="sub">サービスを読む → ファネルで詰まり → 施策 → 工数×インパクト → 提案。自分の手で1周する。</div>
+  </header>
+  <div class="note">📝 答えは載っていません。<b>自分でファネルを描き、SQLで数字を出して</b>埋めていきます。画面モックの件数は飾り（仮）。詰まりはSQLで出した数字で判断します。</div>
+
+  <!-- STEP2 -->
+  <section class="step">
+    <div class="step-h"><div class="num">2</div><h2>サービスを読んで、ファネルを自分で描く</h2></div>
+    <p class="lead">モックを触って「入口 → お金が発生するまで」の流れを自分で決めて並べる。<span class="tag">まだ数字は出さない</span></p>
+    <div class="funnel">
+      <div class="fstage" style="width:100%">①（入口）　　　　　　　<span class="ci"></span></div>
+      <div class="farrow">▽</div>
+      <div class="fstage" style="width:88%">②</div>
+      <div class="farrow">▽</div>
+      <div class="fstage" style="width:76%">③</div>
+      <div class="farrow">▽</div>
+      <div class="fstage" style="width:64%">④　　　　　　<span class="ci"></span></div>
+      <div class="farrow">▽</div>
+      <div class="fstage" style="width:52%">⑤</div>
+      <div class="farrow">▽</div>
+      <div class="fstage" style="width:42%">⑥</div>
+    </div>
+    <div class="legend">段は自分で決める（数も自由）／<span class="ci"></span>＝お金が発生する地点（キャッシュポイント）に丸／各段で「見る指標」を1つ決める</div>
+  </section>
+
+  <!-- STEP3 -->
+  <section class="step">
+    <div class="step-h"><div class="num">3</div><h2>SQLで実データを当てて、詰まりを名指す</h2></div>
+    <p class="lead">各段の人数を出す → <b>前段で割って通過率</b> → 通常値（ベンチ）と比べて低い段＝詰まり。</p>
+    <table>
+      <tr><th>段</th><th>件数</th><th>通過率（前段で割る）</th><th>通常値（ベンチ）</th><th>判定</th></tr>
+      <tr><td class="blank">①</td><td class="blank"></td><td class="blank">—</td><td class="blank"></td><td class="judge"><span>低すぎ</span><span>あと一歩</span><span>伸ばせる</span></td></tr>
+      <tr><td class="blank">②</td><td class="blank"></td><td class="blank">②÷①</td><td class="blank"></td><td class="judge"><span>低すぎ</span><span>あと一歩</span><span>伸ばせる</span></td></tr>
+      <tr><td class="blank">③</td><td class="blank"></td><td class="blank">③÷②</td><td class="blank"></td><td class="judge"><span>低すぎ</span><span>あと一歩</span><span>伸ばせる</span></td></tr>
+      <tr><td class="blank">④</td><td class="blank"></td><td class="blank">④÷③</td><td class="blank"></td><td class="judge"><span>低すぎ</span><span>あと一歩</span><span>伸ばせる</span></td></tr>
+      <tr><td class="blank">⑤</td><td class="blank"></td><td class="blank">⑤÷④</td><td class="blank"></td><td class="judge"><span>低すぎ</span><span>あと一歩</span><span>伸ばせる</span></td></tr>
+    </table>
+    <p class="hint" style="margin-top:8px">※ SQLは自分で書く（COUNT / DISTINCT / 前段で割る）。正解の数字は配られない。</p>
+  </section>
+
+  <!-- STEP4 -->
+  <section class="step">
+    <div class="step-h"><div class="num">4</div><h2>詰まりごとに、改善する施策を最低3つ</h2></div>
+    <p class="lead">質より量。良し悪しは次のステップで。切り口を変えて（通知／導線短縮／入力削減 …）。</p>
+    <div class="clog">詰まり A：________________________</div>
+    <div class="slots">
+      <div class="slot">施策1</div><div class="slot">施策2</div><div class="slot">施策3</div>
+    </div>
+    <div class="clog" style="margin-top:14px">詰まり B：________________________</div>
+    <div class="slots">
+      <div class="slot">施策1</div><div class="slot">施策2</div><div class="slot">施策3</div>
+    </div>
+  </section>
+
+  <!-- STEP5 -->
+  <section class="step">
+    <div class="step-h"><div class="num">5</div><h2>工数×インパクトで優先度</h2></div>
+    <p class="lead">工数は<b>何時間か</b>（時給5,000円 → コスト＝時間×5,000）。リターン＝単価×母数。<b>短時間×インパクト大</b>から着手。</p>
+    <div class="matrix-wrap">
+      <div class="yaxis">インパクト 大 → 小</div>
+      <div class="grid3">
+        <div class="cell hot"></div><div class="cell"></div><div class="cell"></div>
+        <div class="cell"></div><div class="cell"></div><div class="cell"></div>
+        <div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      </div>
+    </div>
+    <div class="xaxis" style="display:grid;grid-template-columns:26px 1fr"><span></span><span style="display:grid;grid-template-columns:repeat(3,1fr)"><span>短時間</span><span>中</span><span>長時間</span></span></div>
+    <div class="axis-label">工数（時間）→</div>
+    <table style="margin-top:16px">
+      <tr><th>施策</th><th>工数(h)</th><th>コスト(=h×5,000)</th><th>リターン(単価×母数)</th><th>ROI(年間÷コスト)</th></tr>
+      <tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+      <tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+      <tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+    </table>
+    <p class="hint" style="margin-top:8px">工数目安：文言2〜4h／UI・フォーム4〜8h／フロー組替12〜24h／通知4〜8h／決済40〜64h（AIでも縮まない）</p>
+  </section>
+
+  <!-- STEP6 -->
+  <section class="step">
+    <div class="step-h"><div class="num">6</div><h2>提案：数字 → 課題 → 施策 → 投資対効果 → 結論</h2></div>
+    <p class="lead">まず<b>数字（根拠）</b>を出してから課題を言う。最後は「何を先にやるか」を言い切る。</p>
+    <div class="prop">
+      <div class="prow"><div class="plabel">① 数字</div><div class="pfill"></div></div>
+      <div class="pseq">▽ だから</div>
+      <div class="prow"><div class="plabel">② 課題</div><div class="pfill"></div></div>
+      <div class="pseq">▽ 解くために</div>
+      <div class="prow"><div class="plabel">③ 施策</div><div class="pfill"></div></div>
+      <div class="pseq">▽ どれが効く？</div>
+      <div class="prow"><div class="plabel">④ 投資対効果</div><div class="pfill"></div></div>
+      <div class="pseq">▽ 結論</div>
+      <div class="prow"><div class="plabel">⑤ 何を先に</div><div class="pfill"></div></div>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>

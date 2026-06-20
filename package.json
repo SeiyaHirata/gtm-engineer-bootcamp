@@ -1,0 +1,14 @@
+{
+  "name": "reserve-bootcamp-tests",
+  "private": true,
+  "type": "module",
+  "description": "ReServe合宿: ローカルSupabase（または埋め込みPostgres）のシードデータに対し、ファネル/収益の分析クエリを流して結果と期待値を検証するテスト",
+  "scripts": {
+    "test": "node tests/run.mjs",
+    "test:supabase": "node tests/run-supabase.mjs"
+  },
+  "dependencies": {
+    "@electric-sql/pglite": "^0.2.0",
+    "pg": "^8.11.0"
+  }
+}
