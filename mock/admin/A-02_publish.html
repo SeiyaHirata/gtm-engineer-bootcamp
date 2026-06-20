@@ -77,23 +77,22 @@
 
   <div class="app-layout">
 
-    <!-- サイドナビ -->
-    <nav class="sidenav">
-      <div class="nav-group">店舗管理</div>
-      <a href="A-01_onboarding.html">初期設定</a>
-      <a href="#" class="active">公開確認</a>
-      <a href="A-03_dashboard.html">ダッシュボード</a>
-      <a href="A-04_reservations.html">予約一覧</a>
-      <a href="A-05_billing.html">請求・プラン</a>
-      <div class="nav-group">アカウント</div>
-      <a href="#">通知設定</a>
-      <a href="#">スタッフ権限</a>
-    </nav>
+      <nav class="sidenav">
+    <div class="nav-group">店舗管理</div>
+    <a href="A-00_signup.html">アカウント登録</a>
+    <a href="A-01_onboarding.html">設定</a>
+    <a href="A-02_publish.html" class="active">公開確認</a>
+    <a href="A-03_dashboard.html">ダッシュボード</a>
+    <a href="A-04_reservations.html">予約一覧</a>
+    <a href="A-05_billing.html">請求・プラン</a>
+    <div class="nav-group">店舗ページ</div>
+    <a href="../user/U-01_store.html" target="_blank" rel="noopener">公開ページを見る ↗</a>
+  </nav>
 
     <main class="app-main">
 
       <div class="page-head">
-        <div class="crumb"><a href="A-01_onboarding.html" style="color:var(--faint);text-decoration:none;">← 戻る</a>　店舗管理 ＞ 初期設定 ＞ 公開確認</div>
+        <div class="crumb"><a href="A-01_onboarding.html" style="color:var(--faint);text-decoration:none;">← 戻る</a>　店舗管理 ＞ 設定 ＞ 公開確認</div>
         <h1>公開前の最終確認</h1>
         <p class="lede">入力した設定内容を確認し、問題なければ店舗ページを公開してください。公開すると、下記のURLからお客様が予約できるようになります。</p>
       </div>
@@ -195,7 +194,7 @@
 
       <!-- アクション帯：公開する／戻って編集 -->
       <div class="actions">
-        <a class="link-cta" href="../user/U-01_store.html">公開した店舗ページを見る →</a>
+        <a class="link-cta" href="../user/U-01_store.html" target="_blank" rel="noopener">公開した店舗ページを見る →</a>
         <div class="actions-btns">
           <a class="btn btn-ghost" href="A-01_onboarding.html">戻って編集</a>
           <a class="btn btn-primary btn-lg" href="A-03_dashboard.html">公開する</a>
@@ -209,9 +208,9 @@
   <footer class="footer">
     <div class="footer-links">
       <a href="../index.html">モック一覧</a>
-      <a href="A-01_onboarding.html">初期設定</a>
+      <a href="A-01_onboarding.html">設定</a>
       <a href="A-03_dashboard.html">ダッシュボード</a>
-      <a href="../user/U-01_store.html">公開店舗ページ</a>
+      <a href="../user/U-01_store.html" target="_blank" rel="noopener">公開店舗ページ</a>
     </div>
     ReServe ｜ 美容室予約クラウド（GTMエンジニア合宿モック）｜
     この画面は「① 設定完了」直後の公開判断を体感する演出用です。表示内容はレイアウト確認用で、詰まりの特定・通過率・ROIの算出はすべて <strong>SQL</strong> で行います。
