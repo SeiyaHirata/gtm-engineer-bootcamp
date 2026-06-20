@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ReServe 合宿モック一覧</title>
+<style>
+  :root { --gold:#c9a96a; --ink:#2b2622; --muted:#7a7065; --line:#e7e0d6; --bg:#faf7f2; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:-apple-system,"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif; background:var(--bg); color:var(--ink); line-height:1.7; }
+  header { background:#fff; border-bottom:1px solid var(--line); padding:28px 24px; }
+  .brand { font-size:22px; font-weight:800; letter-spacing:.08em; color:var(--gold); }
+  .sub { color:var(--muted); font-size:13px; margin-top:4px; }
+  main { max-width:880px; margin:0 auto; padding:28px 24px 60px; }
+  .note { background:#fff8ec; border:1px solid #f0e2c4; border-radius:10px; padding:14px 16px; font-size:13px; color:#7a6a45; margin-bottom:28px; }
+  h2 { font-size:15px; letter-spacing:.06em; color:var(--muted); border-bottom:1px solid var(--line); padding-bottom:8px; margin:32px 0 14px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:14px; }
+  a.card { display:block; background:#fff; border:1px solid var(--line); border-radius:12px; padding:16px; text-decoration:none; color:inherit; transition:.15s; box-shadow:0 1px 3px rgba(0,0,0,.03); }
+  a.card:hover { border-color:var(--gold); box-shadow:0 4px 14px rgba(201,169,106,.18); transform:translateY(-1px); }
+  .id { font-size:11px; font-weight:700; color:var(--gold); letter-spacing:.08em; }
+  .title { font-size:15px; font-weight:700; margin:4px 0 6px; }
+  .desc { font-size:12.5px; color:var(--muted); }
+  .tag { display:inline-block; font-size:11px; background:#fdecec; color:#c0392b; border-radius:5px; padding:1px 7px; margin-top:8px; }
+  .tag.ok { background:#e8f5ec; color:#2e7d4f; }
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">ReServe</div>
+  <div class="sub">美容室予約SaaS ｜ GTMエンジニア合宿 UIモック一覧（静的・数字は仮。分析はSQLで）</div>
+</header>
+<main>
+  <div class="note">これは合宿用のUIモックです。画面上の件数はレイアウト用の<b>仮の数字</b>で、詰まりの特定・通過率・ROIは<b>すべてSupabaseのSQL</b>で出します。各画面は「根本原因」が一目で伝わるように作っています。</div>
+
+  <h2>店舗管理画面（PC・供給側）</h2>
+  <div class="grid">
+    <a class="card" href="admin/A-01_onboarding.html">
+      <div class="id">A-01</div><div class="title">店舗オンボーディング</div>
+      <div class="desc">初期設定。項目が多く進捗も見えない。</div><span class="tag">詰まり① 設定完了</span>
+    </a>
+    <a class="card" href="admin/A-03_dashboard.html">
+      <div class="id">A-03</div><div class="title">管理ダッシュボード</div>
+      <div class="desc">キャンセル通知が目立ち、店舗がうんざり。</div><span class="tag">詰まり② 早期解約の文脈</span>
+    </a>
+  </div>
+
+  <h2>利用者向けサイト（スマホ・需要側）</h2>
+  <div class="grid">
+    <a class="card" href="user/U-01_store.html">
+      <div class="id">U-01</div><div class="title">公開店舗ページ</div>
+      <div class="desc">予約導線の入口。「予約する」→ U-02。</div><span class="tag">詰まり③a の入口</span>
+    </a>
+    <a class="card" href="user/U-02_form.html">
+      <div class="id">U-02</div><div class="title">初回予約フォーム</div>
+      <div class="desc">項目が多く、送信CTAがテキスト風で押せるか不明。</div><span class="tag">詰まり③a 初回予約</span>
+    </a>
+    <a class="card" href="user/U-03_confirm.html">
+      <div class="id">U-03</div><div class="title">予約確認・完了</div>
+      <div class="desc">後払い案内＋目立つキャンセルボタン。</div><span class="tag">詰まり③b キャンセル</span>
+    </a>
+  </div>
+
+  <h2>講師用（模範解・コマ7開示）</h2>
+  <div class="grid">
+    <a class="card" href="instructor/revenue-summary.html">
+      <div class="id">講師用</div><div class="title">ReServe 収益サマリー</div>
+      <div class="desc">サブスク＋手数料の答え合わせ用ダッシュボード。</div><span class="tag ok">答え（受講生には伏せる）</span>
+    </a>
+  </div>
+</main>
+</body>
+</html>
