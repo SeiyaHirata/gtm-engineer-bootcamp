@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ステップ2　サービスとファネルを整理する｜GTM Bootcamp 教材</title>
+<link rel="stylesheet" href="assets/kyozai.css">
+</head>
+<body>
+<header class="topbar"><div class="topbar-inner"><a class="brand" href="index.html" style="text-decoration:none">GTM Bootcamp <em>教材</em></a><nav class="chips"><a class="chip" href="00_目的.html">0</a><a class="chip" href="01_セットアップ.html">1</a><a class="chip current" href="02_サービスとファネルを整理する.html">2</a><a class="chip" href="03_SQLで詰まりを特定する.html">3</a><a class="chip" href="04_改善点を洗い出す.html">4</a><a class="chip" href="05_工数×インパクトで優先度.html">5</a><a class="chip" href="06_提案.html">6</a><a class="chip" href="07_持ち帰り.html">7</a></nav></div></header>
+<main class="wrap"><article class="page">
+
+<p class="step-kicker">STEP 2 / 7</p>
+<div class="step-head"><span class="step-badge">2</span><h1>サービスとファネルを整理する</h1></div>
+
+<p class="lede">ここからが今日の核になる。</p>
+
+<p>前のステップで、全員が同じデータを手元で見られる状態になった。サービスも起動できている。ここで多くの人がやりたくなるのが、「じゃあ何の機能を作ろう」「どのテーブルをSQLで叩こう」という発想だ。</p>
+
+<p><strong>今日はそれをやらない。</strong></p>
+
+<div class="stop">
+  <span class="ic">✋</span>
+  <div>
+    <span class="h">いきなり機能案やSQLに飛ばない</span>
+    <p>飛んだ瞬間に、自分が何のために手を動かしているのか分からなくなる。「どこに技術を使うべきか」を判断できないまま、なんとなく作って終わる。それは前回さんざん話した「作業者」の動き方だ。</p>
+  </div>
+</div>
+
+<p>このステップでやるのは、ただ1つ。<strong>サービスを、点ではなく流れで読む。</strong> これだけに集中する。</p>
+
+<h2>まず見るのは2つだけ</h2>
+
+<p>GTMエンジニアがサービスに入って最初に見るものは、2つしかない。機能案でもなく、SQLでもなく、UIの粗探しでもない。この2つだけだ。</p>
+
+<div class="cards2">
+  <div class="ccard">
+    <span class="cc-ic">🗺️</span>
+    <span class="cc-badge">①</span>
+    <p class="cc-t">サービスの全体像（流れ）</p>
+    <p class="cc-d">お客さんが入口から出口まで歩く1本の道。＝ファネル。</p>
+  </div>
+  <div class="ccard">
+    <span class="cc-ic">💰</span>
+    <span class="cc-badge">②</span>
+    <p class="cc-t">キャッシュポイント</p>
+    <p class="cc-d">その流れの中で、売上や利益が発生する地点。</p>
+  </div>
+</div>
+
+<p>なぜこの2つかというと、この2つが分からないと「どこを改善すると売上に効くのか」を決められないからだ。改善する場所が決まらないのに、いきなり改善案を出しても、それは当てずっぽうになる。順番に見ていく。</p>
+
+<h2>① サービスの全体像を見る</h2>
+
+<p>サービスの全体像を見るとは、<strong>ファネルを理解すること</strong>だ。ファネルというのは、お客さんがそのサービスを使っていく順番のことだった。前回マッチングアプリの例で話した、「いいねする → マッチする → 返信が来る → 会う約束が取れる → 当日会う → 続く」という、あの流れと同じだ。</p>
+
+<p>ここで一番大事なのは、<strong>点で見るのではなく、流れで見る</strong>ということ。</p>
+
+<div class="vs">
+  <div class="vs-side vs-bad">
+    <div class="vh">✕ 点で見る</div>
+    <div class="dots">
+      <span class="dot">登録画面がある</span>
+      <span class="dot">商品一覧がある</span>
+      <span class="dot">決済がある</span>
+    </div>
+    <p class="cc-d" style="margin-top:12px">機能をバラバラに見ても、サービスは分からない。</p>
+  </div>
+  <div class="vs-mid">VS</div>
+  <div class="vs-side vs-good">
+    <div class="vh">◯ 流れで見る</div>
+    <div class="chain">
+      <span class="lnk">入口</span><span class="ar">→</span>
+      <span class="lnk">登録</span><span class="ar">→</span>
+      <span class="lnk">利用</span><span class="ar">→</span>
+      <span class="lnk">課金</span>
+    </div>
+    <p class="cc-d" style="margin-top:12px">お客さんは入口から出口まで1本の道を歩いている。同じ目線でたどる。</p>
+  </div>
+</div>
+
+<p>具体的には、こういう問いでサービスを読んでいく。</p>
+
+<ul>
+  <li>どうやって入ってくるのか（流入）</li>
+  <li>どうやって登録するのか</li>
+  <li>どうやって使い始めるのか</li>
+  <li>どこで「これいいな」と価値を感じるのか</li>
+  <li>どこでお金が発生するのか</li>
+  <li>どこで継続したり、もう一度買ったり、逆に離れたりするのか</li>
+</ul>
+
+<p>この一連の流れを、頭の中ではなく<strong>1枚の紙の上に並べる</strong>。これが「全体像を見る」ということだ。イメージとしては、こういう「上から下への1本の道」になる。</p>
+
+<div class="funnel">
+  <div class="fstage" style="width:100%">入口 / 流入</div>
+  <div class="farrow">▼</div>
+  <div class="fstage" style="width:84%">登録</div>
+  <div class="farrow">▼</div>
+  <div class="fstage" style="width:68%">課金 <span class="cash">💰 キャッシュポイント</span></div>
+  <div class="farrow">▼</div>
+  <div class="fstage" style="width:54%">利用</div>
+  <div class="farrow">▼</div>
+  <div class="fstage" style="width:42%">継続</div>
+</div>
+<p class="fnote">上から下へ、お客さんが歩く順に並べる。💰はお金が発生する地点（キャッシュポイント）の例。<br><strong>課金がどこに来るかはサービスによって違う。</strong>登録してすぐ課金（登録即決済）のように前半に来ることもあれば、使ってみてから課金することもある。<br>※これは「並べ方の例」。自分が触るサービスの正解の段ではない。<strong>段は自分で決める。</strong></p>
+
+<h2>流れにすると、何が見えるか</h2>
+
+<p>点を流れにすると、見え方が変わる。たとえば「決済機能」を点で見ると、「決済ができる/できない」しか分からない。でも流れの中に置くと、「価値を感じた人が、ここでお金を払う段」として見える。前の段から何人来て、ここで何人が払うのか、という見方ができるようになる。</p>
+
+<p>これが流れで見ることの意味だ。各段は、お客さんが通っていく<strong>チェックポイント</strong>になる。1段進むごとに、必ず人は減っていく。全員が次の段に進むことはない。</p>
+
+<div class="funnel" style="max-width:420px">
+  <div class="fstage" style="width:100%">前の段（多い）</div>
+  <div class="farrow">▼</div>
+  <div class="fstage" style="width:66%">この段（減る）</div>
+  <div class="farrow">▼</div>
+  <div class="fstage" style="width:40%">次の段（さらに減る）</div>
+</div>
+<p class="fnote">各段は前から流れてきた一部だけが通る。だから1段ごとに人は減る（数はイメージ。実際の通過率はまだ出さない）。</p>
+
+<div class="note"><span class="h">覚えておく</span>この「減っていく」という性質。後のステップで、ここが効いてくる。</div>
+
+<h2>② キャッシュポイントを見る</h2>
+
+<p>2つ目に見るのが、キャッシュポイントだ。キャッシュポイントとは、<strong>サービスの中で売上や利益が発生する場所</strong>のこと。お金が生まれる地点だ。ここが分からないまま開発すると、どれだけ頑張っても売上につながらない。流れのどこかに、お金が発生する地点が必ずある。そこを見つける。</p>
+
+<div class="warn"><span class="h">⚠ キャッシュポイントは1つとは限らない</span>1本の流れの中に、お金が発生する地点が複数あることは普通にある。</div>
+
+<div class="chain" style="margin:18px 0">
+  <span class="lnk">入口</span><span class="ar">→</span>
+  <span class="lnk">登録</span><span class="ar">→</span>
+  <span class="lnk" style="background:#fffbeb;border-color:#fcd34d;color:#8a5300">月額 💰</span><span class="ar">→</span>
+  <span class="lnk">利用</span><span class="ar">→</span>
+  <span class="lnk" style="background:#fffbeb;border-color:#fcd34d;color:#8a5300">手数料 💰</span><span class="ar">→</span>
+  <span class="lnk">継続</span>
+</div>
+
+<p>前回レアのようなSaaSの話をした。あのサービスだと、管理者から取る月額もキャッシュポイントだし、ショップの取引額（GMV）にかかる手数料も別のキャッシュポイントだ。月額・手数料・追加課金、いろいろなパターンがある。だから、自分が触っているサービスにキャッシュポイントがいくつあるのか、それぞれどこにあるのかを、流れの上で見つけていく。そして見るときの目線はこれだ。<strong>どこが伸びると、売上が増えるのか。</strong></p>
+
+<h2>全体像とキャッシュポイントが揃うと</h2>
+
+<p>この2つが見えて、はじめて次の問いが立てられる。</p>
+
+<div class="question">
+  <div class="q">どこを改善すると、売上にインパクトが出るのか？</div>
+  <div class="sub">ファネル（流れ）× キャッシュポイント が見えて、はじめて立てられる問い</div>
+</div>
+
+<p>ファネル（流れ）が見えていて、お金が発生する地点（キャッシュポイント）も見えている。だから、「この段を直すと、このキャッシュポイントの数字が動くな」とつなげて考えられる。逆に、流れもキャッシュポイントも見えていないのに改善案を出すと、「便利そうだから作る」になってしまう。それは数字につながらない。GTMエンジニアは「この数字のために作る」と言える状態を、まずここで作る。</p>
+
+<h2>理解が先、詰まりは後</h2>
+
+<p>ここで順番を間違えないでほしい。今日のこのステップでやるのは、<strong>流れを理解すること</strong>まで。「どこが詰まっているか」を数字で突き止めるのは、次のステップだ。</p>
+
+<div class="boundary">
+  <div class="b-card b-now">
+    <div class="b-h">いま（ステップ2）</div>
+    流れを理解する。地図を1枚描く。
+  </div>
+  <div class="b-mid">→</div>
+  <div class="b-card b-next">
+    <div class="b-h">次（ステップ3）</div>
+    どこが詰まっているかを、データで突き止める。
+  </div>
+</div>
+
+<p>なぜ分けるのか。流れの全体像が頭に入っていないのに、いきなり「ここが詰まってる」と言っても、それはただの思いつきになる。地図がないのに「この道が混んでる」と言っているようなものだ。まず地図を描く。詰まりを探すのは、地図ができてから。</p>
+
+<p>だから今は、<strong>詰まりの数字をまだ出さない</strong>。ここで数字に飛びつきたくなる気持ちは分かるが、ぐっとこらえる。今は流れを1枚に描き切ることだけに集中する。</p>
+
+<h2>各段で「見るべき指標」を置く</h2>
+
+<p>流れを1枚に描いたら、もう1つだけやることがある。各段に、<strong>数えるべき数字を1つ置く</strong>。たとえばこういう具合だ。</p>
+
+<div class="tags">
+  <span class="tag">登録の段 → <b>登録した人数</b></span>
+  <span class="tag">課金の段 → <b>払った人数</b></span>
+  <span class="tag">継続の段 → <b>続けた人数</b></span>
+</div>
+
+<p>人数なのか、率なのか、金額なのか、その段で何を数えれば状態が分かるかを考えて、1つ置く。</p>
+
+<div class="warn"><span class="h">⚠ 「売上」だけを見ない</span>売上は一番最後の結果でしかない。流れの途中、各段それぞれに数字を置くから、後で「どの段で人がこぼれているか」が見えるようになる。途中に数字がないと、結果が悪かったときに、どこが原因か分からない。</div>
+
+<p>繰り返すが、ここで置くのは「この段では何を数えるか」という<strong>指標の名前</strong>まで。<strong>実際の数字（通過率など）はまだ出さない。</strong> それは次のステップで確かめる。今は「この段はこの数字を見る」と決めるところまでだ。</p>
+
+<h2>まとめ</h2>
+
+<p>このステップで腹に落としてほしいのは、次の通り。</p>
+
+<ul class="checks">
+  <li>いきなり機能案やSQLに飛ばない。先に流れを読む</li>
+  <li>最初に見るのは2つだけ。①サービス全体像（流れ＝ファネル）②キャッシュポイント</li>
+  <li>点ではなく流れで見る。各段はお客さんが通るチェックポイント</li>
+  <li>お金が発生する地点（キャッシュポイント）は複数あってよい</li>
+  <li>まず流れを理解する。詰まりを数字で見るのは次のステップ</li>
+  <li>各段に「見るべき指標」を1つ置く（数字そのものはまだ出さない）</li>
+</ul>
+
+<p>地図ができれば、次に「どこが渋滞しているか」をデータで突き止めにいける。今日はその地図を、自分の手で1枚描く。</p>
+
+<a class="ws-cta" href="../ワークシート.html"><span class="arrow">→</span><span>ワークシートのステップ2 をやる<span class="sub">サービス（モック）を実際に触って流れを追い、入口からお金が発生するまでのファネルを1枚に描く。段は自分で決める。キャッシュポイントに丸をつけ、各段に「見るべき指標」を1つ置く。※詰まりの数字はまだ出さない。</span></span></a>
+
+<nav class="pager"><a class="pager-btn prev" href="01_セットアップ.html"><span class="lbl">前へ</span>← ステップ1　セットアップ</a><a class="pager-btn next" href="03_SQLで詰まりを特定する.html"><span class="lbl">次へ</span>ステップ3　SQLで詰まりを特定する →</a></nav>
+</article></main>
+</body>
+</html>
