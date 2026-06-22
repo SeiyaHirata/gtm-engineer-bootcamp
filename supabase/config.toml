@@ -10,16 +10,16 @@ project_id = "gtm-engineer-bootcamp"
 [api]
 enabled = true
 # REST/GraphQL API のポート。受講生は基本ここではなく Studio / psql を使う。
-port = 54321
+port = 55321
 schemas = ["public"]
 extra_search_path = ["public", "extensions"]
 max_rows = 1000
 
 [db]
 # Postgres 接続ポート（psql・GUIクライアントの接続先）。
-port = 54322
+port = 55322
 # マイグレーション差分用のシャドウDBポート。
-shadow_port = 54320
+shadow_port = 55320
 # Postgres メジャーバージョン。
 major_version = 15
 
@@ -32,15 +32,15 @@ sql_paths = ["./seed.sql"]
 [studio]
 enabled = true
 # Studio（GUI）のポート。SQLエディタでファネルSQLを叩く想定。
-port = 54323
+port = 55323
 api_url = "http://127.0.0.1"
 
 [inbucket]
 # ローカルのメール受信ボックス（本合宿では未使用だが標準構成として有効化）。
 enabled = true
-port = 54324
-smtp_port = 54325
-pop3_port = 54326
+port = 55324
+smtp_port = 55325
+pop3_port = 55326
 
 [storage]
 enabled = true
@@ -60,3 +60,7 @@ enable_signup = true
 enable_signup = true
 double_confirm_changes = true
 enable_confirmations = false
+
+[analytics]
+# 他のローカルSupabaseプロジェクトとのポート競合（54327等）回避のため無効化。
+enabled = false
